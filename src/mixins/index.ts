@@ -1,11 +1,3 @@
-// import moment, { Moment } from "moment";
-
-// moment.locale("zh-cn");
-
-// function ago(time: Moment) {
-//   time = moment(time);
-//   return time.fromNow();
-// }
 function ago(time: Date) {
   const date3 = new Date().getTime() - new Date(time).getTime();
   const days = Math.floor(date3 / (24 * 3600 * 1000));

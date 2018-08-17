@@ -3,7 +3,7 @@ import { baseURL } from "./config";
 import { toast } from "@/components/toast/index";
 import Store from "@/store";
 let accesstoken = () =>
-  window.localStorage.getItem("accessToken") || Store.getters.token;
+  Store.getters.localToken || Store.getters.token;
 const axios = Axios.create({
   baseURL,
   timeout: 0,
