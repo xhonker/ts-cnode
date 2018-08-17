@@ -1,8 +1,12 @@
+### gif 先感受下
+
+<img src='./src/assets/tabbar.gif' width='200px' alt="tabbar">
+<img src='./src/assets/tab.gif' width='200px' alt="tab">
+<img src='./src/assets/my.gif' width='200px' alt="my">
+
 #### 技术栈
 
 > vue 全家桶, typescript, scss
-
-> 没用任何 UI 库
 
 #### 主要功能
 
