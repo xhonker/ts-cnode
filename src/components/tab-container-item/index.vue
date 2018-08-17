@@ -1,5 +1,5 @@
 <template>
-  <div v-show="id === $parent.value">
+  <div class="wu-tab-container-item" v-show="id === $parent.value">
     <slot></slot>
   </div>
 </template> 

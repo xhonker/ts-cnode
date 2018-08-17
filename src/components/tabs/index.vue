@@ -1,5 +1,5 @@
 <template>
-  <div class="wu-tab-container" @scroll="handlerScroll">
+  <div class="wu-tabs">
     <slot></slot>
   </div>
 </template>
@@ -8,18 +8,19 @@
 import { Vue, Prop, Component } from "vue-property-decorator";
 
 @Component
-export default class TabContainer extends Vue {
+export default class Tabs extends Vue {
   @Prop() private value!: string;
-
-  handlerScroll(e: Event) {
-    this.$emit("scroll", e);
-  }
 }
 </script>
 
 <style lang='scss'>
-.wu-tab-container {
-  height: 100%;
-  overflow: scroll;
+.wu-tabs {
+  display: flex;
+  height: 30px;
+  line-height: 30px;
+  user-select: none;
+  align-items: center;
+  font-size: 12px;
+  justify-content: center;
 }
 </style>
