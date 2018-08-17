@@ -51,13 +51,13 @@
   "lint-staged": {
     "*.js": [
       "vue-cli-service lint",
-      "prettier --write --fix",
+      "prettier --write",
       "eslint --fix",
       "git add"
     ],
     "*.vue": [
       "vue-cli-service lint",
-      "prettier --write --fix",
+      "prettier --write",
       "eslint --fix",
       "git add"
     ]
