@@ -1,0 +1,7 @@
+export const REQUEST__TOPICS = "REQUEST__TOPICS";
+export const REQUEST__TOPIC__DETAILS = "REQUEST__TOPIC__DETAILS";
+export const CHANGE__TAB = "CHANGE__TAB";
+export const CHANGE__TABBAR = "CHANGE__TABBAR";
+export const SET__TOPICS__SCROLL = "SET__TOPICS__SCROLL";
+export const SET__TOPIC__SCROLL = "SET__TOPIC__SCROLL";
+export const CHANGE__COLLECT = "CHANGE__COLLECT";
