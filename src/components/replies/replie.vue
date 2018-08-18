@@ -34,7 +34,8 @@ import { translationTime } from "@/mixins";
   inject: ["path"]
 })
 export default class Replie extends Vue {
-  @Prop() private replie!: replies;
+  @Prop()
+  private replie!: replies;
 }
 </script>
 

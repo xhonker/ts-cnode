@@ -8,7 +8,8 @@ const prefixCls = "iconfont";
 
 @Component
 export default class Icon extends Vue {
-  @Prop() private type!: string;
+  @Prop()
+  private type!: string;
 
   get className() {
     return [`${prefixCls}`, `icon-${this.type}`];

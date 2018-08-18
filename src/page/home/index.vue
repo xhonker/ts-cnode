@@ -86,10 +86,14 @@ export default class Home extends Vue {
   private contentHeight: number = 0;
   private showTop: boolean = false;
   private currentScrollTop: number = 0;
-  @Action(REQUEST__TOPICS) requestTopics!: requestTopics;
-  @Action(CHANGE__TAB) change$Tab!: (tab: string) => never;
-  @Action(SET__TOPICS__SCROLL) setTopicsScroll!: (scrollTop: number) => never;
-  @Action(CHANGE__TABBAR) change$TabBar!: (tab: string) => never;
+  @Action(REQUEST__TOPICS)
+  requestTopics!: requestTopics;
+  @Action(CHANGE__TAB)
+  change$Tab!: (tab: string) => never;
+  @Action(SET__TOPICS__SCROLL)
+  setTopicsScroll!: (scrollTop: number) => never;
+  @Action(CHANGE__TABBAR)
+  change$TabBar!: (tab: string) => never;
   @State(state => state.topics.topics)
   topics!: Array<topic>;
   @State(state => state.topics.topicTabs)

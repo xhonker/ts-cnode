@@ -37,7 +37,8 @@ import Icon from "../icon/index.vue";
   mixins: [translationTime]
 })
 export default class TopicsCard extends Vue {
-  @Prop() private topics!: topic;
+  @Prop()
+  private topics!: topic;
 
   get topicsHeaderText() {
     // @ts-ignore

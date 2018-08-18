@@ -32,7 +32,8 @@ import { getLocalStorage } from "@/utils";
 export default class Message extends Vue {
   @State(state => state.user)
   user!: userState;
-  @Action(GET__MY__MESSAGE) getMessage!: (accessToken: string) => void;
+  @Action(GET__MY__MESSAGE)
+  getMessage!: (accessToken: string) => void;
   mounted() {
     this.init();
   }

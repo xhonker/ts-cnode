@@ -9,7 +9,8 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 
 @Component
 export default class Tabs extends Vue {
-  @Prop() private value!: string;
+  @Prop()
+  private value!: string;
 }
 </script>
 

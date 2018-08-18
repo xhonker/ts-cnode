@@ -10,7 +10,8 @@ const prefixCls = "wu-tabs-item";
 
 @Component
 export default class TabsItem extends Vue {
-  @Prop() private id!: string;
+  @Prop()
+  private id!: string;
 
   get className() {
     return [

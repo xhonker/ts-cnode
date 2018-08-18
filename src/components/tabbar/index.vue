@@ -15,7 +15,8 @@ export default class WuTabbar extends Vue {
   @Prop({ default: "bottom" })
   private tabbarPosition!: postion;
 
-  @Prop() private value!: string;
+  @Prop()
+  private value!: string;
 
   get className() {
     return [`${prefixCls}`, `${prefixCls}-${this.tabbarPosition}`];

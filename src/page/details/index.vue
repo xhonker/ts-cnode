@@ -78,15 +78,19 @@ export default class Details extends Vue {
   private scroll: number = 0;
   private showTop: boolean = false;
   private comment: string = "";
-  @Prop() private topic!: string;
+  @Prop()
+  private topic!: string;
 
   @State(state => state.topics.openTopics)
   openTopics!: Array<topicDetails>;
   @State(state => state.user)
   user!: userState;
-  @Action(REQUEST__TOPIC__DETAILS) getTopicDetails!: getTopicDetails;
-  @Action(SET__TOPIC__SCROLL) setTopicScroll!: (data: topicScroll) => never;
-  @Action(CHANGE__COLLECT) changeCollect!: (data: changeCollect) => never;
+  @Action(REQUEST__TOPIC__DETAILS)
+  getTopicDetails!: getTopicDetails;
+  @Action(SET__TOPIC__SCROLL)
+  setTopicScroll!: (data: topicScroll) => never;
+  @Action(CHANGE__COLLECT)
+  changeCollect!: (data: changeCollect) => never;
   async mounted() {
     !this.details.author && (await this.getTopicDetails({ topic: this.topic }));
     this.details.scroll > 200 && (this.showTop = true);

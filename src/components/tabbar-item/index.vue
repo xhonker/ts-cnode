@@ -16,7 +16,8 @@ const prefixCls = "wu-tabbar-tab";
 
 @Component
 export default class WuTabbartab extends Vue {
-  @Prop() private id!: string;
+  @Prop()
+  private id!: string;
 
   get tabbarTabCls() {
     return [
