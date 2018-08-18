@@ -9,8 +9,10 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 const prefixCls = "wu-label-item";
 @Component
 export default class Label extends Vue {
-  @Prop() private id!: string;
-  @Prop() private label!: string;
+  @Prop()
+  private id!: string;
+  @Prop()
+  private label!: string;
   get labelItemCls() {
     return [
       `${prefixCls}`,

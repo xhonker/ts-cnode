@@ -29,8 +29,9 @@ import { ILogin, userState } from "@/store/interface/user";
   }
 })
 export default class Login extends Vue {
-  private accessToken: string = "89248133-5ea9-4c0d-a50e-ee95b8298f55";
-  @Action(USER__LOGIN) userLogin!: (data: ILogin) => never;
+  private accessToken: string = "";
+  @Action(USER__LOGIN)
+  userLogin!: (data: ILogin) => never;
   @State(state => state.user)
   user!: userState;
   handlerLogin() {

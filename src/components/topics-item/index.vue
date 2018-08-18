@@ -23,7 +23,8 @@ import { translationTime } from "@/mixins";
   inject: ["path"]
 })
 export default class TopicsItem extends Vue {
-  @Prop() private topics!: recent;
+  @Prop()
+  private topics!: recent;
 }
 </script>
 

@@ -89,12 +89,18 @@ type updateScroll = (scrollTop: number) => never;
 })
 export default class User extends Vue {
   private currentScrollTop: number = 0;
-  @Prop() private loginname!: string;
-  @Prop() private my!: string;
-  @Action(GET__USER__INFO) getUserInfo!: getUser;
-  @Action(CHANGE__USER__TAB) changeUserTab!: changeTab;
-  @Action(UPDATE__USER__SCROLL) updateUserScroll!: updateScroll;
-  @Action(USER__LOGOUT) logout!: () => never;
+  @Prop()
+  private loginname!: string;
+  @Prop()
+  private my!: string;
+  @Action(GET__USER__INFO)
+  getUserInfo!: getUser;
+  @Action(CHANGE__USER__TAB)
+  changeUserTab!: changeTab;
+  @Action(UPDATE__USER__SCROLL)
+  updateUserScroll!: updateScroll;
+  @Action(USER__LOGOUT)
+  logout!: () => never;
   @State(state => state.user.user)
   users!: Array<user>;
   @State(state => state.user)

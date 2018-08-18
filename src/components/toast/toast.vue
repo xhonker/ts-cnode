@@ -21,7 +21,8 @@ const prefixCls = "wu-toast";
 })
 export default class Toast extends Vue {
   private show: boolean = true;
-  @Prop() private message!: string;
+  @Prop()
+  private message!: string;
   @Prop({ default: 3000 })
   private duration!: number;
   @Prop({ default: "" })

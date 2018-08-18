@@ -23,7 +23,7 @@ import { CHANGE__COLLECT } from "@/store/topics/type";
 import { setLocalStorage, getLocalStorage } from "@/utils";
 
 let state: userState = {
-  accessToken: "", // 89248133-5ea9-4c0d-a50e-ee95b8298f55
+  accessToken: "",
   localToken: window.localStorage.getItem("accessToken")!,
   user: [],
   tab: "replies",

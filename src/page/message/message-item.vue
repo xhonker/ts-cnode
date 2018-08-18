@@ -26,7 +26,8 @@ import { translationTime } from "@/mixins";
   inject: ["path"]
 })
 export default class MessageItem extends Vue {
-  @Prop() private message!: IMessage;
+  @Prop()
+  private message!: IMessage;
 }
 </script>
 

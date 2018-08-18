@@ -15,7 +15,8 @@ import { replies } from "@/store/interface/topics";
   }
 })
 export default class Replies extends Vue {
-  @Prop() private replies!: Array<replies>;
+  @Prop()
+  private replies!: Array<replies>;
 }
 </script>
 
