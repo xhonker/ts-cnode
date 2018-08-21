@@ -23,7 +23,7 @@
 import { Vue, Prop, Component } from "vue-property-decorator";
 import Card from "@/components/card/index.vue";
 import Icon from "@/components/icon/index.vue";
-import { replies } from "@/store/interface/topics";
+import { RepliesInfo } from "@/store/interface/topics";
 import { translationTime } from "@/mixins";
 @Component({
   components: {
@@ -35,7 +35,7 @@ import { translationTime } from "@/mixins";
 })
 export default class Replie extends Vue {
   @Prop()
-  private replie!: replies;
+  private replie!: RepliesInfo;
 }
 </script>
 

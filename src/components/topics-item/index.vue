@@ -16,7 +16,7 @@
 
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
-import { recent } from "@/store/interface/user";
+import { RecentInfo } from "@/store/interface/user";
 import { translationTime } from "@/mixins";
 @Component({
   mixins: [translationTime],
@@ -24,7 +24,7 @@ import { translationTime } from "@/mixins";
 })
 export default class TopicsItem extends Vue {
   @Prop()
-  private topics!: recent;
+  private topics!: RecentInfo;
 }
 </script>
 

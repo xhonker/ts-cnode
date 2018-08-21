@@ -19,7 +19,7 @@ import MessageItem from "./message-item.vue";
 import { State, Action } from "vuex-class";
 import { message, markALlMessage } from "@/api/user";
 import { GET__MY__MESSAGE } from "@/store/user/type";
-import { userState } from "@/store/interface/user";
+import { UserState } from "@/store/interface/user";
 import { setElementAttr, calcClientHeight, docH } from "@/utils";
 
 import { getLocalStorage } from "@/utils";
@@ -29,9 +29,9 @@ import { getLocalStorage } from "@/utils";
     MessageItem
   }
 })
-export default class Message extends Vue {
+export default class WuMessage extends Vue {
   @State(state => state.user)
-  user!: userState;
+  user!: UserState;
   @Action(GET__MY__MESSAGE)
   getMessage!: (accessToken: string) => void;
   mounted() {

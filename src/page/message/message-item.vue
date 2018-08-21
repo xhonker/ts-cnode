@@ -18,7 +18,7 @@
 
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
-import { IMessage } from "@/store/interface/user";
+import { MessageInfo } from "@/store/interface/user";
 import { translationTime } from "@/mixins";
 
 @Component({
@@ -27,7 +27,7 @@ import { translationTime } from "@/mixins";
 })
 export default class MessageItem extends Vue {
   @Prop()
-  private message!: IMessage;
+  private message!: MessageInfo;
 }
 </script>
 

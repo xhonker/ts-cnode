@@ -8,7 +8,7 @@
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
 import Replie from "./replie.vue";
-import { replies } from "@/store/interface/topics";
+import { RepliesInfo } from "@/store/interface/topics";
 @Component({
   components: {
     Replie
@@ -16,7 +16,7 @@ import { replies } from "@/store/interface/topics";
 })
 export default class Replies extends Vue {
   @Prop()
-  private replies!: Array<replies>;
+  private replies!: Array<RepliesInfo>;
 }
 </script>
 

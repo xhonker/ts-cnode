@@ -1,9 +1,10 @@
 <template>
   <div class="wu-topics-details" v-if="details.author">
     <nav-bar @leftClick='$router.go(-1)' class="wu-topics-details__navbar">
-      <Icon slot="left" type='left' /> 详情
+      <Icon slot="left" type='left' />主题详情
     </nav-bar>
     <div class="wu-topics-details__container" @scroll="handlerScroll" ref="details">
+      <div class="wu-topics-details__title">{{details.title}}</div>
       <div class="wu-topics-details__header">
         <img :src="details.author.avatar_url" class="wu-topics-details__header-avatar" alt="avatar">
         <span class="wu-topics-details__header-nickname">
@@ -12,8 +13,11 @@
         <span class="wu-topics-details__header-text">{{`发布于${ago(details.create_at)}`}}</span>
       </div>
       <div class="wu-topics-details__body">
-        <span>阅读数：{{details.visit_count}}</span>
-        <span>回复数：{{details.reply_count}}</span>
+        <div class="wu-topics-details__body-left">
+          <span>阅读数：{{details.visit_count}}</span>
+          <span>回复数：{{details.reply_count}}</span>
+        </div>
+
         <span :class="collectCls" @click="handlerCollect">{{details.is_collect?'取消收藏':'收藏'}}</span>
       </div>
       <div class="wu-topics-details__content" v-html="details.content" v-highlight></div>
@@ -46,24 +50,23 @@ import {
   CHANGE__COLLECT
 } from "@/store/topics/type";
 import {
-  topicDetails,
-  topicScroll,
-  replies,
-  detailsArg,
-  changeCollect
+  TopicDetails,
+  TopicScroll,
+  RepliesInfo,
+  ChangeCollect
 } from "@/store/interface/topics";
 import { translationTime } from "@/mixins";
 import NavBar from "@/components/navbar/index.vue";
 import Icon from "@/components/icon/index.vue";
 import Replies from "@/components/replies/index.vue";
-import { userState } from "@/store/interface/user";
+import { UserState } from "@/store/interface/user";
 import { collect, deCollect } from "@/api/user";
 import { toast } from "@/components/toast/index.ts";
 import { API_replies } from "@/api/topics";
 import { getElementAttr, setElementAttr, docH } from "@/utils";
 const prefixCls = "wu-topics-details";
 
-type getTopicDetails = (data: detailsArg) => topicDetails;
+type getTopicDetails = (topic: string) => TopicDetails;
 
 @Component({
   components: {
@@ -82,17 +85,17 @@ export default class Details extends Vue {
   private topic!: string;
 
   @State(state => state.topics.openTopics)
-  openTopics!: Array<topicDetails>;
+  openTopics!: Array<TopicDetails>;
   @State(state => state.user)
-  user!: userState;
+  user!: UserState;
   @Action(REQUEST__TOPIC__DETAILS)
   getTopicDetails!: getTopicDetails;
   @Action(SET__TOPIC__SCROLL)
-  setTopicScroll!: (data: topicScroll) => never;
+  setTopicScroll!: (data: TopicScroll) => void;
   @Action(CHANGE__COLLECT)
-  changeCollect!: (data: changeCollect) => never;
+  changeCollect!: (data: ChangeCollect) => void;
   async mounted() {
-    !this.details.author && (await this.getTopicDetails({ topic: this.topic }));
+    !this.details.author && (await this.getTopicDetails(this.topic));
     this.details.scroll > 200 && (this.showTop = true);
 
     let h = docH - getElementAttr(`.wu-navbar`, "clientHeight");
@@ -100,17 +103,17 @@ export default class Details extends Vue {
     //@ts-ignore
     this.$refs.details.scrollTop = this.details.scroll;
   }
-  get details(): topicDetails {
+  get details(): TopicDetails {
     return this.openTopics.filter(d => d.id === this.topic)[0] || {};
   }
-  get replies(): Array<replies> {
+  get replies(): Array<RepliesInfo> {
     // 作者
     return this.details.replies.reduce(
-      (i: Array<replies>, c) => (
-        this.details.author.loginname === c.author.loginname
-          ? i.push({ is_author: true, ...c })
-          : i.push(c),
-        i
+      (acc: Array<RepliesInfo>, curr) => (
+        this.details.author.loginname === curr.author.loginname
+          ? acc.push({ is_author: true, ...curr })
+          : acc.push(curr),
+        acc
       ),
       []
     );
@@ -134,25 +137,28 @@ export default class Details extends Vue {
       ? this.collect().then(res => {
           this.changeCollect({ topic: this.topic, result: res });
         })
-      : toast.show({ message: "请登录" });
+      : toast.show("请登录");
   }
   collect() {
-    let data = {
-      accesstoken: this.user.accessToken,
-      topic_id: this.details.id
-    };
+    let {
+      user: { accessToken: accesstoken },
+      details: { id: topic_id }
+    } = this;
+    let data = { accesstoken, topic_id };
     return this.details.is_collect ? deCollect(data) : collect(data);
   }
   handlerSubmit() {
-    this.comment
-      ? API_replies({
-          content: (this.comment += `\n\n\n\n[来自xhonker](http://github.com/xhonker)`),
-          topic_id: this.topic
+    let { comment: content, topic: topic_id, getTopicDetails } = this;
+    content
+      ? API_replies({ content, topic_id }).then(data => {
+          data.success && toast.show("评论成功");
+          getTopicDetails(topic_id);
         })
-      : toast.show({ message: "评论内容不能为空" });
+      : toast.show("评论内容不能为空");
   }
   beforeDestroy(): void {
-    this.setTopicScroll({ id: this.topic, scroll: this.scroll });
+    let { topic: id, scroll } = this;
+    this.setTopicScroll({ id, scroll });
   }
 }
 </script>
@@ -201,16 +207,18 @@ export default class Details extends Vue {
   }
   &__body {
     display: flex;
-    position: relative;
     margin: 10px;
     color: #aaa;
     font-size: 10px;
-    > span:nth-child(2) {
-      margin-left: 10px;
+    text-align: left;
+    &-left {
+      flex: 1;
+      margin: auto;
+      span:nth-child(2) {
+        margin-left: 10px;
+      }
     }
     &-collect {
-      position: absolute;
-      right: 0;
       padding: 4px;
       border-radius: 3px;
       font-size: 10px;
@@ -262,6 +270,12 @@ export default class Details extends Vue {
   &__notLogin {
     font-size: 10px;
     color: #bbb;
+  }
+  &__title {
+    padding: 5px 10px;
+    text-align: left;
+    // font-weight: bold;
+    font-size: 18px;
   }
 }
 .markdown-text {

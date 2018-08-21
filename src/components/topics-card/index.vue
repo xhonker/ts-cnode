@@ -24,7 +24,7 @@
 
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
-import { topic } from "@/store/interface/topics";
+import { TopicInfo } from "@/store/interface/topics";
 import { translationTime } from "../../mixins";
 import Card from "../card/index.vue";
 import Icon from "../icon/index.vue";
@@ -38,7 +38,7 @@ import Icon from "../icon/index.vue";
 })
 export default class TopicsCard extends Vue {
   @Prop()
-  private topics!: topic;
+  private topics!: TopicInfo;
 
   get topicsHeaderText() {
     // @ts-ignore

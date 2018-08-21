@@ -33,7 +33,7 @@ import Icon from "@/components/icon/index.vue";
 import Labels from "@/components/label/index.vue";
 import LabelItem from "@/components/label-item/index.vue";
 import { createTopic } from "@/api/topics";
-import { topicTab } from "@/store/interface/topics";
+import { TopicTab } from "@/store/interface/topics";
 import { toast } from "@/components/toast";
 @Component({
   components: {
@@ -43,8 +43,8 @@ import { toast } from "@/components/toast";
     LabelItem
   }
 })
-export default class Edit extends Vue {
-  private tab: topicTab = "dev";
+export default class WuEdit extends Vue {
+  private tab: TopicTab = "dev";
   private title: string = "";
   private content: string = "";
 
@@ -54,7 +54,7 @@ export default class Edit extends Vue {
   handlerSubmit() {
     let { title, tab, content, accesstoken } = this;
     let error = [];
-    if (!accesstoken) return toast.show({ message: "请登录" });
+    if (!accesstoken) return toast.show("请登录");
     if (!title) {
       error.push("请输入标题");
     }
@@ -62,7 +62,7 @@ export default class Edit extends Vue {
       error.push("请输入内容");
     }
     if (error.length) {
-      toast.show({ message: error.join() });
+      toast.show(error.join());
     }
     title &&
       content &&

@@ -34,7 +34,7 @@
           </div>
         </tab-container-item>
 
-        <tab-container-item id='collect'>
+        <tab-container-item id='collect' v-if="userTab === 'collect'">
           <div v-if="!userInfo.collect.length" class="user__no-data">
             <icon type='no-data'></icon>
           </div>
@@ -61,14 +61,8 @@ import TabContainerItem from "@/components/tab-container-item/index.vue";
 import TabsItem from "@/components/tabs-item/index.vue";
 import TopicsItem from "@/components/topics-item/index.vue";
 import TopicsCard from "@/components/topics-card/index.vue";
-import {
-  GET__USER__INFO,
-  CHANGE__USER__TAB,
-  UPDATE__USER__SCROLL,
-  USER__LOGOUT
-} from "@/store/user/type";
-import { user, userState } from "@/store/interface/user";
-import { topic } from "@/store/interface/topics";
+import * as type from "@/store/user/type";
+import { UserInfo, UserState } from "@/store/interface/user";
 import { calcClientHeight, docH } from "@/utils";
 type getUser = (loginname: string) => never;
 type changeTab = (tab: string) => never;
@@ -93,18 +87,20 @@ export default class User extends Vue {
   private loginname!: string;
   @Prop()
   private my!: string;
-  @Action(GET__USER__INFO)
+  @Action(type.GET__USER__INFO)
   getUserInfo!: getUser;
-  @Action(CHANGE__USER__TAB)
+  @Action(type.CHANGE__USER__TAB)
   changeUserTab!: changeTab;
-  @Action(UPDATE__USER__SCROLL)
+  @Action(type.UPDATE__USER__SCROLL)
   updateUserScroll!: updateScroll;
-  @Action(USER__LOGOUT)
+  @Action(type.USER__LOGOUT)
   logout!: () => never;
-  @State(state => state.user.user)
-  users!: Array<user>;
+  @Action(type.GET__USER__COLLECT)
+  getUserCollect!: (loginname: string) => void;
+  @State(state => state.user.users)
+  users!: Array<UserInfo>;
   @State(state => state.user)
-  user!: userState;
+  user!: UserState;
   async mounted() {
     !this.userInfo.loginname && (await this.getUserInfo(this.loginname));
     this.init();
@@ -115,10 +111,10 @@ export default class User extends Vue {
     //@ts-ignore
     this.$refs.content.$el.setAttribute(
       "style",
-      `height:${this.userHeight()}px`
+      `height:${this.userContainerHeight()}px`
     );
   }
-  userHeight() {
+  userContainerHeight(): number {
     let userEles = [".wu-navbar", ".wu-user-container__header", ".wu-tabs"];
     let myELes = [
       ".wu-user .wu-navbar",
@@ -136,6 +132,10 @@ export default class User extends Vue {
     return this.user.tab;
   }
   set userTab(tab) {
+    if (this.userTab === tab) return;
+    tab === "collect" &&
+      !this.userInfo.collect!.length &&
+      this.getUserCollect(this.loginname);
     this.changeUserTab(tab);
   }
   handerScroll(el: Event) {
@@ -159,7 +159,6 @@ export default class User extends Vue {
     &__header {
       display: flex;
       align-items: center;
-      // margin: 10px 10px 0;
       padding: 10px 10px 0;
       &-nickname {
         font-size: 18px;

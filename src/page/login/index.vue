@@ -21,23 +21,23 @@ import { login } from "@/api/user";
 import { toast } from "@/components/toast";
 import { Action, State } from "vuex-class";
 import { USER__LOGIN } from "@/store/user/type";
-import { ILogin, userState } from "@/store/interface/user";
+import { LoginInfo, UserState } from "@/store/interface/user";
 @Component({
   components: {
     NavBar,
     User
   }
 })
-export default class Login extends Vue {
+export default class WuLogin extends Vue {
   private accessToken: string = "";
   @Action(USER__LOGIN)
-  userLogin!: (data: ILogin) => never;
+  userLogin!: (data: LoginInfo) => never;
   @State(state => state.user)
-  user!: userState;
+  user!: UserState;
   handlerLogin() {
     this.accessToken
       ? login(this.accessToken).then(
-          (data: ILogin) =>
+          (data: LoginInfo) =>
             data.success &&
             this.userLogin(
               Object.assign({}, data, {
@@ -46,14 +46,14 @@ export default class Login extends Vue {
               })
             )
         )
-      : toast.show({ message: "请输入用户令牌" });
+      : toast.show("请输入用户令牌");
   }
   mounted() {
     let token = this.user.localToken;
     !this.user.accessToken &&
       token &&
       login(token).then(
-        (data: ILogin) =>
+        (data: LoginInfo) =>
           data.success &&
           this.userLogin(
             Object.assign({}, data, { accessToken: token, localToken: token })
@@ -74,7 +74,7 @@ export default class Login extends Vue {
     left: 50%;
     transform: translate(-50%);
     input {
-      width: 80vw;
+      width: 90vw;
       font-size: 14px;
     }
     button {
