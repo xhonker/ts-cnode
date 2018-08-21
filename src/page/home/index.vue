@@ -36,12 +36,12 @@ type requestTopics = (data?: { tab?: string; page?: number }) => void;
 
 @Component({
   components: {
-    [TabContainer.name]: TabContainer,
-    [TabContainerItem.name]: TabContainerItem,
-    [NavBar.name]: NavBar,
-    [Tabs.name]: Tabs,
-    [TabsItem.name]: TabsItem,
-    [TopicsCard.name]: TopicsCard
+    TabContainer,
+    TabContainerItem,
+    NavBar,
+    Tabs,
+    TabsItem,
+    TopicsCard
   },
   inject: ["path"]
 })

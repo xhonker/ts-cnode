@@ -2,23 +2,23 @@
   <div class="container">
     <tab-container v-model="tabbar">
       <tab-container-item id="home">
-        <wu-home />
+        <home />
       </tab-container-item>
       <tab-container-item id="edit">
-        <wu-edit />
+        <edit />
       </tab-container-item>
       <tab-container-item id="user">
-        <wu-login v-if="tabbar === 'user'" />
+        <login v-if="tabbar === 'user'" />
       </tab-container-item>
       <tab-container-item id="message">
-        <wu-message v-if="tabbar === 'message'" />
+        <message v-if="tabbar === 'message'" />
       </tab-container-item>
     </tab-container>
-    <wu-tabbar v-model="tabbar">
-      <wu-tabbartab :id='tabbar.id' v-for=" tabbar in tabbars" :key="tabbar.id">
+    <tab-bar v-model="tabbar">
+      <tab-bar-tab :id='tabbar.id' v-for=" tabbar in tabbars" :key="tabbar.id">
         <Icon slot="icon" :type='tabbar.id' />{{tabbar.value}}
-      </wu-tabbartab>
-    </wu-tabbar>
+      </tab-bar-tab>
+    </tab-bar>
   </div>
 </template>
 
@@ -44,15 +44,15 @@ type requestTopics = (data?: { tab?: string; page?: number }) => never;
 
 @Component({
   components: {
-    [TabBar.name]: TabBar,
-    [TabBarTab.name]: TabBarTab,
-    [Icon.name]: Icon,
-    [TabContainer.name]: TabContainer,
-    [TabContainerItem.name]: TabContainerItem,
-    [Edit.name]: Edit,
-    [Login.name]: Login,
-    [Message.name]: Message,
-    [Home.name]: Home
+    TabBar,
+    TabBarTab,
+    Icon,
+    TabContainer,
+    TabContainerItem,
+    Edit,
+    Login,
+    Message,
+    Home
   },
   inject: ["path"]
 })
