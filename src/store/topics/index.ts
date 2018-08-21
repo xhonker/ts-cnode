@@ -1,101 +1,80 @@
 import {
-  State,
-  topic,
-  topicDetails,
-  topicScroll,
-  changeCollect
+  TopicsState,
+  TopicInfo,
+  TopicDetails,
+  TopicScroll,
+  ChangeCollect
 } from "@/store/interface/topics";
 import { ActionTree, MutationTree, GetterTree } from "vuex";
 import { getTopics, getTopicDetails } from "@/api/topics";
-import {
-  REQUEST__TOPICS,
-  CHANGE__TAB,
-  REQUEST__TOPIC__DETAILS,
-  SET__TOPICS__SCROLL,
-  SET__TOPIC__SCROLL,
-  CHANGE__COLLECT,
-  CHANGE__TABBAR
-} from "@/store/topics/type";
+import * as type from "@/store/topics/type";
 
-let state: State = {
-  topics: [],
+let state: TopicsState = {
   currentTab: "all",
   tabbar: "home",
-  topicTabs: [
-    { id: "all", value: "全部" },
-    { id: "good", value: "精华" },
-    { id: "share", value: "分享" },
-    { id: "ask", value: "问答" },
-    { id: "job", value: "招聘" }
-  ],
-  tabbars: [
-    { id: "home", value: "首页" },
-    { id: "edit", value: "发布" },
-    { id: "message", value: "消息" },
-    { id: "user", value: "我的" }
-  ],
+  topics: [],
   openTopics: [],
   topicsScroll: 0
 };
-let actions: ActionTree<State, any> = {
-  async [REQUEST__TOPICS]({ commit }, data = {}) {
+let actions: ActionTree<TopicsState, any> = {
+  async [type.REQUEST__TOPICS]({ commit }, data = {}) {
     let { tab = "all", page = 1 } = data;
     let topics = await getTopics(tab, page);
-    commit(REQUEST__TOPICS, topics);
+    commit(type.REQUEST__TOPICS, topics);
   },
-  [CHANGE__TAB]({ commit }, tab: string) {
-    commit(CHANGE__TAB, tab);
+  [type.TOPICS__CHANGE__TAB]({ commit }, tab: string) {
+    commit(type.TOPICS__CHANGE__TAB, tab);
   },
-  [CHANGE__TABBAR]({ commit }, tab: string) {
-    commit(CHANGE__TABBAR, tab);
+  [type.CHANGE__TABBAR]({ commit }, tab: string) {
+    commit(type.CHANGE__TABBAR, tab);
   },
-  async [REQUEST__TOPIC__DETAILS]({ commit }, data) {
-    let topic = await getTopicDetails(data);
-    topic = Object.assign({}, topic, { scroll: 0 });
-    commit(REQUEST__TOPIC__DETAILS, topic);
+  async [type.REQUEST__TOPIC__DETAILS]({ commit }, topic: string) {
+    let topicDetails = await getTopicDetails(topic);
+    topicDetails = Object.assign({}, topicDetails, { scroll: 0 });
+    commit(type.REQUEST__TOPIC__DETAILS, topicDetails);
   },
-  [SET__TOPICS__SCROLL]({ commit }, scroll: number) {
-    commit(SET__TOPICS__SCROLL, scroll);
+  [type.SET__TOPICS__SCROLL]({ commit }, scroll: number) {
+    commit(type.SET__TOPICS__SCROLL, scroll);
   },
-  [SET__TOPIC__SCROLL]({ commit }, data: topicScroll) {
-    commit(SET__TOPIC__SCROLL, data);
+  [type.SET__TOPIC__SCROLL]({ commit }, data: TopicScroll) {
+    commit(type.SET__TOPIC__SCROLL, data);
   },
-  [CHANGE__COLLECT]({ commit }, data: changeCollect) {
-    commit(CHANGE__COLLECT, data);
+  [type.CHANGE__COLLECT]({ commit }, data: ChangeCollect) {
+    commit(type.CHANGE__COLLECT, data);
   }
 };
-let mutations: MutationTree<State> = {
-  [REQUEST__TOPICS](state, data: topic) {
+let mutations: MutationTree<TopicsState> = {
+  [type.REQUEST__TOPICS](state, data: TopicInfo) {
     state.topics = state.topics.concat(data);
   },
-  [CHANGE__TAB](state, data) {
+  [type.TOPICS__CHANGE__TAB](state, data) {
     state.currentTab = data;
     state.topics = [];
     state.topicsScroll = 0;
   },
-  [CHANGE__TABBAR](state, tab: string) {
+  [type.CHANGE__TABBAR](state, tab: string) {
     state.tabbar = tab;
   },
-  [REQUEST__TOPIC__DETAILS](state, data: topicDetails) {
+  [type.REQUEST__TOPIC__DETAILS](state, data: TopicDetails) {
     state.openTopics.push(data);
   },
-  [SET__TOPICS__SCROLL](state, data: number) {
+  [type.SET__TOPICS__SCROLL](state, data: number) {
     state.topicsScroll = data;
   },
-  [SET__TOPIC__SCROLL](state, data: topicScroll) {
+  [type.SET__TOPIC__SCROLL](state, data: TopicScroll) {
     state.openTopics.map(d => {
       if (d.id === data.id) {
         d.scroll = data.scroll;
       }
     });
   },
-  [CHANGE__COLLECT](state, data: changeCollect) {
+  [type.CHANGE__COLLECT](state, data: ChangeCollect) {
     data.result &&
       state.openTopics.map(
         d => d.id === data.topic && (d.is_collect = !d.is_collect)
       );
   }
 };
-let getters: GetterTree<State, any> = {};
+let getters: GetterTree<TopicsState, any> = {};
 
 export { state, actions, mutations, getters };

@@ -1,3 +1,8 @@
+import { ViewImg } from "@/components/img-view/index";
+/**
+ * 事件注册
+ * 处理点击用户以及图片
+ */
 export const regEvent = () => {
   document.querySelector("#app")!.addEventListener("click", e => {
     let ev = e || window.event;
@@ -16,8 +21,7 @@ export const regEvent = () => {
     // @ts-ignore
     if (target.nodeName.toLowerCase() === "img") {
       //@ts-ignore
-      console.log(target.currentSrc);
-      e.preventDefault();
+      ViewImg(target.currentSrc);
     }
   });
 };

@@ -1,15 +1,7 @@
-export function home() {
-  return "/";
-}
+export const home = () => "/";
 
-export function details(topic: string) {
-  return `/details/${topic}`;
-}
+export const details = (topic: string) => `/details/${topic}`;
 
-export function user(loginname: string) {
-  return `/user/${loginname}`;
-}
+export const user = (loginname: string) => `/user/${loginname}`;
 
-export function edit() {
-  return "/edit";
-}
+export const edit = () => "/edit";

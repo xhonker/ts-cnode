@@ -5,7 +5,7 @@ import hljs from "highlight.js/lib/highlight";
 import javascript from "highlight.js/lib/languages/javascript";
 hljs.registerLanguage("javascript", javascript);
 
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/atom-one-dark.css";
 
 Vue.directive("highlight", el => {
   let blocks = el.querySelectorAll("pre code");

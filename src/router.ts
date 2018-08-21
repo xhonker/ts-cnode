@@ -1,9 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "@/page/home/index.vue";
+import Main from "@/page/main/index.vue";
 import Details from "@/page/details/index.vue";
 import User from "@/page/user/index.vue";
-import Edit from "@/page/edit/index.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -11,7 +10,7 @@ export default new Router({
     {
       path: "/",
       name: "Home",
-      component: Home
+      component: Main
     },
     {
       path: "/details/:topic",
@@ -24,11 +23,6 @@ export default new Router({
       name: "user",
       component: User,
       props: true
-    },
-    {
-      path: "/edit",
-      name: "edit",
-      component: Edit
     }
   ]
 });

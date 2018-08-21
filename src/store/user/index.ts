@@ -1,19 +1,6 @@
-import {
-  user,
-  userTab,
-  userState,
-  ICollect,
-  ILogin
-} from "@/store/interface/user";
-import { getUserInfo, getUserCollect, collect, message } from "@/api/user";
-import {
-  GET__USER__INFO,
-  CHANGE__USER__TAB,
-  UPDATE__USER__SCROLL,
-  USER__LOGIN,
-  USER__LOGOUT,
-  GET__MY__MESSAGE
-} from "./type";
+import * as user from "@/store/interface/user";
+import { getUserInfo, getUserCollect, message } from "@/api/user";
+import * as type from "./type";
 import {
   ActionTree,
   MutationTree,
@@ -22,10 +9,10 @@ import {
 import { CHANGE__COLLECT } from "@/store/topics/type";
 import { setLocalStorage, getLocalStorage } from "@/utils";
 
-let state: userState = {
+let state: user.UserState = {
+  localToken: getLocalStorage("accessToken"),
   accessToken: "",
-  localToken: window.localStorage.getItem("accessToken")!,
-  user: [],
+  users: [],
   tab: "replies",
   scroll: 0,
   loginname: "",
@@ -33,50 +20,54 @@ let state: userState = {
   id: "",
   message: []
 };
-let actions: ActionTree<userState, any> = {
-  async [GET__USER__INFO]({ commit }, loginname: string) {
+let actions: ActionTree<user.UserState, any> = {
+  async [type.GET__USER__INFO]({ commit }, loginname: string) {
     let user = await getUserInfo(loginname);
-    let collect = await getUserCollect(loginname);
-    user["collect"] = collect;
-    commit(GET__USER__INFO, user);
+    user["collect"] = [];
+    commit(type.GET__USER__INFO, user);
   },
-  [CHANGE__USER__TAB]({ commit }, tab: userTab) {
-    commit(CHANGE__USER__TAB, tab);
+  [type.CHANGE__USER__TAB]({ commit }, tab: user.UserTab) {
+    commit(type.CHANGE__USER__TAB, tab);
   },
-  [UPDATE__USER__SCROLL]({ commit }, scrollTop: number) {
-    commit(UPDATE__USER__SCROLL, scrollTop);
+  [type.UPDATE__USER__SCROLL]({ commit }, scrollTop: number) {
+    commit(type.UPDATE__USER__SCROLL, scrollTop);
   },
-  async [USER__LOGIN]({ commit }, data: ILogin) {
+  async [type.USER__LOGIN]({ commit }, data: user.LoginInfo) {
     let messages = await message(data.accessToken);
     data.message = messages;
-    commit(USER__LOGIN, data);
+    commit(type.USER__LOGIN, data);
   },
-  [USER__LOGOUT]({ commit }) {
-    commit(USER__LOGOUT);
+  [type.USER__LOGOUT]({ commit }) {
+    commit(type.USER__LOGOUT);
   },
-  async [GET__MY__MESSAGE]({ commit }, accesstoken) {
+  async [type.GET__MY__MESSAGE]({ commit }, accesstoken) {
     let msg = await message(accesstoken);
-    commit(GET__MY__MESSAGE, msg);
+    commit(type.GET__MY__MESSAGE, msg);
+  },
+  async [type.GET__USER__COLLECT]({ commit }, loginname: string) {
+    let collect = await getUserCollect(loginname);
+    Object.assign(collect, { loginname });
+    commit(type.GET__USER__COLLECT, collect);
   }
 };
-let mutations: MutationTree<userState> = {
-  [GET__USER__INFO](state, data: user) {
+let mutations: MutationTree<user.UserState> = {
+  [type.GET__USER__INFO](state, data: user.UserInfo) {
     state.tab = "replies";
     state.scroll = 0;
-    state.user!.push(data);
+    state.users!.push(data);
   },
-  [CHANGE__USER__TAB](state, data: userTab) {
+  [type.CHANGE__USER__TAB](state, data: user.UserTab) {
     state.tab = data;
   },
-  [UPDATE__USER__SCROLL](state, data: number) {
+  [type.UPDATE__USER__SCROLL](state, data: number) {
     state.scroll = data;
   },
-  [USER__LOGIN](state, data: ILogin) {
+  [type.USER__LOGIN](state, data: user.LoginInfo) {
     Object.assign(state, data);
     setLocalStorage("accessToken", data.accessToken);
     setLocalStorage("loginName", data.loginname);
   },
-  [USER__LOGOUT](state) {
+  [type.USER__LOGOUT](state) {
     state.accessToken = "";
     state.localToken = "";
     state.avatar_url = "";
@@ -90,19 +81,20 @@ let mutations: MutationTree<userState> = {
     let topic = await getUserCollect(
       state.loginname || getLocalStorage("loginName")!
     );
-    state.user!.length && (state.user![0]["collect"] = topic);
+    state.users!.length && (state.users![0]["collect"] = topic);
   },
-  [GET__MY__MESSAGE](state, data) {
+  [type.GET__MY__MESSAGE](state, data) {
     state.message = data;
+  },
+  [type.GET__USER__COLLECT](state, data) {
+    state.users!.map(
+      user => user.loginname === data.loginname && (user.collect = data)
+    );
   }
 };
-let getters: GetterTree<userState, any> = {
-  ["token"](state) {
-    return state.accessToken;
-  },
-  ["localToken"](state) {
-    return state.localToken;
-  }
+let getters: GetterTree<user.UserState, any> = {
+  token: state => state.accessToken,
+  localToken: state => state.localToken
 };
 
 export { state, actions, mutations, getters };

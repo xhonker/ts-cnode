@@ -1,49 +1,49 @@
 import { author } from "./base";
-import { topic } from "./topics";
+import { TopicInfo } from "./topics";
 
-export interface userState extends ILogin {
+export interface UserState extends LoginInfo {
   scroll: number;
-  tab: userTab;
-  user?: Array<user>;
-  message: Array<IMessage>;
+  tab: UserTab;
+  users?: Array<UserInfo>;
+  message: Array<MessageInfo>;
 }
 
-export interface user {
+export interface UserInfo {
   loginname: string;
   avatar_url: string;
   githubUsername: string;
   create_at: string;
   score: number;
-  recent_topics: Array<recent>;
-  recent_replies: Array<recent>;
-  collect?: Array<topic>;
+  recent_topics: Array<RecentInfo>;
+  recent_replies: Array<RecentInfo>;
+  collect?: Array<TopicInfo>;
 }
 
-export interface recent {
+export interface RecentInfo {
   id: string;
   author: author;
   title: string;
   last_reply_at: string;
 }
 
-export type userTab = "topics" | "replies" | "collect";
+export type UserTab = "topics" | "replies" | "collect";
 
-export interface ICollect {
+export interface CollectInfo {
   accesstoken: string;
   topic_id: string;
 }
 
-export interface ILogin {
+export interface LoginInfo {
   success?: boolean;
   accessToken: string;
   localToken: string;
   loginname: string;
   avatar_url: string;
   id: string;
-  message: Array<IMessage>;
+  message: Array<MessageInfo>;
 }
 
-export interface IMessage {
+export interface MessageInfo {
   id: string;
   type: string;
   has_read: boolean;

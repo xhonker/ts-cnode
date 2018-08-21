@@ -1,19 +1,17 @@
 import { author } from "./base";
-export interface tabs {
+export interface TabsInfo {
   id: string;
   value: string;
 }
-export interface State {
-  topics: Array<topic>;
+export interface TopicsState {
+  topics: Array<TopicInfo>;
   currentTab: string;
   tabbar: string;
-  topicTabs: Array<tabs>;
-  tabbars: Array<tabs>;
-  openTopics: Array<topicDetails>;
+  openTopics: Array<TopicDetails>;
   topicsScroll: number;
 }
 
-export interface topic {
+export interface TopicInfo {
   id: string;
   author_id: string;
   tab: string;
@@ -28,13 +26,13 @@ export interface topic {
   author: author;
 }
 
-export interface topicDetails extends topic {
-  replies: Array<replies>;
+export interface TopicDetails extends TopicInfo {
+  replies: Array<RepliesInfo>;
   is_collect: boolean;
   scroll: number;
 }
 
-export interface replies {
+export interface RepliesInfo {
   id: string;
   author: author;
   content: string;
@@ -45,30 +43,26 @@ export interface replies {
   is_author?: boolean;
 }
 
-export interface topicScroll {
+export interface TopicScroll {
   id: string;
   scroll: number;
 }
 
-export interface detailsArg {
-  topic: string;
-}
-
-export interface changeCollect {
+export interface ChangeCollect {
   result: boolean;
   topic: string;
 }
 
-export interface ICreateTopic {
+export interface CreateTopic {
   accesstoken: string;
   title: string;
-  tab: topicTab;
+  tab: TopicTab;
   content: string;
 }
 
-export type topicTab = "job" | "share" | "ask" | "dev";
+export type TopicTab = "job" | "share" | "ask" | "dev";
 
-export interface IReplies {
+export interface CommentInfo {
   content: string;
   topic_id: string;
 }

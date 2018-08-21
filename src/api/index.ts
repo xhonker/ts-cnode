@@ -3,6 +3,7 @@ import { baseURL } from "./config";
 import { toast } from "@/components/toast/index";
 import Store from "@/store";
 let accesstoken = () => Store.getters.localToken || Store.getters.token;
+
 const axios = Axios.create({
   baseURL,
   timeout: 0,
@@ -39,8 +40,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => (toast.hide(), response),
   error => {
-    console.log(error);
-    let message = error.response.data.error_msg;
+    let message = error.response.data && error.response.data.error_msg;
     toast.hide();
     toast.show({ message, duration: 5000 });
   }
