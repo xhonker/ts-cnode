@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast loading 1`] = `
+<div class="wu-toast wu-toast-center">
+  <div class="iconfont icon-loading"></div>
+  <div class="wu-toast-content">
+    加载中
+  </div>
+</div>
+`;
+
+exports[`Toast loading: 
+    <div class="wu-toast wu-toast-center"><div class="iconfont icon-loading"></div> <div class="wu-toast-content">
+          加载中
+        </div></div> 1`] = `
+<div class="wu-toast wu-toast-center">
+  <div class="iconfont icon-loading"></div>
+  <div class="wu-toast-content">
+    加载中
+  </div>
+</div>
+`;
+
+exports[`Toast loading: 1 1`] = `
+<div class="wu-toast wu-toast-center">
+  <div class="iconfont icon-loading"></div>
+  <div class="wu-toast-content">
+    加载中
+  </div>
+</div>
+`;
+
+exports[`Toast mount 1`] = `
+<div class="wu-toast wu-toast-center">
+  <!---->
+  <div class="wu-toast-content">
+    test
+  </div>
+</div>
+`;
+
+exports[`Toast show 1`] = `
+<div class="wu-toast wu-toast-center">
+  <!---->
+  <div class="wu-toast-content">
+    test
+  </div>
+</div>
+`;

@@ -3,7 +3,15 @@
     <router-view/>
   </div>
 </template>
+<script>
+import { regEvent } from "@/utils/regEvent";
 
+export default {
+  mounted() {
+    regEvent();
+  }
+};
+</script>
 <style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
