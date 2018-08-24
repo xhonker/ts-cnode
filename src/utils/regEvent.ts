@@ -15,7 +15,9 @@ export const regEvent = () => {
         // @ts-ignore
         let user = target.textContent.replace("@", ""); // @xhonker
         e.preventDefault();
-        window.location.href = `${window.location.origin}/#/user/${user}`;
+        window.location.href = `${window.location.origin}${
+          window.location.pathname
+        }#/user/${user}`;
       }
     }
     // @ts-ignore
