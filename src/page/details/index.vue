@@ -135,8 +135,8 @@ export default class Details extends Vue {
   handlerCollect() {
     this.user.localToken
       ? this.collect().then(res => {
-        this.changeCollect({ topic: this.topic, result: res });
-      })
+          this.changeCollect({ topic: this.topic, result: res });
+        })
       : toast.show("请登录");
   }
   collect() {
@@ -151,12 +151,12 @@ export default class Details extends Vue {
     let { comment: content, topic: topic_id, getTopicDetails } = this;
     content
       ? API_replies({ content, topic_id }).then(async data => {
-        data.success && toast.show("评论成功");
-        this.comment = '';
-        await getTopicDetails(topic_id);
-        //@ts-ignore
-        this.$refs.details.scrollTop = this.$refs.details.scrollHeight;
-      })
+          data.success && toast.show("评论成功");
+          this.comment = "";
+          await getTopicDetails(topic_id);
+          //@ts-ignore
+          this.$refs.details.scrollTop = this.$refs.details.scrollHeight;
+        })
       : toast.show("评论内容不能为空");
   }
   beforeDestroy(): void {
