@@ -150,9 +150,12 @@ export default class Details extends Vue {
   handlerSubmit() {
     let { comment: content, topic: topic_id, getTopicDetails } = this;
     content
-      ? API_replies({ content, topic_id }).then(data => {
+      ? API_replies({ content, topic_id }).then(async data => {
         data.success && toast.show("评论成功");
-        getTopicDetails(topic_id);
+        this.comment = '';
+        await getTopicDetails(topic_id);
+        //@ts-ignore
+        this.$refs.details.scrollTop = this.$refs.details.scrollHeight;
       })
       : toast.show("评论内容不能为空");
   }
@@ -310,12 +313,6 @@ export default class Details extends Vue {
   h3 {
     font-size: 14px;
   }
-  // pre {
-  //   overflow: auto;
-  //   background-color: #000;
-  //   color: white;
-  //   // padding: 10px;
-  // }
   img {
     max-width: 100%;
   }
@@ -345,10 +342,8 @@ export default class Details extends Vue {
   }
 }
 .prettyprint {
-  // padding: 5px 10px;
   width: 100%;
   font-size: 12px;
   overflow: scroll;
-  // background: #eee;
 }
 </style>

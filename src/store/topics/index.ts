@@ -56,7 +56,14 @@ let mutations: MutationTree<TopicsState> = {
     state.tabbar = tab;
   },
   [type.REQUEST__TOPIC__DETAILS](state, data: TopicDetails) {
-    state.openTopics.push(data);
+    let isCollect = false;
+    state.openTopics.map(
+      topic =>
+        topic.id === data.id &&
+        (isCollect = true) &&
+        (topic.replies = data.replies)
+    );
+    !isCollect ? state.openTopics.push(data) : null;
   },
   [type.SET__TOPICS__SCROLL](state, data: number) {
     state.topicsScroll = data;
