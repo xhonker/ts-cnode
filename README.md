@@ -2,6 +2,10 @@
 
 <img src='./src/assets/qr.png' width='150px'>
 
+### 打包大小
+
+<img src='./src/assets/build.png' width='450px'>
+
 ### gif 先感受下
 
 <img src='./src/assets/tabbar.gif' width='200px' alt="tabbar">
