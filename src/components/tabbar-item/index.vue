@@ -32,13 +32,14 @@ export default class WuTabbartab extends Vue {
 </script>
 
 <style lang="scss">
+@import "../../../style/index";
 .wu-tabbar-tab {
   display: block;
   flex: 1;
   text-decoration: none;
   user-select: none;
   &-is-selected {
-    color: #108ee9;
+    color: $theme;
   }
   &-title {
     margin-top: 2px;

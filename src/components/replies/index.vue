@@ -21,9 +21,10 @@ export default class Replies extends Vue {
 </script>
 
 <style lang='scss'>
+@import "../../../style/index";
 .wu-topic-details-comment {
   &__header {
-    border-left: 10px solid #108ee9;
+    border-left: 10px solid $theme;
     background: #eee;
     text-align: left;
     padding: 10px;

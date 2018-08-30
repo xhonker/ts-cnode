@@ -167,6 +167,7 @@ export default class Details extends Vue {
 </script>
 
 <style lang='scss'>
+@import "../../../style/index";
 .wu-topics-details {
   font-size: 14px;
   .icon-top {
@@ -225,7 +226,7 @@ export default class Details extends Vue {
       padding: 4px;
       border-radius: 3px;
       font-size: 10px;
-      background: #108ee9;
+      background: $theme;
       color: #fff;
     }
     &-cancelCollect {
@@ -249,7 +250,7 @@ export default class Details extends Vue {
       padding: 4px;
       font-size: 10px;
       color: #fff;
-      background: #108ee9;
+      background: $theme;
       border-radius: 4px;
     }
   }

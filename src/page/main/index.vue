@@ -69,11 +69,5 @@ export default class Main extends Vue {
     if (this.tabbar === tab) return;
     this.changeTabBar(tab);
   }
-  mounted() {
-    // regEvent();
-  }
 }
 </script>
-
-<style lang='scss'>
-</style>

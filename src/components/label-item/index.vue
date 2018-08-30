@@ -26,6 +26,7 @@ export default class Label extends Vue {
 </script>
 
 <style lang='scss'>
+@import "../../../style/index";
 .wu-label-item {
   display: inline-block;
   padding: 5px 8px;
@@ -36,7 +37,7 @@ export default class Label extends Vue {
   margin: 0 4px;
   &-selected {
     color: #fff;
-    background: #108ee9;
+    background: $theme;
   }
 }
 </style>

@@ -4,7 +4,7 @@ module.exports = {
     "postcss-px-to-viewport": {
       viewportWidth: 320,
       viewportUnit: "vw",
-      selectorBlackList: [".ignore", ".hairlines", ".iconfont"],
+      selectorBlackList: [".ignore", ".hairlines"],
       minPixelValue: 1,
       mediaQuery: false
     }

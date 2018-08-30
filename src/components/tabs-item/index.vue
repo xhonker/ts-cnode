@@ -26,10 +26,11 @@ export default class TabsItem extends Vue {
 </script>
 
 <style lang='scss'>
+@import "../../../style/index";
 .wu-tabs-item {
   flex: 1;
   &-selected {
-    color: #108ee9;
+    color: $theme;
     position: relative;
     font-size: 14px;
     &::before {
@@ -39,7 +40,7 @@ export default class TabsItem extends Vue {
       width: 60%;
       bottom: 0;
       margin-left: 20%;
-      border-bottom: 2px solid #108ee9;
+      border-bottom: 2px solid $theme;
       animation: selected 0.5s;
     }
   }

@@ -64,6 +64,7 @@ export default class WuLogin extends Vue {
 </script>
 
 <style lang='scss'>
+@import "../../../style/index";
 .wu-login {
   position: relative;
   height: 100vh;
@@ -82,7 +83,7 @@ export default class WuLogin extends Vue {
       padding: 4px 12px;
       border: 1px solid;
       font-size: 14px;
-      background: #108ee9;
+      background: $theme;
       color: #fff;
       border-radius: 4px;
       outline: none;

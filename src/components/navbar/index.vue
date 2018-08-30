@@ -21,6 +21,7 @@ export default class NavBar extends Vue {}
 </script>
 
 <style lang='scss'>
+@import "../../../style/index.scss";
 .wu-navbar {
   display: flex;
   height: 35px;
@@ -30,7 +31,7 @@ export default class NavBar extends Vue {}
   color: #fff;
   align-items: center;
   overflow: hidden;
-  background: #108ee9;
+  background: $theme;
   &-left,
   &-right {
     font-size: 10px;

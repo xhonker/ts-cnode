@@ -13,9 +13,3 @@ export default class Label extends Vue {
   private value!: string;
 }
 </script>
-
-<style lang='scss'>
-.wu-label {
-  // display: flex;
-}
-</style>

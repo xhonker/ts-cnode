@@ -101,6 +101,7 @@ export default class WuHome extends Vue {
 </script>
 
 <style lang='scss'>
+@import "../../../style/index";
 .topics__item {
   overflow: scroll;
   background: rgb(238, 238, 238);
@@ -116,7 +117,7 @@ export default class WuHome extends Vue {
   position: absolute;
   bottom: 80px;
   right: 20px;
-  color: #108ee9;
+  color: $theme;
   font-size: 40px !important;
 }
 @keyframes loading {
