@@ -21,7 +21,8 @@ export default class Tabs extends Vue {
   line-height: 30px;
   user-select: none;
   align-items: center;
-  font-size: 12px;
   justify-content: center;
+  font-size: 12px;
+  background: #fff;
 }
 </style>
