@@ -54,11 +54,11 @@ export default class TopicsCard extends Vue {
   margin-bottom: 10px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
 }
+.wu-card__body {
+  border-bottom: 1px solid #eee;
+}
 .topics__item {
   background: rgb(238, 238, 238);
-  .wu-card__body {
-    border-bottom: 1px solid #eee;
-  }
   &-avatar {
     width: 25px;
     height: 25px;

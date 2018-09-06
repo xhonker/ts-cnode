@@ -156,7 +156,7 @@ export default class User extends Vue {
     &__header {
       display: flex;
       align-items: center;
-      padding: 10px 10px 0;
+      padding: 10px;
       &-nickname {
         font-size: 18px;
       }
