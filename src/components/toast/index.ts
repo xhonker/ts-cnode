@@ -17,7 +17,7 @@ interface ToastData {
   message?: string;
   duration?: number;
   show?: boolean;
-  icon?: string;
+  isLoading?: boolean;
   position?: position;
 }
 const parseOptions = (message: any) =>
@@ -45,7 +45,7 @@ class Toast implements IToast {
     this.queue = [];
   }
   loading(message: string) {
-    return this.createToast({ icon: "loading", message, duration: 0 });
+    return this.createToast({ isLoading: true, message, duration: 0 });
   }
 }
 

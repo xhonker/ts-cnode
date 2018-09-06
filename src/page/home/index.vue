@@ -1,18 +1,17 @@
 <template>
   <div class="wu-home">
-    <nav-bar>
-      首页
-    </nav-bar>
+    <nav-bar>首页</nav-bar>
     <div class="content">
       <tabs v-model="topicsTab">
         <tabs-item :id="tab.id" v-for="tab in topicTabs" :key="tab.id">{{tab.value}}</tabs-item>
       </tabs>
-      <tab-container class="topics__item" @scroll="handlerScroll" ref="topicsContent">
+      <tab-container class="topics__item" :style="styContent" @scroll="handlerScroll" ref="topicsContent" @touchmove="handlerTouchmove" @touchstart="handlerTouchStart" @touchend='handlerTouchend'>
         <tab-container-item class="tab__container__item" v-for="(topic, key) in topics" :key="key">
           <router-link :to="path.details(topic.id)">
             <topics-card :topics='topic' />
           </router-link>
         </tab-container-item>
+        <div :class="notTab" v-if="isShowSlideTips">别闹</div>
       </tab-container>
     </div>
     <div class="iconfont icon-top" v-show="showTop" @click="$refs.topicsContent.$el.scrollTop=0"></div>
@@ -47,10 +46,14 @@ type requestTopics = (data?: { tab?: string; page?: number }) => void;
 })
 export default class WuHome extends Vue {
   private page: number = 1;
-  private contentHeight: number = 0;
   private showTop: boolean = false;
   private currentScrollTop: number = 0;
   private topicTabs: Array<TabsInfo> = topicTabs;
+  private touchstart: number = 0;
+  private touchend: number = 0;
+  private contentH: number = 0;
+  private touchRight: number | null = null;
+  private touchLeft: number | null = null;
   @Action(type.REQUEST__TOPICS)
   requestTopics!: requestTopics;
   @Action(type.TOPICS__CHANGE__TAB)
@@ -72,7 +75,41 @@ export default class WuHome extends Vue {
     isBottom &&
       this.topics.length &&
       ++this.page &&
-      this.requestTopics({ tab: this.topicsTab, page: this.page }); // 一定要判断有没有数据，否则切换TAB会触发到底部了。
+      this.requestTopics({ tab: this.topicsTab, page: this.page });
+  }
+  handlerTouchStart(e: TouchEvent) {
+    this.touchstart = e.touches[0].pageX;
+  }
+  handlerTouchmove(e: TouchEvent) {
+    this.touchend = e.touches[0].pageX;
+    if (Math.abs(this.calcTouchDist) < 15) return;
+    //@ts-ignore
+    this.calcTouchDist > 0
+      ? (this.touchRight = this.calcTouchDist)
+      : (this.touchLeft = Math.abs(this.calcTouchDist));
+  }
+  handlerTouchend(e: TouchEvent) {
+    let screenW = window.screen.width / 3;
+    let isSlide = Math.abs(this.calcTouchDist) > screenW;
+    isSlide && this.touchend > 0 ? this.touchSwitchTab() : this.resetTouch();
+  }
+  touchSwitchTab() {
+    let tab;
+    if (this.tabIndex === 0 && this.calcTouchDist < 0) return this.resetTouch();
+    if (this.tabIndex === topicTabs.length - 1 && this.calcTouchDist > 0)
+      return this.resetTouch();
+    this.calcTouchDist > 0
+      ? (tab = topicTabs[this.tabIndex + 1].id)
+      : (tab = topicTabs[this.tabIndex - 1].id);
+    this.topicsTab = tab;
+    this.resetTouch();
+  }
+  resetTouch() {
+    this.touchLeft = null;
+    this.touchRight = null;
+  }
+  get calcTouchDist() {
+    return this.touchstart - this.touchend;
   }
   get topicsTab(): string {
     return this.currentTab;
@@ -81,6 +118,28 @@ export default class WuHome extends Vue {
     this.page = 1;
     this.topicsChangeTab(tab);
     this.requestTopics({ tab, page: 1 });
+  }
+  get styContent() {
+    return {
+      height: `${this.contentH}px`,
+      right: this.touchRight ? `${this.touchRight}px` : null,
+      left: this.touchLeft ? `${this.touchLeft}px` : null
+    };
+  }
+  get notTab() {
+    return [
+      `topics__item-notab`,
+      {
+        [`topics__item-notab-left`]: this.tabIndex === 0,
+        [`topics__item-notab-right`]: this.tabIndex === topicTabs.length - 1
+      }
+    ];
+  }
+  get isShowSlideTips() {
+    return this.tabIndex === 0 || this.tabIndex === topicTabs.length - 1;
+  }
+  get tabIndex() {
+    return topicTabs.findIndex(d => d.id === this.topicsTab);
   }
   mounted() {
     !this.topics.length && this.requestTopics();
@@ -91,8 +150,7 @@ export default class WuHome extends Vue {
   init() {
     let temp = [".wu-tabbar", ".wu-navbar", ".wu-tabs"];
     let h = docH - calcClientHeight(temp);
-    //@ts-ignore
-    this.$refs.topicsContent.$el.setAttribute("style", `height:${h}px`);
+    this.contentH = h;
   }
   beforeDestroy() {
     this.setTopicsScroll(this.currentScrollTop);
@@ -102,16 +160,31 @@ export default class WuHome extends Vue {
 
 <style lang='scss'>
 @import "../../../style/index";
+.wu-home {
+  .content {
+    overflow: hidden;
+  }
+}
 .topics__item {
+  position: relative;
   overflow: scroll;
   background: rgb(238, 238, 238);
+  &-notab {
+    position: fixed;
+    top: 45%;
+    width: 1px;
+    color: #ddd;
+    font-size: 14px;
+    &-left {
+      margin-left: -15vw;
+    }
+    &-right {
+      margin-left: 110vw;
+    }
+  }
 }
 .tab__container__item {
   margin: 5px 7px;
-}
-.loading {
-  overflow: hidden;
-  animation: loading 1s infinite;
 }
 .icon-top {
   position: absolute;
@@ -119,13 +192,5 @@ export default class WuHome extends Vue {
   right: 20px;
   color: $theme;
   font-size: 40px !important;
-}
-@keyframes loading {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(1turn);
-  }
 }
 </style>

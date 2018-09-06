@@ -69,6 +69,7 @@ export default class WuMessage extends Vue {
     position: absolute;
     top: 50%;
     transform: translate(-50%);
+    color: #bbb;
   }
   &__no-data {
     margin-top: 30px;

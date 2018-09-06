@@ -38,6 +38,7 @@ export default class WuTabbartab extends Vue {
   flex: 1;
   text-decoration: none;
   user-select: none;
+  color: #949494;
   &-is-selected {
     color: $theme;
   }

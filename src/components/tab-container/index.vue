@@ -1,5 +1,5 @@
 <template>
-  <div class="wu-tab-container" @scroll="handlerScroll">
+  <div class="wu-tab-container" @scroll="handlerScroll" @touchmove="handlerTouchmove" @touchstart="handlerTouchstart" @touchend="handlerTouchend">
     <slot></slot>
   </div>
 </template>
@@ -14,6 +14,15 @@ export default class TabContainer extends Vue {
 
   handlerScroll(e: Event) {
     this.$emit("scroll", e);
+  }
+  handlerTouchmove(e: TouchEvent) {
+    this.$emit("touchmove", e);
+  }
+  handlerTouchstart(e: TouchEvent) {
+    this.$emit("touchstart", e);
+  }
+  handlerTouchend(e: TouchEvent) {
+    this.$emit("touchend", e);
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <transition name="toast">
     <div :class="toast" v-if="show">
-      <div :class="iconCls" v-if="icon"></div>
+      <div :class="iconCls" v-if="isLoading"></div>
       <div class="wu-toast-content">
         {{message}}
       </div>
@@ -25,8 +25,8 @@ export default class Toast extends Vue {
   private message!: string;
   @Prop({ default: 3000 })
   private duration!: number;
-  @Prop({ default: "" })
-  private icon!: string;
+  @Prop({ default: false })
+  private isLoading!: boolean;
   @Prop({ default: "center" })
   private position!: string;
   mounted() {
@@ -40,7 +40,7 @@ export default class Toast extends Vue {
     return [
       "iconfont",
       {
-        [`icon-${this.icon}`]: this.icon
+        [`loading`]: this.isLoading
       }
     ];
   }
@@ -72,9 +72,15 @@ export default class Toast extends Vue {
   &-content {
     font-weight: 200;
   }
-  .icon-loading {
+  .loading {
+    margin-right: auto;
+    margin-left: auto;
     margin-bottom: 5px;
-    animation: loading 1s infinite;
+    width: 20px;
+    height: 20px;
+    background: url("../../assets/img/loading.png") no-repeat;
+    background-size: cover;
+    animation: loading 1s linear infinite;
   }
 }
 @keyframes loading {

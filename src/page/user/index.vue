@@ -109,10 +109,7 @@ export default class User extends Vue {
   }
   init() {
     //@ts-ignore
-    this.$refs.content.$el.setAttribute(
-      "style",
-      `height:${this.userContainerHeight()}px`
-    );
+    this.$refs.content.$el.style.height = `${this.userContainerHeight()}px`;
   }
   userContainerHeight(): number {
     let userEles = [".wu-navbar", ".wu-user-container__header", ".wu-tabs"];
