@@ -8,6 +8,7 @@ import {
 } from "../../../node_modules/vuex";
 import { CHANGE__COLLECT } from "@/store/topics/type";
 import { setLocalStorage, getLocalStorage } from "@/utils";
+import { TopicInfo } from "@/store/interface/topics";
 
 let state: user.UserState = {
   localToken: getLocalStorage("accessToken"),
@@ -46,12 +47,15 @@ let actions: ActionTree<user.UserState, any> = {
   },
   async [type.GET__USER__COLLECT]({ commit }, loginname: string) {
     let collect = await getUserCollect(loginname);
+    collect.sort(sortToLastReplyAT);
     Object.assign(collect, { loginname });
     commit(type.GET__USER__COLLECT, collect);
   }
 };
 let mutations: MutationTree<user.UserState> = {
   [type.GET__USER__INFO](state, data: user.UserInfo) {
+    data.recent_replies.sort(sortToLastReplyAT);
+    data.recent_topics.sort(sortToLastReplyAT);
     state.tab = "replies";
     state.scroll = 0;
     state.users!.push(data);
@@ -96,5 +100,16 @@ let getters: GetterTree<user.UserState, any> = {
   token: state => state.accessToken,
   localToken: state => state.localToken
 };
+
+/**
+ * 按最后回复时间排序
+ * @param {(TopicInfo | user.RecentInfo)} acc
+ * @param {(TopicInfo | user.RecentInfo)} curr
+ * @return {number}
+ */
+const sortToLastReplyAT = (
+  acc: TopicInfo | user.RecentInfo,
+  curr: TopicInfo | user.RecentInfo
+) => +new Date(curr.last_reply_at) - +new Date(acc.last_reply_at);
 
 export { state, actions, mutations, getters };

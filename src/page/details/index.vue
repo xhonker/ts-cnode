@@ -55,7 +55,7 @@ import {
   RepliesInfo,
   ChangeCollect
 } from "@/store/interface/topics";
-import { translationTime } from "@/mixins";
+import { publicMethods } from "@/mixins";
 import NavBar from "@/components/navbar/index.vue";
 import Icon from "@/components/icon/index.vue";
 import Replies from "@/components/replies/index.vue";
@@ -74,7 +74,7 @@ type getTopicDetails = (topic: string) => TopicDetails;
     Icon,
     Replies
   },
-  mixins: [translationTime],
+  mixins: [publicMethods],
   inject: ["path"]
 })
 export default class Details extends Vue {

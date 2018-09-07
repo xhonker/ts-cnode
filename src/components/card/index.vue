@@ -4,7 +4,7 @@
       <div class="wu-card__header">
         <slot name="header"></slot>
       </div>
-      <div class="wu-card__body">
+      <div :class="bodyCls">
         <slot name="body"></slot>
       </div>
       <div class="wu-card__footer">
@@ -16,9 +16,20 @@
 
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
-
+const prefixCls = "wu-card__body";
 @Component
-export default class Card extends Vue {}
+export default class Card extends Vue {
+  @Prop()
+  bodyBorder!: boolean;
+  get bodyCls() {
+    return [
+      prefixCls,
+      {
+        [`${prefixCls}-border`]: this.bodyBorder
+      }
+    ];
+  }
+}
 </script>
 
 <style lang='scss'>
@@ -39,7 +50,9 @@ export default class Card extends Vue {}
     overflow: hidden;
   }
   &__body {
-    // border-bottom: 1px solid #eee;
+    &-border {
+      border-bottom: 1px solid #eee;
+    }
   }
 }
 </style>

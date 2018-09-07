@@ -1,5 +1,6 @@
 import { get, post } from "./index";
 import { CollectInfo, UserInfo, LoginInfo } from "@/store/interface/user";
+import { TopicInfo } from "@/store/interface/topics";
 
 /**
  * 获取用户基本信息
@@ -12,7 +13,7 @@ export const getUserInfo = (loginname: string): Promise<UserInfo> =>
  * 获取用户收藏
  * @param loginname 登录用户名
  */
-export const getUserCollect = (loginname: string) =>
+export const getUserCollect = (loginname: string): Promise<Array<TopicInfo>> =>
   get(`topic_collect/${loginname}`).then(data => data.data.data);
 
 /**

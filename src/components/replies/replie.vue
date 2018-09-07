@@ -24,13 +24,13 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 import Card from "@/components/card/index.vue";
 import Icon from "@/components/icon/index.vue";
 import { RepliesInfo } from "@/store/interface/topics";
-import { translationTime } from "@/mixins";
+import { publicMethods } from "@/mixins";
 @Component({
   components: {
     Card,
     Icon
   },
-  mixins: [translationTime],
+  mixins: [publicMethods],
   inject: ["path"]
 })
 export default class Replie extends Vue {

@@ -19,10 +19,10 @@
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
 import { MessageInfo } from "@/store/interface/user";
-import { translationTime } from "@/mixins";
+import { publicMethods } from "@/mixins";
 
 @Component({
-  mixins: [translationTime],
+  mixins: [publicMethods],
   inject: ["path"]
 })
 export default class MessageItem extends Vue {

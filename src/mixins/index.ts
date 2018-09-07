@@ -46,7 +46,7 @@ function getTab(tab: string) {
       return "";
   }
 }
-export const translationTime = {
+export const publicMethods = {
   methods: {
     ago,
     getTab

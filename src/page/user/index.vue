@@ -52,7 +52,7 @@
 <script lang='ts'>
 import { Vue, Prop, Component, Watch } from "vue-property-decorator";
 import { Action, State } from "vuex-class";
-import { translationTime } from "@/mixins";
+import { publicMethods } from "@/mixins";
 import NavBar from "@/components/navbar/index.vue";
 import Icon from "@/components/icon/index.vue";
 import Tabs from "@/components/tabs/index.vue";
@@ -78,7 +78,7 @@ type updateScroll = (scrollTop: number) => never;
     TopicsItem,
     TopicsCard
   },
-  mixins: [translationTime],
+  mixins: [publicMethods],
   inject: ["path"]
 })
 export default class User extends Vue {

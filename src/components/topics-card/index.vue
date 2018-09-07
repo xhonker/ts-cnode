@@ -1,5 +1,5 @@
 <template>
-  <Card class="topics__card">
+  <Card class="topics__card" bodyBorder>
     <div slot="header" class="topics__item__header">
       <img class="topics__item-avatar" :src="topics.author.avatar_url" />
       <div class="topics__item__header__container">
@@ -25,7 +25,7 @@
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
 import { TopicInfo } from "@/store/interface/topics";
-import { translationTime } from "../../mixins";
+import { publicMethods } from "../../mixins";
 import Card from "../card/index.vue";
 import Icon from "../icon/index.vue";
 
@@ -34,7 +34,7 @@ import Icon from "../icon/index.vue";
     Card,
     Icon
   },
-  mixins: [translationTime]
+  mixins: [publicMethods]
 })
 export default class TopicsCard extends Vue {
   @Prop()
@@ -53,9 +53,6 @@ export default class TopicsCard extends Vue {
 .topics__card {
   margin-bottom: 10px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
-}
-.wu-card__body {
-  border-bottom: 1px solid #eee;
 }
 .topics__item {
   background: rgb(238, 238, 238);
