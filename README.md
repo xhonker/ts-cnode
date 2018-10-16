@@ -1,3 +1,7 @@
+[![node][node]][node-url]
+[![vue-cli][vue-cli]][vue-cli-url]
+[![typescript][typescript]][typescript-url]
+
 ### 扫一扫在线预览
 
 <img src='./src/assets/qr.png' width='150px'>
@@ -44,3 +48,14 @@
 - [x] topics 左右滑动切换 tab
 - [ ] tabbar 改为侧边栏 (扩大可视区)
 - [ ] 个人中心改版
+
+## License
+
+[MIT](./LICENSE)
+
+[node]: https://img.shields.io/badge/node-%3E=v8.9.0-brightgreen.svg
+[node-url]: https://nodejs.org
+[vue-cli]: https://img.shields.io/badge/%40vue%2Fcli-3.0.1-brightgreen.svg
+[vue-cli-url]: https://cli.vuejs.org
+[typescript]: https://img.shields.io/badge/typescript-2.9.1-brightgreen.svg
+[typescript-url]: http://www.typescriptlang.org
