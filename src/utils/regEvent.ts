@@ -24,7 +24,7 @@ export const regEvent = () => {
     // @ts-ignore
     if (target.nodeName.toLowerCase() === "img") {
       //@ts-ignore
-      ViewImg(target.currentSrc);
+      ViewImg(target.currentSrc, target);
     }
   });
 };

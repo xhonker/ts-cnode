@@ -20,21 +20,22 @@ class myEvent implements myEvents {
 
 let temps = new myEvent();
 
-temps.on('test', d => {
-  console.log('test', d);
+temps.on("test", d => {
+  console.log("test", d);
 });
 
-temps.emit('test', { a: 1 }, { b: 2 });
+temps.emit("test", { a: 1 }, { b: 2 });
 
 interface API {
-  '/user': { name: string };
-  '/menu': { foods: Array<any> };
+  "/user": { name: string };
+  "/menu": { foods: Array<any> };
 }
-const get = <URL extends keyof API>(url: URL): Promise<API[URL]> => { // keyof 应用
+const get = <URL extends keyof API>(url: URL): Promise<API[URL]> => {
+  // keyof 应用
   return fetch(url).then(res => res.json());
 };
 
-get('/menu').then(data => data.foods);
+get("/menu").then(data => data.foods);
 
 type DeepReadonly<T> = { readonly [P in keyof T]: DeepReadonly<T[P]> };
 

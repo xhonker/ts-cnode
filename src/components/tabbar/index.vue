@@ -26,7 +26,7 @@ export default class WuTabbar extends Vue {
 
 <style lang='scss'>
 .wu-tabbar {
-  position: fixed;
+  // position: fixed;
   display: flex;
   width: 100%;
   height: 45px;

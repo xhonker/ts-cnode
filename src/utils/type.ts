@@ -23,7 +23,7 @@ let types: Array<String> = [
   "Undefined"
 ];
 
-types.map(
+types.forEach(
   type =>
     (typeAssert[`is${type}`] = (target: any) =>
       toString.call(target) === `[object ${type}]`)

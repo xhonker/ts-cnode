@@ -1,22 +1,23 @@
 <template>
   <div class="container">
-    <tab-container v-model="tabbar">
-      <tab-container-item id="home">
-        <home />
+    <tab-container v-model="tabbar" class="container__main">
+      <tab-container-item id="home" style="height:inherit;">
+        <home/>
       </tab-container-item>
-      <tab-container-item id="edit">
-        <edit />
+      <tab-container-item id="edit" style="height:inherit;">
+        <edit/>
       </tab-container-item>
-      <tab-container-item id="user">
-        <login v-if="tabbar === 'user'" />
+      <tab-container-item id="user" style="height:inherit;">
+        <login v-if="tabbar === 'user'"/>
       </tab-container-item>
-      <tab-container-item id="message">
-        <message v-if="tabbar === 'message'" />
+      <tab-container-item id="message" style="height:inherit;">
+        <message v-if="tabbar === 'message'"/>
       </tab-container-item>
     </tab-container>
-    <tab-bar v-model="tabbar">
-      <tab-bar-tab :id='tabbar.id' v-for=" tabbar in tabbars" :key="tabbar.id">
-        <Icon slot="icon" :type='tabbar.id' />{{tabbar.value}}
+    <tab-bar v-model="tabbar" class="container__menu">
+      <tab-bar-tab :id="tabbar.id" v-for=" tabbar in tabbars" :key="tabbar.id">
+        <Icon slot="icon" :type="tabbar.id"/>
+        {{tabbar.value}}
       </tab-bar-tab>
     </tab-bar>
   </div>
@@ -71,3 +72,18 @@ export default class Main extends Vue {
   }
 }
 </script>
+
+<style lang='scss'>
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  &__menu {
+    flex: 0 0 auto;
+  }
+  &__main {
+    flex: 1;
+  }
+}
+</style>

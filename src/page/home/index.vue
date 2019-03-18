@@ -5,10 +5,18 @@
       <tabs v-model="topicsTab">
         <tabs-item :id="tab.id" v-for="tab in topicTabs" :key="tab.id">{{tab.value}}</tabs-item>
       </tabs>
-      <tab-container class="topics__item" :style="styContent" @scroll="handlerScroll" ref="topicsContent" @touchmove="handlerTouchmove" @touchstart="handlerTouchStart" @touchend='handlerTouchend'>
+      <tab-container
+        class="topics__item"
+        :style="styContent"
+        @scroll="handlerScroll"
+        ref="topicsContent"
+        @touchmove="handlerTouchmove"
+        @touchstart="handlerTouchStart"
+        @touchend="handlerTouchend"
+      >
         <tab-container-item class="tab__container__item" v-for="(topic, key) in topics" :key="key">
           <router-link :to="path.details(topic.id)">
-            <topics-card :topics='topic' />
+            <topics-card :topics="topic"/>
           </router-link>
         </tab-container-item>
         <div :class="notTab" v-if="isShowSlideTips">别闹</div>
@@ -78,11 +86,13 @@ export default class WuHome extends Vue {
       this.requestTopics({ tab: this.topicsTab, page: this.page });
   }
   handlerTouchStart(e: TouchEvent) {
+    this.touchend = 0;
     this.touchstart = e.touches[0].pageX;
   }
   handlerTouchmove(e: TouchEvent) {
     this.touchend = e.touches[0].pageX;
-    if (Math.abs(this.calcTouchDist) < 15) return;
+    console.log("​WuHome -> handlerTouchmove -> this.calcTouchDist", this.calcTouchDist);
+    if (Math.abs(this.calcTouchDist) < 30) return;
     //@ts-ignore
     this.calcTouchDist > 0
       ? (this.touchRight = this.calcTouchDist)
@@ -121,7 +131,7 @@ export default class WuHome extends Vue {
   }
   get styContent() {
     return {
-      height: `${this.contentH}px`,
+      // height: `${this.contentH}px`,
       right: this.touchRight ? `${this.touchRight}px` : null,
       left: this.touchLeft ? `${this.touchLeft}px` : null
     };
@@ -161,8 +171,17 @@ export default class WuHome extends Vue {
 <style lang='scss'>
 @import "../../../style/index";
 .wu-home {
+  display: flex;
+  flex-direction: column;
+  height: inherit;
   .content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     overflow: hidden;
+  }
+  .wu-navbar {
+    flex: 0 0 auto;
   }
 }
 .topics__item {
