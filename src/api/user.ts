@@ -1,5 +1,5 @@
 import { get, post } from "./index";
-import { CollectInfo, UserInfo, LoginInfo } from "@/store/interface/user";
+import { CollectInfo, UserInfo } from "@/store/interface/user";
 import { TopicInfo } from "@/store/interface/topics";
 
 /**

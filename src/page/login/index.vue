@@ -1,14 +1,14 @@
 <template>
-  <div class="wu-login">
-    <template v-if="!user.localToken">
+  <div class='wu-login'>
+    <template v-if='!user.localToken'>
       <nav-bar>登录</nav-bar>
-      <div class="wu-login-container">
-        <input type="text" v-model="accessToken" placeholder="请输入accessToken">
-        <button @click="handlerLogin">登录</button>
+      <div class='wu-login-container'>
+        <input placeholder='请输入accessToken' type='text' v-model='accessToken'>
+        <button @click='handlerLogin'>登录</button>
       </div>
     </template>
     <template v-else>
-      <user :loginname='user.loginname' my="我" v-if="user.loginname" />
+      <user :loginname='user.loginname' my='我' v-if='user.loginname'/>
     </template>
   </div>
 </template>
@@ -29,36 +29,30 @@ import { LoginInfo, UserState } from "@/store/interface/user";
   }
 })
 export default class WuLogin extends Vue {
-  private accessToken: string = "";
+  private accessToken: string = '';
   @Action(USER__LOGIN)
   userLogin!: (data: LoginInfo) => never;
   @State(state => state.user)
   user!: UserState;
-  handlerLogin() {
-    this.accessToken
-      ? login(this.accessToken).then(
-          (data: LoginInfo) =>
-            data.success &&
-            this.userLogin(
-              Object.assign({}, data, {
-                accessToken: this.accessToken,
-                localToken: this.accessToken
-              })
-            )
-        )
-      : toast.show("请输入用户令牌");
-  }
   mounted() {
     let token = this.user.localToken;
-    !this.user.accessToken &&
-      token &&
-      login(token).then(
-        (data: LoginInfo) =>
-          data.success &&
-          this.userLogin(
-            Object.assign({}, data, { accessToken: token, localToken: token })
-          )
-      );
+    if (token) {
+      this.login(token);
+    }
+  }
+  handlerLogin() {
+    this.login(this.accessToken);
+  }
+  async login(token: string) {
+    if (!token) return toast.show("请输入用户令牌");
+    let { success, ...data } = await login(token);
+    if (!success) return;
+    let userInfo = Object.assign({}, data,
+      {
+        accessToken: token,
+        localToken: token
+      })
+    this.userLogin(userInfo);
   }
 }
 </script>

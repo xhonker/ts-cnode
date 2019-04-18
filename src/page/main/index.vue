@@ -1,22 +1,23 @@
 <template>
-  <div class="container">
-    <tab-container v-model="tabbar">
-      <tab-container-item id="home">
-        <home />
+  <div class='container'>
+    <tab-container v-model='tabbar'>
+      <tab-container-item id='home'>
+        <home/>
       </tab-container-item>
-      <tab-container-item id="edit">
-        <edit />
+      <tab-container-item id='edit'>
+        <edit/>
       </tab-container-item>
-      <tab-container-item id="user">
-        <login v-if="tabbar === 'user'" />
+      <tab-container-item id='user'>
+        <login v-if='tabbar === "user"'/>
       </tab-container-item>
-      <tab-container-item id="message">
-        <message v-if="tabbar === 'message'" />
+      <tab-container-item id='message'>
+        <message v-if='tabbar === "message"'/>
       </tab-container-item>
     </tab-container>
-    <tab-bar v-model="tabbar">
-      <tab-bar-tab :id='tabbar.id' v-for=" tabbar in tabbars" :key="tabbar.id">
-        <Icon slot="icon" :type='tabbar.id' />{{tabbar.value}}
+    <tab-bar v-model='tabbar'>
+      <tab-bar-tab :id='tabbar.id' :key='tabbar.id' v-for=' tabbar in tabbars'>
+        <Icon :type='tabbar.id' slot='icon'/>
+        {{tabbar.value}}
       </tab-bar-tab>
     </tab-bar>
   </div>
@@ -66,7 +67,7 @@ export default class Main extends Vue {
     return this._tabbar;
   }
   set tabbar(tab: string) {
-    if (this.tabbar === tab) return;
+    if (this.tabbar === tab || typeof tab !== 'string') return;
     this.changeTabBar(tab);
   }
 }

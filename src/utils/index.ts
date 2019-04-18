@@ -16,7 +16,11 @@ export const setLocalStorage = (key: string, val: string): void =>
  */
 export const getLocalStorage = (key: string): string =>
   window.localStorage.getItem(key)!;
-
+/**
+ * 移出localStorage item
+ * @param key key
+ */
+export const removeLocalStorage = (key: string) => window.localStorage.removeItem(key);
 /**
  * 获取元素属性
  * @param elCls 类名

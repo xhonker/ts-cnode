@@ -2,6 +2,7 @@ import Axios from "axios";
 import { baseURL } from "./config";
 import { toast } from "@/components/toast/index";
 import Store from "@/store";
+import { USER__LOGOUT } from '@/store/user/type';
 let accesstoken = () => Store.getters.localToken || Store.getters.token;
 
 const axios = Axios.create({
@@ -42,6 +43,7 @@ axios.interceptors.response.use(
   error => {
     let message = error.response.data && error.response.data.error_msg;
     toast.hide();
+    Store.commit(USER__LOGOUT);
     toast.show({ message, duration: 5000 });
   }
 );

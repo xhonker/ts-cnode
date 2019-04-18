@@ -7,7 +7,7 @@ import {
   GetterTree
 } from "../../../node_modules/vuex";
 import { CHANGE__COLLECT } from "@/store/topics/type";
-import { setLocalStorage, getLocalStorage } from "@/utils";
+import { setLocalStorage, getLocalStorage, removeLocalStorage } from "@/utils";
 import { TopicInfo } from "@/store/interface/topics";
 
 let state: user.UserState = {
@@ -78,8 +78,8 @@ let mutations: MutationTree<user.UserState> = {
     state.id = "";
     state.loginname = "";
     state.message = [];
-    setLocalStorage("accessToken", "");
-    setLocalStorage("loginName", "");
+    removeLocalStorage("accessToken");
+    removeLocalStorage("loginName");
   },
   async [CHANGE__COLLECT](state) {
     let topic = await getUserCollect(
