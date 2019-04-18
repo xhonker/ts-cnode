@@ -32,7 +32,7 @@ export default class WuTabbar extends Vue {
   height: 45px;
   background: #fff;
   align-items: center;
-  border-top: 1px solid #eee;
+  box-shadow: 0px 0px 3px #888;
   &-top {
     top: 0;
   }

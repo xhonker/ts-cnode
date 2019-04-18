@@ -1,20 +1,34 @@
 <template>
-  <div class="wu-home">
+  <div :class='$style.home'>
     <nav-bar>首页</nav-bar>
-    <div class="content">
-      <tabs v-model="topicsTab">
-        <tabs-item :id="tab.id" v-for="tab in topicTabs" :key="tab.id">{{tab.value}}</tabs-item>
+    <div :class='$style.content'>
+      <tabs v-model='topicsTab'>
+        <tabs-item :id='tab.id' :key='tab.id' v-for='tab in topicTabs'>{{tab.value}}</tabs-item>
       </tabs>
-      <tab-container class="topics__item" :style="styContent" @scroll="handlerScroll" ref="topicsContent" @touchmove="handlerTouchmove" @touchstart="handlerTouchStart" @touchend='handlerTouchend'>
-        <tab-container-item class="tab__container__item" v-for="(topic, key) in topics" :key="key">
-          <router-link :to="path.details(topic.id)">
-            <topics-card :topics='topic' />
+      <tab-container
+        :style='styContent'
+        @scroll='handlerScroll'
+        @touchend='handlerTouchend'
+        @touchmove='handlerTouchmove'
+        @touchstart='handlerTouchStart'
+        ref='topicsContent'
+      >
+        <tab-container-item
+          :class='$style.tabContainerItem'
+          :key='key'
+          v-for='(topic, key) in topics'
+        >
+          <router-link :to='path.details(topic.id)'>
+            <topics-card :topics='topic'/>
           </router-link>
         </tab-container-item>
-        <div :class="notTab" v-if="isShowSlideTips">别闹</div>
       </tab-container>
     </div>
-    <div class="iconfont icon-top" v-show="showTop" @click="$refs.topicsContent.$el.scrollTop=0"></div>
+    <div
+      :class='["iconfont","icon-top",$style.iconTop]'
+      @click='$refs.topicsContent.$el.scrollTop=0'
+      v-show='showTop'
+    ></div>
   </div>
 </template>
 
@@ -49,15 +63,14 @@ export default class WuHome extends Vue {
   private showTop: boolean = false;
   private currentScrollTop: number = 0;
   private topicTabs: Array<TabsInfo> = topicTabs;
-  private touchstart: number = 0;
-  private touchend: number = 0;
+  private touchStartX: number = 0;
+  private touchStartY: number = 0;
+  private touchEndX: number = 0;
   private contentH: number = 0;
-  private touchRight: number | null = null;
-  private touchLeft: number | null = null;
-  @Action(type.REQUEST__TOPICS)
-  requestTopics!: requestTopics;
-  @Action(type.TOPICS__CHANGE__TAB)
-  topicsChangeTab!: (tab: string) => void;
+  private calcTouch: number = 0;
+  private isScroll: boolean = false;
+  @Action(type.REQUEST__TOPICS) requestTopics!: requestTopics;
+  @Action(type.TOPICS__CHANGE__TAB) topicsChangeTab!: (tab: string) => void;
   @Action(type.SET__TOPICS__SCROLL)
   setTopicsScroll!: (scrollTop: number) => void;
   @State(state => state.topics.topics)
@@ -70,6 +83,7 @@ export default class WuHome extends Vue {
     //@ts-ignore
     let { clientHeight, scrollTop, scrollHeight } = e.srcElement;
     this.currentScrollTop = scrollTop;
+    this.isScroll = true;
     let isBottom = scrollHeight - scrollTop === clientHeight;
     scrollTop > 400 ? (this.showTop = true) : (this.showTop = false);
     isBottom &&
@@ -77,21 +91,30 @@ export default class WuHome extends Vue {
       ++this.page &&
       this.requestTopics({ tab: this.topicsTab, page: this.page });
   }
-  handlerTouchStart(e: TouchEvent) {
-    this.touchstart = e.touches[0].pageX;
+  handlerTouchStart({ touches }: TouchEvent) {
+    let { pageX, pageY } = touches[0];
+    this.touchStartX = pageX;
+    this.touchStartY = pageY;
   }
-  handlerTouchmove(e: TouchEvent) {
-    this.touchend = e.touches[0].pageX;
+  handlerTouchmove({ touches }: TouchEvent) {
+    let { pageX, pageY } = touches[0];
+    this.touchEndX = pageX;
+    let touchEndY = pageY;
+    let touchY = this.touchStartY - touchEndY;
+    if (Math.abs(touchY) < 50) {
+      this.isScroll = false;
+    }
+
+    if (this.isScroll) return;
     if (Math.abs(this.calcTouchDist) < 15) return;
-    //@ts-ignore
-    this.calcTouchDist > 0
-      ? (this.touchRight = this.calcTouchDist)
-      : (this.touchLeft = Math.abs(this.calcTouchDist));
+    this.calcTouch = ~(this.touchStartX - this.touchEndX) + 1; // 取反
   }
-  handlerTouchend(e: TouchEvent) {
+  handlerTouchend() {
     let screenW = window.screen.width / 3;
-    let isSlide = Math.abs(this.calcTouchDist) > screenW;
-    isSlide && this.touchend > 0 ? this.touchSwitchTab() : this.resetTouch();
+    let isSlide = Math.abs(this.calcTouch) > screenW;
+    isSlide && this.touchEndX > 0 ? this.touchSwitchTab() : this.resetTouch();
+    this.calcTouch = 0;
+    this.touchStartY = 0;
   }
   touchSwitchTab() {
     let tab;
@@ -105,11 +128,10 @@ export default class WuHome extends Vue {
     this.resetTouch();
   }
   resetTouch() {
-    this.touchLeft = null;
-    this.touchRight = null;
+    this.calcTouch = 0;
   }
   get calcTouchDist() {
-    return this.touchstart - this.touchend;
+    return this.touchStartX - this.touchEndX;
   }
   get topicsTab(): string {
     return this.currentTab;
@@ -122,21 +144,8 @@ export default class WuHome extends Vue {
   get styContent() {
     return {
       height: `${this.contentH}px`,
-      right: this.touchRight ? `${this.touchRight}px` : null,
-      left: this.touchLeft ? `${this.touchLeft}px` : null
+      transform: `translateX(${this.calcTouch}px)`
     };
-  }
-  get notTab() {
-    return [
-      `topics__item-notab`,
-      {
-        [`topics__item-notab-left`]: this.tabIndex === 0,
-        [`topics__item-notab-right`]: this.tabIndex === topicTabs.length - 1
-      }
-    ];
-  }
-  get isShowSlideTips() {
-    return this.tabIndex === 0 || this.tabIndex === topicTabs.length - 1;
   }
   get tabIndex() {
     return topicTabs.findIndex(d => d.id === this.topicsTab);
@@ -158,35 +167,18 @@ export default class WuHome extends Vue {
 }
 </script>
 
-<style lang='scss'>
-@import "../../../style/index";
-.wu-home {
-  .content {
-    overflow: hidden;
-  }
+<style lang='scss' module>
+@import "style/index";
+.home {
 }
-.topics__item {
-  position: relative;
-  overflow: scroll;
-  background: rgb(238, 238, 238);
-  &-notab {
-    position: fixed;
-    top: 45%;
-    width: 1px;
-    color: #ddd;
-    font-size: 14px;
-    &-left {
-      margin-left: -15vw;
-    }
-    &-right {
-      margin-left: 110vw;
-    }
-  }
+.content {
+  overflow: hidden;
+  background-color: #eee;
 }
-.tab__container__item {
+.tabContainerItem {
   margin: 5px 7px;
 }
-.icon-top {
+.iconTop {
   position: absolute;
   bottom: 80px;
   right: 20px;

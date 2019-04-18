@@ -1,23 +1,27 @@
 <template>
-  <Card class="topics__card" bodyBorder>
-    <div slot="header" class="topics__item__header">
-      <img class="topics__item-avatar" :src="topics.author.avatar_url" />
-      <div class="topics__item__header__container">
-        <div class="topics__item__header__container-nickname">{{topics.author.loginname}}</div>
-        <Icon type='hot' v-if="topics.top" />
-        <Icon type='good' v-if="topics.good" />
-        <div class="topics__item__header__container-text">{{topicsHeaderText}}</div>
+  <Card bodyBorder class='topics__card'>
+    <div class='topics__item__header' slot='header'>
+      <div class='topics__item-avatar'>
+        <img :src='topics.author.avatar_url'>
+      </div>
+      <div class='topics__item__header__container'>
+        <div class='topics__item__header__container-nickname'>{{topics.author.loginname}}</div>
+        <Icon type='hot' v-if='topics.top'/>
+        <Icon type='good' v-if='topics.good'/>
+        <div class='topics__item__header__container-text'>{{topicsHeaderText}}</div>
       </div>
     </div>
-    <div slot="body" class="topics__item__body">
-      {{topics.title}}
-    </div>
-    <div slot="footer" class="topics__item__footer">
+    <div class='topics__item__body' slot='body'>{{topics.title}}</div>
+    <div class='topics__item__footer' slot='footer'>
       <div>
-        <Icon type='chakan' />{{topics.visit_count}} </div>
+        <Icon type='chakan'/>
+        {{topics.visit_count}}
+      </div>
       <div>
-        <Icon type='comment' />{{topics.reply_count}}</div>
-      <div class="topics__item__footer-time">{{ ago(topics.last_reply_at)}}</div>
+        <Icon type='comment'/>
+        {{topics.reply_count}}
+      </div>
+      <div class='topics__item__footer-time'>{{ ago(topics.last_reply_at)}}</div>
     </div>
   </Card>
 </template>
@@ -55,12 +59,16 @@ export default class TopicsCard extends Vue {
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
 }
 .topics__item {
-  background: rgb(238, 238, 238);
   &-avatar {
     width: 25px;
     height: 25px;
     border-radius: 4px;
     margin-right: 10px;
+    overflow: hidden;
+    background: #eee;
+    img {
+      width: 100%;
+    }
   }
   &__header {
     display: flex;
@@ -94,8 +102,29 @@ export default class TopicsCard extends Vue {
       flex: 1;
       padding: 6px 0;
       &:nth-child(2n) {
-        border-right: 1px solid #eee;
-        border-left: 1px solid #eee;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 200%;
+          width: 1px;
+          transform: scale(0.5);
+          transform-origin: 0 0;
+          background-color: #eee;
+        }
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 200%;
+          width: 1px;
+          transform: scale(0.5);
+          transform-origin: 0 0;
+          background-color: #eee;
+        }
       }
       > i {
         font-size: 16px;

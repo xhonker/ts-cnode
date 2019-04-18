@@ -39,22 +39,23 @@ export default class TabsItem extends Vue {
       position: absolute;
       width: 60%;
       bottom: 0;
-      margin-left: 20%;
+      left: 50%;
+      transform: translateX(-50%);
       border-bottom: 2px solid $theme;
-      animation: selected 0.5s;
+      animation: selected 0.5s ease-in-out;
     }
   }
 }
 
 @keyframes selected {
   0% {
-    margin-left: 10%;
+    transform: translateX(-40%);
   }
   50% {
-    margin-left: 25%;
+   transform: translateX(-60%);
   }
   100% {
-    margin-left: 20%;
+    transform: translateX(-50%);
   }
 }
 </style>

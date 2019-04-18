@@ -1,14 +1,14 @@
 <template>
-  <div class="wu-card">
-    <div class="wu-card-container">
-      <div class="wu-card__header">
-        <slot name="header"></slot>
+  <div class='wu-card'>
+    <div class='wu-card-container'>
+      <div class='wu-card__header'>
+        <slot name='header'></slot>
       </div>
-      <div :class="bodyCls">
-        <slot name="body"></slot>
+      <div :class='bodyCls'>
+        <slot name='body'></slot>
       </div>
-      <div class="wu-card__footer">
-        <slot name="footer"></slot>
+      <div class='wu-card__footer'>
+        <slot name='footer'></slot>
       </div>
     </div>
   </div>
@@ -19,8 +19,7 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 const prefixCls = "wu-card__body";
 @Component
 export default class Card extends Vue {
-  @Prop()
-  bodyBorder!: boolean;
+  @Prop() bodyBorder!: boolean;
   get bodyCls() {
     return [
       prefixCls,
@@ -33,6 +32,7 @@ export default class Card extends Vue {
 </script>
 
 <style lang='scss'>
+@import "style/index";
 .wu-card {
   background: #fff;
   color: #333;
@@ -51,7 +51,7 @@ export default class Card extends Vue {
   }
   &__body {
     &-border {
-      border-bottom: 1px solid #eee;
+      @include thinnerBorder();
     }
   }
 }

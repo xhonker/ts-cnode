@@ -1,11 +1,17 @@
 import Vue from "vue";
-import "@/directive";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store/index";
-import "normalize.css";
-import "../style/index.scss";
 import * as path from "./path";
+
+import "@/directive";
+import "../style/index.scss";
+import "./common/fastclick";
+import "normalize.css";
+
+//@ts-ignore
+window.FastClick.attach(document.body); // fix click 300ms
+
 Vue.config.productionTip = false;
 
 new Vue({

@@ -1,43 +1,39 @@
 <template>
-  <div class="wu-topics-details" v-if="details.author">
-    <nav-bar @leftClick='$router.go(-1)' class="wu-topics-details__navbar">
-      <Icon slot="left" type='left' />主题详情
+  <div class='wu-topics-details' v-if='details.author'>
+    <nav-bar @leftClick='$router.go(-1)' class='wu-topics-details__navbar'>
+      <Icon slot='left' type='left'/>主题详情
     </nav-bar>
-    <div class="wu-topics-details__container" @scroll="handlerScroll" ref="details">
-      <div class="wu-topics-details__title">{{details.title}}</div>
-      <div class="wu-topics-details__header">
-        <img :src="details.author.avatar_url" class="wu-topics-details__header-avatar" alt="avatar">
-        <span class="wu-topics-details__header-nickname">
-          <router-link :to="path.user(details.author.loginname)">{{details.author.loginname}}</router-link>
+    <div @scroll='handlerScroll' class='wu-topics-details__container' ref='details'>
+      <div class='wu-topics-details__title'>{{details.title}}</div>
+      <div class='wu-topics-details__header'>
+        <img :src='details.author.avatar_url' alt='avatar' class='wu-topics-details__header-avatar'>
+        <span class='wu-topics-details__header-nickname'>
+          <router-link :to='path.user(details.author.loginname)'>{{details.author.loginname}}</router-link>
         </span>
-        <span class="wu-topics-details__header-text">{{`发布于${ago(details.create_at)}`}}</span>
+        <span class='wu-topics-details__header-text'>{{`发布于${ago(details.create_at)}`}}</span>
       </div>
-      <div class="wu-topics-details__body">
-        <div class="wu-topics-details__body-left">
+      <div class='wu-topics-details__body'>
+        <div class='wu-topics-details__body-left'>
           <span>阅读数：{{details.visit_count}}</span>
           <span>回复数：{{details.reply_count}}</span>
         </div>
 
-        <span :class="collectCls" @click="handlerCollect">{{details.is_collect?'取消收藏':'收藏'}}</span>
+        <span :class='collectCls' @click='handlerCollect'>{{details.is_collect?'取消收藏':'收藏'}}</span>
       </div>
-      <div class="wu-topics-details__content" v-html="details.content" v-highlight></div>
-      <div class="wu-topics-details__replies">
-        <div v-if="user.accessToken|| user.localToken">
-          <textarea v-model="comment" maxlength="150" placeholder="我来说一句" />
-          <div class="wu-topics-details-submit">
-            <span @click="handlerSubmit">评论</span>
+      <div class='wu-topics-details__content' v-highlight v-html='details.content'></div>
+      <div class='wu-topics-details__replies'>
+        <div v-if='user.accessToken|| user.localToken'>
+          <textarea maxlength='150' placeholder='我来说一句' v-model='comment'/>
+          <div class='wu-topics-details-submit'>
+            <span @click='handlerSubmit'>评论</span>
           </div>
         </div>
-        <div class="wu-topics-details__notLogin" v-else>
-          请登录后再来评论
-        </div>
+        <div class='wu-topics-details__notLogin' v-else>请登录后再来评论</div>
       </div>
-      <replies :replies='replies' v-if="replies.length"></replies>
-      <div class="wu-topics-details__notReplies" v-else>
-        还没有评论，快来抢沙发
-      </div>
+      <replies :replies='replies' v-if='replies.length'></replies>
+      <div class='wu-topics-details__notReplies' v-else>还没有评论，快来抢沙发</div>
     </div>
-    <div class="iconfont icon-top" v-show="showTop" @click="$refs.details.scrollTop=0"></div>
+    <div @click='$refs.details.scrollTop=0' class='iconfont icon-top' v-show='showTop'></div>
   </div>
 </template>
 
@@ -135,8 +131,8 @@ export default class Details extends Vue {
   handlerCollect() {
     this.user.localToken
       ? this.collect().then(res => {
-          this.changeCollect({ topic: this.topic, result: res });
-        })
+        this.changeCollect({ topic: this.topic, result: res });
+      })
       : toast.show("请登录");
   }
   collect() {
@@ -151,12 +147,12 @@ export default class Details extends Vue {
     let { comment: content, topic: topic_id, getTopicDetails } = this;
     content
       ? API_replies({ content, topic_id }).then(async data => {
-          data.success && toast.show("评论成功");
-          this.comment = "";
-          await getTopicDetails(topic_id);
-          //@ts-ignore
-          this.$refs.details.scrollTop = this.$refs.details.scrollHeight;
-        })
+        data.success && toast.show("评论成功");
+        this.comment = "";
+        await getTopicDetails(topic_id);
+        //@ts-ignore
+        this.$refs.details.scrollTop = this.$refs.details.scrollHeight;
+      })
       : toast.show("评论内容不能为空");
   }
   beforeDestroy(): void {
@@ -167,7 +163,7 @@ export default class Details extends Vue {
 </script>
 
 <style lang='scss'>
-@import "../../../style/index";
+@import "style/index";
 .wu-topics-details {
   font-size: 14px;
   .icon-top {
@@ -235,12 +231,12 @@ export default class Details extends Vue {
     }
   }
   &__content {
-    border-top: 1px solid #eee;
+    @include thinnerBorder(#eee, 0.5, top);
   }
   &__replies {
     padding: 10px 0;
     font-size: 10px;
-    border-top: 1px solid #f8f8f8;
+    @include thinnerBorder(#eee, 0.5, top);
   }
   &-submit {
     margin: 15px auto;
@@ -346,5 +342,12 @@ export default class Details extends Vue {
   width: 100%;
   font-size: 12px;
   overflow: scroll;
+}
+.icon-top {
+  position: absolute;
+  bottom: 80px;
+  right: 20px;
+  color: $theme;
+  font-size: 40px !important;
 }
 </style>

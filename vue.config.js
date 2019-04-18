@@ -8,12 +8,6 @@ module.exports = {
       .loader("url-loader")
       .options({
         limit: 8192,
-        fallback: {
-          loader: "file-loader",
-          options: {
-            name: "img/[name].[hash:8].[ext]"
-          }
-        }
       });
   }
 };

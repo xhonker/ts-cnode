@@ -13,3 +13,6 @@ blockquote {
   color: #666;
   background: #f8f8f8;
 }
+img[src=''],img:not([src]){
+  opacity: 0;
+}

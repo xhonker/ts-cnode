@@ -1,0 +1,18 @@
+// 细边框
+@mixin thinnerBorder($color:#e2e2e2,$scale:0.5, $position:bottom) {
+  position: relative;
+  overflow: hidden;
+  $width : 100 * (1 / $scale) +'%';
+  &::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    #{$position}:0;
+    width: #{$width};
+    height: 1px;
+    transform: scale($scale);
+    transform-origin: 0 0;
+    background-color: $color;
+  }
+}

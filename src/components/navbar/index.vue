@@ -1,13 +1,13 @@
 <template>
-  <div class="wu-navbar">
-    <div class="wu-navbar-left" @click="$emit('leftClick')">
-      <slot name="left"></slot>
+  <div class='wu-navbar'>
+    <div @click='$emit("leftClick")' class='wu-navbar-left'>
+      <slot name='left'></slot>
     </div>
-    <div class="wu-navbar-content">
+    <div class='wu-navbar-content'>
       <slot></slot>
     </div>
-    <div class="wu-navbar-right" @click="$emit('rightClick')">
-      <slot name="right"></slot>
+    <div @click='$emit("rightClick")' class='wu-navbar-right'>
+      <slot name='right'></slot>
     </div>
   </div>
 </template> 
@@ -17,12 +17,13 @@ import { Vue, Prop, Component, Emit } from "vue-property-decorator";
 const prefixCls = "wu-navbar";
 
 @Component
-export default class NavBar extends Vue {}
+export default class NavBar extends Vue { }
 </script>
 
 <style lang='scss'>
 @import "../../../style/index.scss";
 .wu-navbar {
+  position: relative;
   display: flex;
   height: 35px;
   width: 100%;
@@ -34,20 +35,19 @@ export default class NavBar extends Vue {}
   background: $theme;
   &-left,
   &-right {
+    position: absolute;
+    border: 10px solid transparent;
     font-size: 10px;
-    flex: 1;
     overflow: hidden;
   }
   &-left {
-    text-align: left;
-    margin-left: 10px;
+    left: 0;
   }
   &-right {
-    text-align: right;
-    margin-right: 10px;
+    right: 0;
   }
   &-content {
-    // flex: 3;
+    flex: 1;
   }
 }
 </style>

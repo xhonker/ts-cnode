@@ -1,5 +1,5 @@
 <template>
-  <div class="wu-tab-container" @scroll="handlerScroll" @touchmove="handlerTouchmove" @touchstart="handlerTouchstart" @touchend="handlerTouchend">
+  <div class='wu-tab-container' v-on='$listeners'>
     <slot></slot>
   </div>
 </template>
@@ -11,25 +11,12 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 export default class TabContainer extends Vue {
   @Prop()
   private value!: string;
-
-  handlerScroll(e: Event) {
-    this.$emit("scroll", e);
-  }
-  handlerTouchmove(e: TouchEvent) {
-    this.$emit("touchmove", e);
-  }
-  handlerTouchstart(e: TouchEvent) {
-    this.$emit("touchstart", e);
-  }
-  handlerTouchend(e: TouchEvent) {
-    this.$emit("touchend", e);
-  }
 }
 </script>
 
 <style lang='scss'>
 .wu-tab-container {
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 </style>
