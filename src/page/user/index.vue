@@ -1,46 +1,49 @@
 <template>
-  <div class="wu-user" v-if="userInfo.loginname">
-    <nav-bar @leftClick="$router.go(-1)" @rightClick="logout">
-      <icon slot="left" type='left' v-if="!my"></icon>
-      <span slot="right" v-if="my" class="wu-user-logout">注销</span>
+  <div :class='$style.user' v-if='userInfo.loginname'>
+    <nav-bar @leftClick='$router.go(-1)' @rightClick='logout'>
+      <icon slot='left' type='left' v-if='!my'></icon>
+      <span :class='$style.userLogout' slot='right' v-if='my'>注销</span>
       {{ my ? my:'用户信息'}}
     </nav-bar>
-    <div class="wu-user-container">
-      <div class="wu-user-container__header">
-        <img :src="userInfo.avatar_url" alt="">
-        <div class="wu-user-container__header-info">
-          <div class="wu-user-container__header-nickname">{{userInfo.loginname}}</div>
-          <div class="wu-user-container__header-score">{{userInfo.score}}积分</div>
+    <div :class='$style.userContainer'>
+      <div :class='$style.userContainerHeader'>
+        <img :src='userInfo.avatar_url' alt>
+        <div :class='$style.userContainerHeaderInfo'>
+          <div :class='$style.userContainerHeaderNickname'>{{userInfo.loginname}}</div>
+          <div :class='$style.userContainerHeaderScore'>{{userInfo.score}}积分</div>
         </div>
-        <span class="wu-user-container__header-time">注册时间{{ago(userInfo.create_at)}} </span>
+        <span :class='$style.userContainerHeaderTime'>注册时间{{ago(userInfo.create_at)}}</span>
       </div>
-      <tabs v-model="userTab">
-        <tabs-item id="replies">参与的话题</tabs-item>
-        <tabs-item id="topics">发布的话题</tabs-item>
-        <tabs-item id="collect">收藏</tabs-item>
+      <tabs v-model='userTab'>
+        <tabs-item id='replies'>参与的话题</tabs-item>
+        <tabs-item id='topics'>发布的话题</tabs-item>
+        <tabs-item id='collect'>收藏</tabs-item>
       </tabs>
-      <tab-container v-model="userTab" ref='content' @scroll="handerScroll">
-        <tab-container-item id='replies' class="wu-user-replies">
-          <topics-item v-for="(replie,key) in userInfo.recent_replies" :key="key" :topics='replie'></topics-item>
-          <div v-if="!userInfo.recent_replies.length" class="user__no-data">
-            <icon type='no-data'></icon>
-          </div>
-
-        </tab-container-item>
-        <tab-container-item id='topics' class="wu-user-topics">
-          <topics-item v-for="(topics,key) in userInfo.recent_topics" :key="key" :topics='topics'></topics-item>
-          <div v-if="!userInfo.recent_topics.length" class="user__no-data">
+      <tab-container @scroll='handerScroll' ref='content' v-model='userTab'>
+        <tab-container-item :class='$style.userReplies' id='replies'>
+          <topics-item :key='key' :topics='replie' v-for='(replie,key) in userInfo.recent_replies'></topics-item>
+          <div :class='$style.userNoData' v-if='!userInfo.recent_replies.length'>
             <icon type='no-data'></icon>
           </div>
         </tab-container-item>
-
-        <tab-container-item id='collect' v-if="userTab === 'collect'">
-          <div v-if="!userInfo.collect.length" class="user__no-data">
+        <tab-container-item :class='$style.userTopics' id='topics'>
+          <topics-item :key='key' :topics='topics' v-for='(topics,key) in userInfo.recent_topics'></topics-item>
+          <div :class='$style.userNoData' v-if='!userInfo.recent_topics.length'>
             <icon type='no-data'></icon>
           </div>
-          <div class="wu-user__collect" v-if="userInfo.collect.length">
-            <router-link :to='path.details(topic.id)' v-for="(topic,key) in userInfo.collect" :key="key">
-              <topics-card :topics='topic' />
+        </tab-container-item>
+
+        <tab-container-item id='collect' v-if='userTab === "collect"'>
+          <div :class='$style.userNoData' v-if='!userInfo.collect.length'>
+            <icon type='no-data'></icon>
+          </div>
+          <div :class='$style.userCollect' v-if='userInfo.collect.length'>
+            <router-link
+              :key='key'
+              :to='path.details(topic.id)'
+              v-for='(topic,key) in userInfo.collect'
+            >
+              <topics-card :topics='topic'/>
             </router-link>
           </div>
         </tab-container-item>
@@ -112,13 +115,15 @@ export default class User extends Vue {
     this.$refs.content.$el.style.height = `${this.userContainerHeight()}px`;
   }
   userContainerHeight(): number {
-    let userEles = [".wu-navbar", ".wu-user-container__header", ".wu-tabs"];
+    let userEles = [".wu-navbar", `${this.getStyle('userContainerHeader')}`, ".wu-tabs"];
+    console.log("TCL: User -> userEles", userEles)
     let myELes = [
-      ".wu-user .wu-navbar",
-      ".wu-user-container__header",
-      ".wu-user .wu-tabs",
+      `${this.getStyle('user')} .wu-navbar`,
+      `${this.getStyle("userContainerHeader")}`,
+      `${this.getStyle('user')} .wu-tabs`,
       ".wu-tabbar"
     ];
+    console.log("TCL: User -> myELes", myELes)
     let calc = this.my ? calcClientHeight(myELes) : calcClientHeight(userEles);
     return docH - calc;
   }
@@ -143,53 +148,58 @@ export default class User extends Vue {
   destroyed() {
     this.updateUserScroll(this.currentScrollTop);
   }
+  getStyle(className: string) {
+    //@ts-ignore
+    return `.${this.$style[className]}`;
+  }
 }
 </script>
 
-<style lang='scss'>
-.wu-user {
-  &-replies,
-  &-topics {
-    margin: 10px;
-  }
-  &-container {
-    &__header {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      &-nickname {
-        font-size: 18px;
-      }
-      img {
-        width: 40px;
-        height: 40px;
-        border-radius: 4px;
-      }
-      &-time {
-        flex: 1;
-        text-align: right;
-        font-size: 10px;
-        color: #bbb;
-      }
-      &-info {
-        margin-left: 10px;
-        text-align: left;
-      }
-      &-score {
-        margin-top: 5px;
-        font-size: 12px;
-        color: #ddd;
-      }
-    }
-  }
-  &__collect {
-    padding: 5px 7px;
-    background: rgb(238, 238, 238);
+<style lang='scss' module>
+.user {
+  position: relative;
+}
+.userReplies,
+.userTopics {
+  margin: 10px;
+}
+.userContainer {
+}
+.userContainerHeader {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
   }
 }
-.user__no-data {
+.userContainerHeaderNickname {
+  font-size: 18px;
+}
+.userContainerHeaderTime {
+  flex: 1;
+  text-align: right;
+  font-size: 10px;
+  color: #bbb;
+}
+.userContainerHeaderInfo {
+  margin-left: 10px;
+  text-align: left;
+}
+.userContainerHeaderScore {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #ddd;
+}
+.userCollect {
+  padding: 5px 7px;
+  background: rgb(238, 238, 238);
+}
+.userNoData {
   margin-top: 20px;
-  .icon-no-data {
+  :global(.icon-no-data) {
     font-size: 30px;
     color: #cbcbcc;
     &::after {

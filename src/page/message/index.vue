@@ -1,15 +1,15 @@
 <template>
-  <div class="wu-message">
+  <div :class='$style.message'>
     <nav-bar>消息中心</nav-bar>
-    <div class="wu-message-container">
-      <template v-if="!user.localToken">
-        <span class="wu-message-notLogin">请登录</span>
+    <div :class='$style.messageContainer'>
+      <template v-if='!user.localToken'>
+        <span :class='$style.messageNotLogin'>请登录</span>
       </template>
       <template v-else>
-        <div class="wu-message__no-data" v-if="!user.message.length">
+        <div :class='$style.messageNoData' v-if='!user.message.length'>
           <icon type='no-data'></icon>
         </div>
-        <message-item :message='message' v-for="(message,key) in user.message" :key="key"></message-item>
+        <message-item :key='key' :message='message' v-for='(message,key) in user.message'></message-item>
       </template>
     </div>
   </div>
@@ -47,8 +47,10 @@ export default class WuMessage extends Vue {
     this.init();
   }
   init() {
-    let h = docH - calcClientHeight([".wu-message .wu-navbar", ".wu-tabbar"]);
-    setElementAttr(".wu-message-container", "style", `height:${h}px`);
+    //@ts-ignore
+    let h = docH - calcClientHeight([`.${this.$style.message} .wu-navbar`, ".wu-tabbar"]);
+    //@ts-ignore
+    setElementAttr(`.${this.$style.messageContainer}`, "style", `height:${h}px`);
 
     let token = this.user.localToken || this.user.accessToken;
     token && !this.user.message.length && this.getMessage(token);
@@ -57,30 +59,30 @@ export default class WuMessage extends Vue {
 }
 </script>
 
-<style lang='scss'>
-.wu-message {
+<style lang='scss' module>
+.message {
   position: relative;
   min-height: 100vh;
   background: #fff;
-  &-container {
-    overflow: scroll;
-  }
-  &-notLogin {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%);
-    color: #bbb;
-  }
-  &__no-data {
-    margin-top: 30px;
-    .icon-no-data {
-      font-size: 30px;
-      color: #cbcbcc;
-      &::after {
-        content: "暂无消息";
-        display: block;
-        font-size: 14px;
-      }
+}
+.messageContainer {
+  overflow: scroll;
+}
+.messageNotLogin {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  color: #bbb;
+}
+.messageNoData {
+  margin-top: 30px;
+  :global(.icon-no-data) {
+    font-size: 30px;
+    color: #cbcbcc;
+    &::after {
+      content: "暂无消息";
+      display: block;
+      font-size: 14px;
     }
   }
 }

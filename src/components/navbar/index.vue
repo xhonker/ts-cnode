@@ -21,7 +21,7 @@ export default class NavBar extends Vue { }
 </script>
 
 <style lang='scss'>
-@import "../../../style/index.scss";
+@import "style/index";
 .wu-navbar {
   position: relative;
   display: flex;

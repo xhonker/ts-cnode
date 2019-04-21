@@ -3,4 +3,66 @@
 @import './common/index';
 @import './function/index';
 @import './mixin/index';
-@import './fonts/iconfont'
+@import './fonts/iconfont';
+
+ // markdown-text format 
+.markdown-text {
+   margin: 10px;
+    text-align: left;
+    overflow: hidden;
+    a {
+      color: #4078c0;
+      word-break: break-all;
+    }
+    p {
+      word-break: break-all;
+      white-space: pre-line;
+      line-height: 20px;
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0;
+    }
+    ul {
+      -webkit-padding-start: 20px;
+    }
+    hr {
+      height: 1px;
+      background-color: #eee;
+      border: 0;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    h3 {
+      font-size: 14px;
+    }
+    img {
+      max-width: 100%;
+    }
+    table {
+      word-break: break-all;
+      border-collapse: collapse;
+      tbody {
+        display: table-row-group;
+      }
+      tr {
+        background-color: #fff;
+        th {
+          width: 10%;
+        }
+        th,
+        td {
+          padding: 6px 13px;
+          border: 1px solid #ddd;
+        }
+      }
+      tr:nth-child(odd) {
+        background-color: white;
+      }
+      tr:nth-child(even) {
+        background-color: #f8f8f8;
+      }
+    }
+}

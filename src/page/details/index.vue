@@ -1,37 +1,40 @@
 <template>
-  <div class='wu-topics-details' v-if='details.author'>
-    <nav-bar @leftClick='$router.go(-1)' class='wu-topics-details__navbar'>
+  <div :class='$style.topicsDetails' v-if='details.author'>
+    <nav-bar :class='$style.topicsDetailsNavbar' @leftClick='$router.go(-1)'>
       <Icon slot='left' type='left'/>主题详情
     </nav-bar>
-    <div @scroll='handlerScroll' class='wu-topics-details__container' ref='details'>
-      <div class='wu-topics-details__title'>{{details.title}}</div>
-      <div class='wu-topics-details__header'>
-        <img :src='details.author.avatar_url' alt='avatar' class='wu-topics-details__header-avatar'>
-        <span class='wu-topics-details__header-nickname'>
+    <div :class='$style.topicsDetailsContainer' @scroll='handlerScroll' ref='details'>
+      <div :class='$style.topicsDetailsTitle'>{{details.title}}</div>
+      <div :class='$style.topicsDetailsHeader'>
+        <img
+          :class='$style.topicsDetailsHeaderAvatar'
+          :src='details.author.avatar_url'
+          alt='avatar'
+        >
+        <span :class='$style.topicsDetailsHeaderNickname'>
           <router-link :to='path.user(details.author.loginname)'>{{details.author.loginname}}</router-link>
         </span>
-        <span class='wu-topics-details__header-text'>{{`发布于${ago(details.create_at)}`}}</span>
+        <span :class='$style.topicsDetailsHeaderText'>{{`发布于${ago(details.create_at)}`}}</span>
       </div>
-      <div class='wu-topics-details__body'>
-        <div class='wu-topics-details__body-left'>
+      <div :class='$style.topicsDetailsBody'>
+        <div :class='$style.topicsDetailsBodyLeft'>
           <span>阅读数：{{details.visit_count}}</span>
           <span>回复数：{{details.reply_count}}</span>
         </div>
-
         <span :class='collectCls' @click='handlerCollect'>{{details.is_collect?'取消收藏':'收藏'}}</span>
       </div>
-      <div class='wu-topics-details__content' v-highlight v-html='details.content'></div>
-      <div class='wu-topics-details__replies'>
+      <div :class='$style.topicsDetailsContent' v-highlight v-html='details.content'></div>
+      <div :class='$style.topicsDetailsReplies'>
         <div v-if='user.accessToken|| user.localToken'>
           <textarea maxlength='150' placeholder='我来说一句' v-model='comment'/>
-          <div class='wu-topics-details-submit'>
+          <div :class='$style.topicsDetailsSubmit'>
             <span @click='handlerSubmit'>评论</span>
           </div>
         </div>
-        <div class='wu-topics-details__notLogin' v-else>请登录后再来评论</div>
+        <div :class='$style.topicsDetailsNotLogin' v-else>请登录后再来评论</div>
       </div>
       <replies :replies='replies' v-if='replies.length'></replies>
-      <div class='wu-topics-details__notReplies' v-else>还没有评论，快来抢沙发</div>
+      <div :class='$style.topicsDetailsNotReplies' v-else>还没有评论，快来抢沙发</div>
     </div>
     <div @click='$refs.details.scrollTop=0' class='iconfont icon-top' v-show='showTop'></div>
   </div>
@@ -95,7 +98,8 @@ export default class Details extends Vue {
     this.details.scroll > 200 && (this.showTop = true);
 
     let h = docH - getElementAttr(`.wu-navbar`, "clientHeight");
-    setElementAttr(`.${prefixCls}__container`, "style", `height:${h}px`);
+    //@ts-ignore
+    setElementAttr(`.${this.$style.topicsDetailsContainer}`, "style", `height:${h}px`);
     //@ts-ignore
     this.$refs.details.scrollTop = this.details.scroll;
   }
@@ -116,9 +120,11 @@ export default class Details extends Vue {
   }
   get collectCls() {
     return [
-      `${prefixCls}__body-collect`,
+      //@ts-ignore
+      this.$style.topicsDetailsBodyCollect,
       {
-        [`${prefixCls}__body-cancelCollect`]: this.details.is_collect
+        //@ts-ignore
+        [this.$style.topicsDetailsBodyCancelCollect]: this.details.is_collect
       }
     ];
   }
@@ -162,93 +168,21 @@ export default class Details extends Vue {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' module>
 @import "style/index";
-.wu-topics-details {
+.topicsDetails {
   font-size: 14px;
-  .icon-top {
+  :global(.prettyprint) {
+    width: 100%;
+    font-size: 12px;
+    overflow: scroll;
+  }
+  :global(.icon-top) {
     position: fixed;
     bottom: 20px;
-  }
-  &__container {
-    overflow: scroll;
-    position: relative;
-    top: 35px;
-    background: #fff;
-  }
-  &__navbar {
-    position: fixed;
-    top: 0;
-  }
-  &__header {
-    display: flex;
-    align-items: center;
-    margin: 10px;
-    &-avatar {
-      margin-right: 10px;
-      width: 25px;
-      height: 25px;
-      border-radius: 3px;
-    }
-    &-nickname {
-      flex: 1;
-      text-align: left;
-      font-size: 16px;
-      a {
-        color: #333;
-      }
-    }
-    &-text {
-      flex: 1;
-      text-align: right;
-      font-size: 12px;
-      color: #ccc;
-    }
-  }
-  &__body {
-    display: flex;
-    margin: 10px;
-    color: #aaa;
-    font-size: 10px;
-    text-align: left;
-    &-left {
-      flex: 1;
-      margin: auto;
-      span:nth-child(2) {
-        margin-left: 10px;
-      }
-    }
-    &-collect {
-      padding: 4px;
-      border-radius: 3px;
-      font-size: 10px;
-      background: $theme;
-      color: #fff;
-    }
-    &-cancelCollect {
-      color: #000;
-      background: #e5e5e5;
-    }
-  }
-  &__content {
-    @include thinnerBorder(#eee, 0.5, top);
-  }
-  &__replies {
-    padding: 10px 0;
-    font-size: 10px;
-    @include thinnerBorder(#eee, 0.5, top);
-  }
-  &-submit {
-    margin: 15px auto;
-    width: 80%;
-    text-align: right;
-    > span {
-      padding: 4px;
-      font-size: 10px;
-      color: #fff;
-      background: $theme;
-      border-radius: 4px;
-    }
+    right: 20px;
+    color: $theme;
+    font-size: 40px !important;
   }
   textarea {
     display: block;
@@ -262,92 +196,100 @@ export default class Details extends Vue {
     font-size: 12px;
     width: 80%;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  &__notReplies {
-    font-size: 10px;
-    color: #ddd;
-  }
-  &__notLogin {
-    font-size: 10px;
-    color: #bbb;
-  }
-  &__title {
-    padding: 5px 10px;
-    text-align: left;
-    // font-weight: bold;
-    font-size: 18px;
+    outline: none;
   }
 }
-.markdown-text {
-  margin: 10px;
-  text-align: left;
-  overflow: hidden;
-  a {
-    color: #4078c0;
-    word-break: break-all;
-  }
-  p {
-    word-break: break-all;
-    white-space: pre-line;
-    line-height: 20px;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-  }
-  ul {
-    -webkit-padding-start: 20px;
-  }
-  hr {
-    height: 1px;
-    background-color: #eee;
-    border: 0;
-  }
-  h1 {
-    font-size: 20px;
-  }
-  h2 {
-    font-size: 16px;
-  }
-  h3 {
-    font-size: 14px;
-  }
-  img {
-    max-width: 100%;
-  }
-  table {
-    word-break: break-all;
-    border-collapse: collapse;
-    tbody {
-      display: table-row-group;
-    }
-    tr {
-      background-color: #fff;
-      th {
-        width: 10%;
-      }
-      th,
-      td {
-        padding: 6px 13px;
-        border: 1px solid #ddd;
-      }
-    }
-    tr:nth-child(odd) {
-      background-color: white;
-    }
-    tr:nth-child(even) {
-      background-color: #f8f8f8;
-    }
-  }
-}
-.prettyprint {
-  width: 100%;
-  font-size: 12px;
+.topicsDetailsContainer {
   overflow: scroll;
+  position: relative;
+  top: 35px;
+  background: #fff;
 }
-.icon-top {
-  position: absolute;
-  bottom: 80px;
-  right: 20px;
-  color: $theme;
-  font-size: 40px !important;
+.topicsDetailsNavbar {
+  position: fixed;
+  top: 0;
+}
+.topicsDetailsHeader {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+}
+.topicsDetailsHeaderAvatar {
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+}
+.topicsDetailsHeaderNickname {
+  flex: 1;
+  text-align: left;
+  font-size: 16px;
+  a {
+    color: #333;
+  }
+}
+.topicsDetailsHeaderText {
+  flex: 1;
+  text-align: right;
+  font-size: 12px;
+  color: #ccc;
+}
+.topicsDetailsBody {
+  display: flex;
+  margin: 10px;
+  color: #aaa;
+  font-size: 10px;
+  text-align: left;
+}
+.topicsDetailsBodyLeft {
+  flex: 1;
+  margin: auto;
+  span:nth-child(2) {
+    margin-left: 10px;
+  }
+}
+.topicsDetailsBodyCollect {
+  padding: 4px;
+  border-radius: 3px;
+  font-size: 10px;
+  background: $theme;
+  color: #fff;
+}
+.topicsDetailsBodyCancelCollect {
+  color: #000;
+  background: #e5e5e5;
+}
+.topicsDetailsContent {
+  @include thinnerBorder(#eee, 0.5, top);
+}
+.topicsDetailsReplies {
+  padding: 10px 0;
+  font-size: 10px;
+  @include thinnerBorder(#eee, 0.5, top);
+}
+.topicsDetailsSubmit {
+  margin: 15px auto;
+  width: 80%;
+  text-align: right;
+  > span {
+    padding: 4px;
+    font-size: 10px;
+    color: #fff;
+    background: $theme;
+    border-radius: 4px;
+  }
+}
+.topicsDetailsNotReplies {
+  font-size: 10px;
+  color: #ddd;
+}
+.topicsDetailsNotLogin {
+  font-size: 10px;
+  color: #bbb;
+}
+.topicsDetailsTitle {
+  padding: 5px 10px;
+  text-align: left;
+  font-size: 18px;
 }
 </style>

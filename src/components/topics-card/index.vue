@@ -1,18 +1,18 @@
 <template>
-  <Card bodyBorder class='topics__card'>
-    <div class='topics__item__header' slot='header'>
-      <div class='topics__item-avatar'>
+  <Card :class='$style.topicsCard' bodyBorder>
+    <div :class='$style.topicsItemHeader' slot='header'>
+      <div :class='$style.topicsItemAvatar'>
         <img :src='topics.author.avatar_url'>
       </div>
-      <div class='topics__item__header__container'>
-        <div class='topics__item__header__container-nickname'>{{topics.author.loginname}}</div>
+      <div :class='$style.topicsItemHeaderContainer'>
+        <div :class='$style.topicsItemHeaderContainerNickname'>{{topics.author.loginname}}</div>
         <Icon type='hot' v-if='topics.top'/>
         <Icon type='good' v-if='topics.good'/>
-        <div class='topics__item__header__container-text'>{{topicsHeaderText}}</div>
+        <div :class='$style.topicsItemHeaderContainerText'>{{topicsHeaderText}}</div>
       </div>
     </div>
-    <div class='topics__item__body' slot='body'>{{topics.title}}</div>
-    <div class='topics__item__footer' slot='footer'>
+    <div :class='$style.topicsItemBody' slot='body'>{{topics.title}}</div>
+    <div :class='$style.topicsItemFooter' slot='footer'>
       <div>
         <Icon type='chakan'/>
         {{topics.visit_count}}
@@ -21,7 +21,7 @@
         <Icon type='comment'/>
         {{topics.reply_count}}
       </div>
-      <div class='topics__item__footer-time'>{{ ago(topics.last_reply_at)}}</div>
+      <div :class='$style.topicsItemFooterTime'>{{ ago(topics.last_reply_at)}}</div>
     </div>
   </Card>
 </template>
@@ -53,103 +53,99 @@ export default class TopicsCard extends Vue {
 }
 </script>
 
-<style lang='scss'>
-.topics__card {
+<style lang='scss' module>
+.topicsCard {
   margin-bottom: 10px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
-}
-.topics__item {
-  &-avatar {
-    width: 25px;
-    height: 25px;
-    border-radius: 4px;
-    margin-right: 10px;
-    overflow: hidden;
-    background: #eee;
-    img {
-      width: 100%;
-    }
+  :global(.icon-good) {
+    color: #ff4e50;
   }
-  &__header {
-    display: flex;
-    margin: 10px;
-    position: relative;
-    &__container {
-      text-align: left;
-      &-nickname {
-        font-size: 16px;
-      }
-      &-text {
-        font-size: 12px;
-        margin-top: 4px;
-        color: #ccc;
-      }
-    }
+  :global(.icon-hot) {
+    color: #fbc327;
+    margin-right: 25px;
   }
-  &__body {
-    margin-bottom: 10px;
-    word-break: break-all;
-    text-align: left;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 14px;
-    line-height: 20px;
-  }
-  &__footer {
-    display: flex;
-    font-size: 12px;
-    > div {
-      flex: 1;
-      padding: 6px 0;
-      &:nth-child(2n) {
-        position: relative;
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 200%;
-          width: 1px;
-          transform: scale(0.5);
-          transform-origin: 0 0;
-          background-color: #eee;
-        }
-        &::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          right: 0;
-          height: 200%;
-          width: 1px;
-          transform: scale(0.5);
-          transform-origin: 0 0;
-          background-color: #eee;
-        }
-      }
-      > i {
-        font-size: 16px;
-        margin-right: 5px;
-      }
-    }
-    &-time {
-      margin: auto;
-    }
-  }
-}
-.icon {
-  &-good,
-  &-hot {
+  :global(.icon-good),
+  :global(.icon-hot) {
     font-size: 30px !important;
     position: absolute;
     right: 0;
     top: 0;
   }
-  &-good {
-    color: #ff4e50;
+}
+.topicsItemAvatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 4px;
+  margin-right: 10px;
+  overflow: hidden;
+  background: #eee;
+  img {
+    width: 100%;
   }
-  &-hot {
-    color: #fbc327;
-    margin-right: 25px;
+}
+.topicsItemHeader {
+  display: flex;
+  margin: 10px;
+  position: relative;
+}
+.topicsItemHeaderContainer {
+  text-align: left;
+}
+.topicsItemHeaderContainerNickname {
+  font-size: 16px;
+}
+.topicsItemHeaderContainerText {
+  font-size: 12px;
+  margin-top: 4px;
+  color: #ccc;
+}
+.topicsItemBody {
+  margin-bottom: 10px;
+  word-break: break-all;
+  text-align: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.topicsItemFooter {
+  display: flex;
+  font-size: 12px;
+  > div {
+    flex: 1;
+    padding: 6px 0;
+    &:nth-child(2n) {
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 200%;
+        width: 1px;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+        background-color: #eee;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 200%;
+        width: 1px;
+        transform: scale(0.5);
+        transform-origin: 0 0;
+        background-color: #eee;
+      }
+    }
+    > i {
+      font-size: 16px;
+      margin-right: 5px;
+    }
   }
+}
+.topicsItemFooterTime {
+  margin: auto;
 }
 </style>

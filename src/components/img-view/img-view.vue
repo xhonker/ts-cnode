@@ -1,6 +1,6 @@
 <template>
-  <div class="wu-imgView" v-if="show" @click="show = false">
-    <img :src="src">
+  <div @click='show = false' :class='$style.imgView' v-if='show'>
+    <img :src='src'>
   </div>
 </template>
 
@@ -20,8 +20,8 @@ export default class ImgView extends Vue {
 }
 </script>
 
-<style lang='scss'>
-.wu-imgView {
+<style lang='scss' module>
+.imgView {
   position: fixed;
   display: flex;
   top: 0;

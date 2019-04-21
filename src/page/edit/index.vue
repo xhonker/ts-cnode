@@ -1,21 +1,23 @@
 <template>
-  <div class="wu-edit">
-    <nav-bar @rightClick='handlerSubmit'>新建主题
-      <span slot="right">发布</span>
+  <div :class='$style.edit'>
+    <nav-bar @rightClick='handlerSubmit'>
+      新建主题
+      <span slot='right'>发布</span>
     </nav-bar>
-    <div class="wu-edit-container">
-      <div class="wu-edit-container__title">
-        <icon type='title' /> <input v-model="title" type="text" placeholder="标题">
+    <div :class='$style.editContainer'>
+      <div :class='$style.editContainerTitle'>
+        <icon type='title'/>
+        <input placeholder='标题' type='text' v-model='title'>
       </div>
-      <div class="wu-edit-container__content">
-        <icon type='content' />
-        <textarea v-model="content" cols="30" rows="5" placeholder="请输入内容"></textarea>
+      <div :class='$style.editContainerContent'>
+        <icon type='content'/>
+        <textarea cols='30' placeholder='请输入内容' rows='5' v-model='content'></textarea>
       </div>
-      <div class="wu-edit-container__tab">
-        <icon type='classify' />
-        <span class="wu-edit-container__tab-title">选择分类</span>
+      <div :class='$style.editContainerTab'>
+        <icon type='classify'/>
+        <span :class='$style.editContainerTabTitle'>选择分类</span>
       </div>
-      <Labels v-model="tab">
+      <Labels v-model='tab'>
         <label-item id='share' label='分享'></label-item>
         <label-item id='ask' label='问答'></label-item>
         <label-item id='job' label='招聘'></label-item>
@@ -74,58 +76,60 @@ export default class WuEdit extends Vue {
 }
 </script>
 
-<style lang='scss'>
-.wu-edit {
+<style lang='scss' module>
+@import "style/index";
+.edit {
   height: 100vh;
   background: #fff;
   font-size: 12px;
-  &-container {
-    margin: 10px 10px 0;
-    &__tab {
-      display: flex;
-      line-height: 25px;
-      &-title {
-        margin-left: 10px;
-        color: #aaa;
-        user-select: none;
-      }
-    }
-    &__title {
-      display: flex;
-      margin-top: 10px;
-      border-bottom: 1px solid #f8f8f8;
-      padding: 5px 0;
-      input {
-        flex: 3;
-        margin-left: 10px;
-        width: 100%;
-      }
-    }
-    &__content {
-      display: flex;
-      margin-top: 10px;
-      border-bottom: 1px solid #f8f8f8;
-      textarea {
-        margin-left: 10px;
-        margin-bottom: 10px;
-        border: 0;
-        flex: 1;
-        width: 100%;
-        resize: none;
-        padding: 4px;
-      }
-    }
+  input {
+    outline: none;
+    padding: 2px 4px;
+    border: 0;
   }
-  .iconfont {
+  textarea {
+    outline: none;
+  }
+}
+.editContainer {
+  // margin: 10px 10px 0;
+  :global(.iconfont) {
     color: #aaa !important;
   }
 }
-input {
-  outline: none;
-  padding: 2px 4px;
-  border: 0;
+.editContainerTab {
+  display: flex;
+  line-height: 25px;
+  padding: 0 10px;
 }
-textarea {
-  outline: none;
+.editContainerTabTitle {
+  margin-left: 10px;
+  color: #aaa;
+  user-select: none;
+}
+.editContainerTitle {
+  @extend .editItem;
+  input {
+    flex: 3;
+    margin-left: 10px;
+    width: 100%;
+  }
+}
+.editContainerContent {
+  @extend .editItem;
+  textarea {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    flex: 1;
+    width: 100%;
+    resize: none;
+    padding: 4px;
+  }
+}
+.editItem {
+  display: flex;
+  padding: 10px;
+  @include thinnerBorder(#eee);
 }
 </style>

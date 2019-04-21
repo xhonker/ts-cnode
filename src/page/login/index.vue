@@ -1,10 +1,12 @@
 <template>
-  <div class='wu-login'>
+  <div :class='$style.login'>
     <template v-if='!user.localToken'>
       <nav-bar>登录</nav-bar>
-      <div class='wu-login-container'>
-        <input placeholder='请输入accessToken' type='text' v-model='accessToken'>
-        <button @click='handlerLogin'>登录</button>
+      <div :class='$style.loginContainer'>
+        <div :class='$style.loginInput'>
+          <input placeholder='请输入accessToken' type='text' v-model='accessToken'>
+        </div>
+        <button :class='$style.loginBtn' @click='handlerLogin'>登录</button>
       </div>
     </template>
     <template v-else>
@@ -42,6 +44,7 @@ export default class WuLogin extends Vue {
   }
   handlerLogin() {
     this.login(this.accessToken);
+    this.accessToken = '';
   }
   async login(token: string) {
     if (!token) return toast.show("请输入用户令牌");
@@ -57,30 +60,42 @@ export default class WuLogin extends Vue {
 }
 </script>
 
-<style lang='scss'>
-@import "../../../style/index";
-.wu-login {
+<style lang='scss' module>
+@import "style/index";
+.login {
   position: relative;
   height: 100vh;
   background: #fff;
-  &-container {
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%);
-    input {
-      width: 90vw;
-      font-size: 14px;
-    }
-    button {
-      margin-top: 10px;
-      padding: 4px 12px;
-      border: 1px solid;
-      font-size: 14px;
-      background: $theme;
-      color: #fff;
-      border-radius: 4px;
-      outline: none;
+}
+.loginContainer {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+}
+.loginBtn {
+  margin-top: 10px;
+  padding: 2px 12px;
+  line-height: normal;
+  font-size: 14px;
+  color: #fff;
+  border-radius: 4px;
+  background: $theme;
+  outline: none;
+  border: none;
+}
+.loginInput {
+  @include thinnerBorder(#eee);
+  margin: auto;
+  padding: 10px;
+  overflow: hidden;
+  input {
+    width: 100%;
+    font-size: 12px;
+    outline: none;
+    border: none;
+    &::placeholder {
+      color: #bbb;
     }
   }
 }
