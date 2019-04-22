@@ -14,7 +14,7 @@ const axios = Axios.create({
 
 axios.interceptors.request.use(
   config => {
-    let createTopics = !!~config.url!.indexOf("topics");
+    Store.commit('request', true)
     let login = !!~config.url!.indexOf("accesstoken");
     let method = config.method;
     if (method === "get" && !config.params && accesstoken()) {
@@ -28,21 +28,19 @@ axios.interceptors.request.use(
         accesstoken: accesstoken()
       });
     }
-    if (createTopics && method === "post") {
-      toast.loading("发布中...");
-    } else {
-      toast.loading(`加载中...`);
-    }
     return config;
   },
   error => Promise.reject(error)
 );
 
 axios.interceptors.response.use(
-  response => (toast.hide(), response),
+  response => {
+    Store.commit('request', false);
+    return response;
+  },
   error => {
     let message = error.response.data && error.response.data.error_msg;
-    toast.hide();
+    Store.commit('request', false);
     Store.commit(USER__LOGOUT);
     toast.show({ message, duration: 5000 });
   }

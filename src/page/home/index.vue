@@ -22,6 +22,10 @@
             <topics-card :topics='topic'/>
           </router-link>
         </tab-container-item>
+        <scroll :loadMore='handlerLoad'>
+          <Skeleton />
+          <Skeleton />
+        </scroll>
       </tab-container>
     </div>
     <div
@@ -40,6 +44,8 @@ import NavBar from "@/components/navbar/index.vue";
 import Tabs from "@/components/tabs/index.vue";
 import TabsItem from "@/components/tabs-item/index.vue";
 import TopicsCard from "@/components/topics-card/index.vue";
+import Scroll from '@/components/scroll/index.vue'
+import Skeleton from "./skeleton.vue";
 import * as type from "@/store/topics/type";
 import { Action, Getter, State } from "vuex-class";
 import { TopicInfo, TabsInfo } from "@/store/interface/topics";
@@ -54,7 +60,9 @@ type requestTopics = (data?: { tab?: string; page?: number }) => void;
     NavBar,
     Tabs,
     TabsItem,
-    TopicsCard
+    TopicsCard,
+    Scroll,
+    Skeleton
   },
   inject: ["path"]
 })
@@ -86,10 +94,13 @@ export default class WuHome extends Vue {
     this.isScroll = true;
     let isBottom = scrollHeight - scrollTop === clientHeight;
     scrollTop > 400 ? (this.showTop = true) : (this.showTop = false);
-    isBottom &&
-      this.topics.length &&
-      ++this.page &&
-      this.requestTopics({ tab: this.topicsTab, page: this.page });
+    // isBottom &&
+    //   this.topics.length &&
+    //   ++this.page &&
+    //   this.requestTopics({ tab: this.topicsTab, page: this.page });
+  }
+  handlerLoad() {
+    this.requestTopics({ tab: this.topicsTab, page: ++this.page });
   }
   handlerTouchStart({ touches }: TouchEvent) {
     let { pageX, pageY } = touches[0];

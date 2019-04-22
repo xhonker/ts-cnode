@@ -17,9 +17,8 @@ let state: TopicsState = {
   topicsScroll: 0
 };
 let actions: ActionTree<TopicsState, any> = {
-  async [type.REQUEST__TOPICS]({ commit }, data = {}) {
-    let { tab = "all", page = 1 } = data;
-    let topics = await getTopics(tab, page);
+  async [type.REQUEST__TOPICS]({ commit }, data = { tab: 'all', page: 1 }) {
+    let topics = await getTopics(data.tab, data.page);
     commit(type.REQUEST__TOPICS, topics);
   },
   [type.TOPICS__CHANGE__TAB]({ commit }, tab: string) {

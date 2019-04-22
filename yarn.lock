@@ -8645,6 +8645,13 @@ vue-class-component@^6.0.0, vue-class-component@^6.1.0:
   version "6.2.0"
   resolved "http://registry.npm.taobao.org/vue-class-component/download/vue-class-component-6.2.0.tgz#7adb1daa9a868c75f30f97f33f4f1b94aee62089"
 
+vue-content-loader@^0.2.1:
+  version "0.2.1"
+  resolved "http://r.cnpmjs.org/vue-content-loader/download/vue-content-loader-0.2.1.tgz#0eb332e2a72643d57fb209d72d6526573b191f5a"
+  integrity sha1-DrMy4qcmQ9V/sgnXLWUmVzsZH1o=
+  dependencies:
+    babel-helper-vue-jsx-merge-props "^2.0.3"
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "http://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"

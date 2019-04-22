@@ -17,6 +17,7 @@
     "normalize.css": "^8.0.0",
     "vue": "^2.5.16",
     "vue-class-component": "^6.0.0",
+    "vue-content-loader": "^0.2.1",
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
