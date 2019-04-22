@@ -22,9 +22,9 @@
             <topics-card :topics='topic'/>
           </router-link>
         </tab-container-item>
-        <scroll :loadMore='handlerLoad'>
-          <Skeleton />
-          <Skeleton />
+        <scroll :loadMore='handlerLoad' :offset='160'>
+          <Skeleton/>
+          <Skeleton/>
         </scroll>
       </tab-container>
     </div>
@@ -87,17 +87,13 @@ export default class WuHome extends Vue {
   scroll!: number;
   @State(state => state.topics.currentTab)
   currentTab!: string;
-  handlerScroll(e: Event) {
+  handlerScroll({ srcElement }: Event) {
     //@ts-ignore
-    let { clientHeight, scrollTop, scrollHeight } = e.srcElement;
+    let { clientHeight, scrollTop, scrollHeight } = srcElement;
     this.currentScrollTop = scrollTop;
     this.isScroll = true;
     let isBottom = scrollHeight - scrollTop === clientHeight;
     scrollTop > 400 ? (this.showTop = true) : (this.showTop = false);
-    // isBottom &&
-    //   this.topics.length &&
-    //   ++this.page &&
-    //   this.requestTopics({ tab: this.topicsTab, page: this.page });
   }
   handlerLoad() {
     this.requestTopics({ tab: this.topicsTab, page: ++this.page });

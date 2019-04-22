@@ -30,6 +30,7 @@ export default class ImgView extends Vue {
   right: 0;
   background: rgba(0, 0, 0, 0.7);
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   z-index: 1024;
   img {
     margin: auto;

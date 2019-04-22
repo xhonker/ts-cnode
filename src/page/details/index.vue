@@ -200,14 +200,16 @@ export default class Details extends Vue {
   }
 }
 .topicsDetailsContainer {
-  overflow: scroll;
   position: relative;
   top: 35px;
   background: #fff;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 .topicsDetailsNavbar {
   position: fixed;
   top: 0;
+  z-index: 2;
 }
 .topicsDetailsHeader {
   display: flex;

@@ -67,6 +67,7 @@ export default class WuMessage extends Vue {
 }
 .messageContainer {
   overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 .messageNotLogin {
   position: absolute;

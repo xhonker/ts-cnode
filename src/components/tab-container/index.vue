@@ -18,5 +18,6 @@ export default class TabContainer extends Vue {
 .wu-tab-container {
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 </style>
