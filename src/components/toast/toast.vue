@@ -1,10 +1,8 @@
 <template>
-  <transition name="toast">
-    <div :class="toast" v-if="show">
-      <div :class="iconCls" v-if="isLoading"></div>
-      <div class="wu-toast-content">
-        {{message}}
-      </div>
+  <transition name='toast'>
+    <div :class='toast' v-if='show'>
+      <div :class='iconCls' v-if='isLoading'></div>
+      <div class='wu-toast-content'>{{message}}</div>
     </div>
   </transition>
 </template>
@@ -53,15 +51,11 @@ export default class Toast extends Vue {
 <style lang='scss'>
 .wu-toast {
   position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0);
+  left: 0;
+  right: 0;
   text-align: center;
   color: #fff;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 4px;
   font-size: 12px;
-  text-align: center;
-  padding: 5px 10px;
   z-index: 1000;
   &-center {
     top: 50%;
@@ -70,7 +64,14 @@ export default class Toast extends Vue {
     top: 0;
   }
   &-content {
+    display: inline-block;
+    text-align: justify;
+    margin: auto;
+    padding: 5px 10px;
+    max-width: 80%;
     font-weight: 200;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
   }
   .loading {
     margin-right: auto;

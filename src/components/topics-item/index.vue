@@ -2,7 +2,9 @@
   <router-link :to='path.details(topics.id)'>
     <div :class='$style.topicsItem'>
       <div :class='$style.topicsItemContainer'>
-        <img :src='topics.author.avatar_url'>
+        <span :class='$style.userAvatar'>
+          <img :src='topics.author.avatar_url'>
+        </span>
         <div :class='$style.topicsItemContainerBody'>
           <div :class='$style.topicsItemContainerBodyTitle'>{{topics.title}}</div>
           <div :class='$style.topicsItemContainerBodyAuthor'>
@@ -41,10 +43,16 @@ export default class TopicsItem extends Vue {
 }
 .topicsItemContainer {
   display: flex;
+  align-items: center;
+}
+.userAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #eee;
   img {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
+    width: 100%;
   }
 }
 .topicsItemContainerBody {
