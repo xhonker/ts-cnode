@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Main from "@/page/main/index.vue";
-import Details from "@/page/details/index.vue";
-import User from "@/page/user/index.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -15,14 +13,19 @@ export default new Router({
     {
       path: "/details/:topic",
       name: "topicDetails",
-      component: Details,
+      component: () => import(/** webpackChunkName: "Details" */ '@/page/details/index.vue'),
       props: true
     },
     {
       path: "/user/:loginname",
       name: "user",
-      component: User,
+      component: () => import(/** webpackChunkName: "User" */'@/page/user/index.vue'),
       props: true
+    },
+    {
+      path: "/qrcode",
+      name: "qrcode",
+      component: () => import(/** webpackChunkName: "User" */'@/page/qrcode-login/index.vue'),
     }
   ]
 });

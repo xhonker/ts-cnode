@@ -6,11 +6,9 @@
     <div :class='$style.topicsDetailsContainer' @scroll='handlerScroll' ref='details'>
       <div :class='$style.topicsDetailsTitle'>{{details.title}}</div>
       <div :class='$style.topicsDetailsHeader'>
-        <img
-          :class='$style.topicsDetailsHeaderAvatar'
-          :src='details.author.avatar_url'
-          alt='avatar'
-        >
+        <span :class='$style.topicsDetailsHeaderAvatar'>
+          <img :src='details.author.avatar_url'>
+        </span>
         <span :class='$style.topicsDetailsHeaderNickname'>
           <router-link :to='path.user(details.author.loginname)'>{{details.author.loginname}}</router-link>
         </span>
@@ -221,6 +219,10 @@ export default class Details extends Vue {
   width: 25px;
   height: 25px;
   border-radius: 3px;
+  background-color: #eee;
+  img {
+    width: 100%;
+  }
 }
 .topicsDetailsHeaderNickname {
   flex: 1;

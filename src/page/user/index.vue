@@ -7,7 +7,9 @@
     </nav-bar>
     <div :class='$style.userContainer'>
       <div :class='$style.userContainerHeader'>
-        <img :src='userInfo.avatar_url' alt>
+        <span :class='$style.userAvatar'>
+          <img :src='userInfo.avatar_url'>
+        </span>
         <div :class='$style.userContainerHeaderInfo'>
           <div :class='$style.userContainerHeaderNickname'>{{userInfo.loginname}}</div>
           <div :class='$style.userContainerHeaderScore'>{{userInfo.score}}积分</div>
@@ -116,7 +118,6 @@ export default class User extends Vue {
   }
   userContainerHeight(): number {
     let userEles = [".wu-navbar", `${this.getStyle('userContainerHeader')}`, ".wu-tabs"];
-    console.log("TCL: User -> userEles", userEles)
     let myELes = [
       `${this.getStyle('user')} .wu-navbar`,
       `${this.getStyle("userContainerHeader")}`,
@@ -169,10 +170,15 @@ export default class User extends Vue {
   display: flex;
   align-items: center;
   padding: 10px;
+}
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #eee;
   img {
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
+    width: 100%;
   }
 }
 .userContainerHeaderNickname {

@@ -1,5 +1,5 @@
 import * as user from "@/store/interface/user";
-import { getUserInfo, getUserCollect, message } from "@/api/user";
+import { getUserInfo, getUserCollect, message, login } from "@/api/user";
 import * as type from "./type";
 import {
   ActionTree,
@@ -33,10 +33,15 @@ let actions: ActionTree<user.UserState, any> = {
   [type.UPDATE__USER__SCROLL]({ commit }, scrollTop: number) {
     commit(type.UPDATE__USER__SCROLL, scrollTop);
   },
-  async [type.USER__LOGIN]({ commit }, data: user.LoginInfo) {
-    let messages = await message(data.accessToken);
-    data.message = messages;
-    commit(type.USER__LOGIN, data);
+  async [type.USER__LOGIN]({ commit }, accessToken: string) {
+    let { success, ...data } = await login(accessToken);
+    if (!success) return;
+    let userInfo = Object.assign({}, data,
+      {
+        accessToken: accessToken,
+        localToken: accessToken
+      })
+    commit(type.USER__LOGIN, userInfo);
   },
   [type.USER__LOGOUT]({ commit }) {
     commit(type.USER__LOGOUT);
