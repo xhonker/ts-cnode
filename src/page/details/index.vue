@@ -6,9 +6,7 @@
     <div :class='$style.topicsDetailsContainer' @scroll='handlerScroll' ref='details'>
       <div :class='$style.topicsDetailsTitle'>{{details.title}}</div>
       <div :class='$style.topicsDetailsHeader'>
-        <span :class='$style.topicsDetailsHeaderAvatar'>
-          <img :src='details.author.avatar_url'>
-        </span>
+        <image-lazy :class='$style.topicsDetailsHeaderAvatar' :src='details.author.avatar_url'/>
         <span :class='$style.topicsDetailsHeaderNickname'>
           <router-link :to='path.user(details.author.loginname)'>{{details.author.loginname}}</router-link>
         </span>
@@ -61,7 +59,6 @@ import { collect, deCollect } from "@/api/user";
 import { toast } from "@/components/toast/index.ts";
 import { API_replies } from "@/api/topics";
 import { getElementAttr, setElementAttr, docH } from "@/utils";
-const prefixCls = "wu-topics-details";
 
 type getTopicDetails = (topic: string) => TopicDetails;
 
@@ -219,10 +216,6 @@ export default class Details extends Vue {
   width: 25px;
   height: 25px;
   border-radius: 3px;
-  background-color: #eee;
-  img {
-    width: 100%;
-  }
 }
 .topicsDetailsHeaderNickname {
   flex: 1;

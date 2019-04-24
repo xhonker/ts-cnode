@@ -28,11 +28,13 @@
         </scroll>
       </tab-container>
     </div>
-    <div
-      :class='["iconfont","icon-top",$style.iconTop]'
-      @click='$refs.topicsContent.$el.scrollTop=0'
-      v-show='showTop'
-    ></div>
+    <transition name='scroll-top'>
+      <div
+        :class='["iconfont","icon-top",$style.iconTop]'
+        @click='$refs.topicsContent.$el.scrollTop=0'
+        v-show='showTop'
+      ></div>
+    </transition>
   </div>
 </template>
 
@@ -177,6 +179,16 @@ export default class WuHome extends Vue {
 <style lang='scss' module>
 @import "style/index";
 .home {
+  :global(.scroll-top-enter-active) {
+    transition: all 0.3s ease;
+  }
+  :global(.scroll-top-leave-active) {
+    transition: all 0.8s ease-in-out;
+  }
+  :global(.scroll-top-enter),
+  :global(.scroll-top-leave-to) {
+    opacity: 0;
+  }
 }
 .content {
   overflow: hidden;

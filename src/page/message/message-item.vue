@@ -1,7 +1,7 @@
 <template>
   <div :class='$style.messageItem'>
     <div :class='$style.messageItemContainer'>
-      <img :class='$style.messageItemContainerAvatar' :src='message.author.avatar_url'>
+      <image-lazy :class='$style.messageItemContainerAvatar' :src='message.author.avatar_url'/>
       <div :class='$style.messageItemContainerContent'>
         <router-link :to='path.user(message.author.loginname)'>
           <span>{{message.author.loginname}}</span>
@@ -55,6 +55,11 @@ export default class MessageItem extends Vue {
   width: 25px;
   height: 25px;
   border-radius: 4px;
+  overflow: hidden;
+  background-color: #eee;
+  img {
+    width: 100%;
+  }
 }
 .messageItemContainerReply {
   overflow: hidden;

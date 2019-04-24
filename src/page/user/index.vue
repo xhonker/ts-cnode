@@ -7,9 +7,7 @@
     </nav-bar>
     <div :class='$style.userContainer'>
       <div :class='$style.userContainerHeader'>
-        <span :class='$style.userAvatar'>
-          <img :src='userInfo.avatar_url'>
-        </span>
+        <image-lazy :class='$style.userAvatar' :src='userInfo.avatar_url'/>
         <div :class='$style.userContainerHeaderInfo'>
           <div :class='$style.userContainerHeaderNickname'>{{userInfo.loginname}}</div>
           <div :class='$style.userContainerHeaderScore'>{{userInfo.score}}积分</div>
@@ -124,7 +122,6 @@ export default class User extends Vue {
       `${this.getStyle('user')} .wu-tabs`,
       ".wu-tabbar"
     ];
-    console.log("TCL: User -> myELes", myELes)
     let calc = this.my ? calcClientHeight(myELes) : calcClientHeight(userEles);
     return docH - calc;
   }
@@ -176,10 +173,6 @@ export default class User extends Vue {
   height: 40px;
   border-radius: 4px;
   overflow: hidden;
-  background-color: #eee;
-  img {
-    width: 100%;
-  }
 }
 .userContainerHeaderNickname {
   font-size: 18px;

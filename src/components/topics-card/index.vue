@@ -1,9 +1,7 @@
 <template>
   <Card :class='$style.topicsCard' bodyBorder>
     <div :class='$style.topicsItemHeader' slot='header'>
-      <div :class='$style.topicsItemAvatar'>
-        <img :src='topics.author.avatar_url'>
-      </div>
+      <image-lazy :src='topics.author.avatar_url' :class="$style.topicsItemAvatar"/>
       <div :class='$style.topicsItemHeaderContainer'>
         <div :class='$style.topicsItemHeaderContainerNickname'>{{topics.author.loginname}}</div>
         <Icon type='hot' v-if='topics.top'/>
@@ -78,10 +76,6 @@ export default class TopicsCard extends Vue {
   border-radius: 4px;
   margin-right: 10px;
   overflow: hidden;
-  background: #eee;
-  img {
-    width: 100%;
-  }
 }
 .topicsItemHeader {
   display: flex;

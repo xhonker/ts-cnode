@@ -4,7 +4,7 @@
       <nav-bar>
         登录
         <span slot='right'>
-          <router-link to='qrcode'>
+          <router-link :to='path.qrcode()'>
             <icon type='scan'/>
           </router-link>
         </span>
@@ -39,7 +39,8 @@ import { UserState } from "@/store/interface/user";
     NavBar,
     User,
     Icon
-  }
+  },
+  inject:['path']
 })
 export default class WuLogin extends Vue {
   private accessToken: string = '';

@@ -16,7 +16,6 @@ export default class Scroll extends Vue {
   @State(state => state.request) loading!: boolean // 如果是vuex 需要 一个接口请求loading的状态
   mounted() {
     this.scrollContainer.addEventListener('scroll', this.handlerScroll);
-    console.log(this.loading)
   }
   beforeDestroy() {
     this.scrollContainer.removeEventListener('scroll', this.handlerScroll);

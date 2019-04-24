@@ -1,7 +1,7 @@
 <template>
   <card :class='$style.topicDetailsReplie'>
     <div :class='$style.topicDetailsReplieHeader' slot='header'>
-      <img :class='$style.topicDetailsReplieAvatar' :src='replie.author.avatar_url'>
+      <image-lazy :class='$style.topicDetailsReplieAvatar' :src='replie.author.avatar_url'/>
       <span :class='$style.topicDetailsReplieNickname'>
         <router-link :to='path.user(replie.author.loginname)'>{{replie.author.loginname}}</router-link>
       </span>
@@ -63,6 +63,7 @@ export default class Replie extends Vue {
   width: 20px;
   height: 20px;
   border-radius: 4px;
+  overflow: hidden;
 }
 .topicDetailsReplieFloor {
   flex: 1;
