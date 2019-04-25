@@ -83,6 +83,21 @@ export default class WuHome extends Vue {
   @State(state => state.topics.topics) topics!: Array<TopicInfo>;
   @State(state => state.topics.topicsScroll) scroll!: number;
   @State(state => state.topics.currentTab) currentTab!: string;
+
+  mounted() {
+    !this.topics.length && this.requestTopics();
+    this.init();
+    //@ts-ignore
+    this.$refs.topicsContent.$el.scrollTop = this.scroll;
+  }
+  init() {
+    let content = [".wu-tabbar", ".wu-navbar", ".wu-tabs"];
+    let containerHeight = docH - calcClientHeight(content);
+    this.contentH = containerHeight;
+  }
+  beforeDestroy() {
+    this.setTopicsScroll(this.currentScrollTop);
+  }
   handlerScroll({ srcElement }: Event) {
     //@ts-ignore
     let { clientHeight, scrollTop, scrollHeight } = srcElement;
@@ -125,9 +140,6 @@ export default class WuHome extends Vue {
     this.touchEndX = 0;
     this.touchStartX = 0;
   }
-  get calcTouchDist() {
-    return this.touchStartX - this.touchEndX;
-  }
   get topicsTab(): string {
     return this.currentTab;
   }
@@ -145,20 +157,7 @@ export default class WuHome extends Vue {
   get tabIndex() {
     return topicTabs.findIndex(d => d.id === this.topicsTab);
   }
-  mounted() {
-    !this.topics.length && this.requestTopics();
-    this.init();
-    //@ts-ignore
-    this.$refs.topicsContent.$el.scrollTop = this.scroll;
-  }
-  init() {
-    let temp = [".wu-tabbar", ".wu-navbar", ".wu-tabs"];
-    let h = docH - calcClientHeight(temp);
-    this.contentH = h;
-  }
-  beforeDestroy() {
-    this.setTopicsScroll(this.currentScrollTop);
-  }
+
 }
 </script>
 

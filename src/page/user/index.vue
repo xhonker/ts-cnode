@@ -86,24 +86,15 @@ type updateScroll = (scrollTop: number) => never;
 })
 export default class User extends Vue {
   private currentScrollTop: number = 0;
-  @Prop()
-  private loginname!: string;
-  @Prop()
-  private my!: string;
-  @Action(type.GET__USER__INFO)
-  getUserInfo!: getUser;
-  @Action(type.CHANGE__USER__TAB)
-  changeUserTab!: changeTab;
-  @Action(type.UPDATE__USER__SCROLL)
-  updateUserScroll!: updateScroll;
-  @Action(type.USER__LOGOUT)
-  logout!: () => never;
-  @Action(type.GET__USER__COLLECT)
-  getUserCollect!: (loginname: string) => void;
-  @State(state => state.user.users)
-  users!: Array<UserInfo>;
-  @State(state => state.user)
-  user!: UserState;
+  @Prop() private loginname!: string;
+  @Prop() private my!: string;
+  @Action(type.GET__USER__INFO) getUserInfo!: getUser;
+  @Action(type.CHANGE__USER__TAB) changeUserTab!: changeTab;
+  @Action(type.UPDATE__USER__SCROLL) updateUserScroll!: updateScroll;
+  @Action(type.USER__LOGOUT) logout!: () => never;
+  @Action(type.GET__USER__COLLECT) getUserCollect!: (loginname: string) => void;
+  @State(state => state.user.users) users!: Array<UserInfo>;
+  @State(state => state.user) user!: UserState;
   async mounted() {
     !this.userInfo.loginname && (await this.getUserInfo(this.loginname));
     this.init();

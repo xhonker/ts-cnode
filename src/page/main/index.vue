@@ -59,10 +59,8 @@ type requestTopics = (data?: { tab?: string; page?: number }) => never;
 })
 export default class Main extends Vue {
   private tabbars: Array<TabsInfo> = tabbars;
-  @Action(type.CHANGE__TABBAR)
-  changeTabBar!: (tab: string) => void;
-  @State(state => state.topics.tabbar)
-  _tabbar!: string;
+  @Action(type.CHANGE__TABBAR) changeTabBar!: (tab: string) => void;
+  @State(state => state.topics.tabbar) _tabbar!: string;
   get tabbar() {
     return this._tabbar;
   }

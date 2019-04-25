@@ -75,19 +75,12 @@ export default class Details extends Vue {
   private scroll: number = 0;
   private showTop: boolean = false;
   private comment: string = "";
-  @Prop()
-  private topic!: string;
-
-  @State(state => state.topics.openTopics)
-  openTopics!: Array<TopicDetails>;
-  @State(state => state.user)
-  user!: UserState;
-  @Action(REQUEST__TOPIC__DETAILS)
-  getTopicDetails!: getTopicDetails;
-  @Action(SET__TOPIC__SCROLL)
-  setTopicScroll!: (data: TopicScroll) => void;
-  @Action(CHANGE__COLLECT)
-  changeCollect!: (data: ChangeCollect) => void;
+  @Prop() private topic!: string;
+  @State(state => state.topics.openTopics) openTopics!: Array<TopicDetails>;
+  @State(state => state.user) user!: UserState;
+  @Action(REQUEST__TOPIC__DETAILS) getTopicDetails!: getTopicDetails;
+  @Action(SET__TOPIC__SCROLL) setTopicScroll!: (data: TopicScroll) => void;
+  @Action(CHANGE__COLLECT) changeCollect!: (data: ChangeCollect) => void;
   async mounted() {
     !this.details.author && (await this.getTopicDetails(this.topic));
     this.details.scroll > 200 && (this.showTop = true);
@@ -97,6 +90,10 @@ export default class Details extends Vue {
     setElementAttr(`.${this.$style.topicsDetailsContainer}`, "style", `height:${h}px`);
     //@ts-ignore
     this.$refs.details.scrollTop = this.details.scroll;
+  }
+  beforeDestroy(): void {
+    let { topic: id, scroll } = this;
+    this.setTopicScroll({ id, scroll });
   }
   get details(): TopicDetails {
     return this.openTopics.filter(d => d.id === this.topic)[0] || {};
@@ -155,10 +152,6 @@ export default class Details extends Vue {
         this.$refs.details.scrollTop = this.$refs.details.scrollHeight;
       })
       : toast.show("评论内容不能为空");
-  }
-  beforeDestroy(): void {
-    let { topic: id, scroll } = this;
-    this.setTopicScroll({ id, scroll });
   }
 }
 </script>

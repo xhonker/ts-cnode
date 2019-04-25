@@ -28,8 +28,8 @@ const QRCODE_ERROR: Object = Object.freeze({
   }
 })
 export default class QrcodeLogin extends Vue {
-  @Action(USER__LOGIN)
-  userLogin!: (data: string) => never;
+  @Action(USER__LOGIN) userLogin!: (data: string) => never;
+  
   onDecode(res: string) {
     if (res.length < 36) return toast.show('accessToken不对');
     this.userLogin(res);

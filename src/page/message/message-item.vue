@@ -28,8 +28,7 @@ import { publicMethods } from "@/mixins";
   inject: ["path"]
 })
 export default class MessageItem extends Vue {
-  @Prop()
-  private message!: MessageInfo;
+  @Prop() private message!: MessageInfo;
 }
 </script>
 

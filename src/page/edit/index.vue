@@ -50,8 +50,7 @@ export default class WuEdit extends Vue {
   private title: string = "";
   private content: string = "";
 
-  @State(state => state.user.accessToken)
-  accesstoken!: string;
+  @State(state => state.user.accessToken) accesstoken!: string;
 
   handlerSubmit() {
     let { title, tab, content, accesstoken } = this;

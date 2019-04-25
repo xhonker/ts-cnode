@@ -40,19 +40,15 @@ import { UserState } from "@/store/interface/user";
     User,
     Icon
   },
-  inject:['path']
+  inject: ['path']
 })
 export default class WuLogin extends Vue {
   private accessToken: string = '';
-  @Action(USER__LOGIN)
-  userLogin!: (data: string) => never;
-  @State(state => state.user)
-  user!: UserState;
+  @Action(USER__LOGIN) userLogin!: (data: string) => never;
+  @State(state => state.user) user!: UserState;
   mounted() {
     let token = this.user.localToken;
-    if (token) {
-      this.login(token);
-    }
+    if (token) this.login(token);
   }
   handlerLogin() {
     this.login(this.accessToken);

@@ -39,10 +39,8 @@ import {
   }
 })
 export default class WuMessage extends Vue {
-  @State(state => state.user)
-  user!: UserState;
-  @Action(GET__MY__MESSAGE)
-  getMessage!: (accessToken: string) => void;
+  @State(state => state.user) user!: UserState;
+  @Action(GET__MY__MESSAGE) getMessage!: (accessToken: string) => void;
   mounted() {
     this.init();
   }
