@@ -74,70 +74,56 @@ export default class WuHome extends Vue {
   private currentScrollTop: number = 0;
   private topicTabs: Array<TabsInfo> = topicTabs;
   private touchStartX: number = 0;
-  private touchStartY: number = 0;
   private touchEndX: number = 0;
   private contentH: number = 0;
   private calcTouch: number = 0;
-  private isScroll: boolean = false;
   @Action(type.REQUEST__TOPICS) requestTopics!: requestTopics;
   @Action(type.TOPICS__CHANGE__TAB) topicsChangeTab!: (tab: string) => void;
-  @Action(type.SET__TOPICS__SCROLL)
-  setTopicsScroll!: (scrollTop: number) => void;
-  @State(state => state.topics.topics)
-  topics!: Array<TopicInfo>;
-  @State(state => state.topics.topicsScroll)
-  scroll!: number;
-  @State(state => state.topics.currentTab)
-  currentTab!: string;
+  @Action(type.SET__TOPICS__SCROLL) setTopicsScroll!: (scrollTop: number) => void;
+  @State(state => state.topics.topics) topics!: Array<TopicInfo>;
+  @State(state => state.topics.topicsScroll) scroll!: number;
+  @State(state => state.topics.currentTab) currentTab!: string;
   handlerScroll({ srcElement }: Event) {
     //@ts-ignore
     let { clientHeight, scrollTop, scrollHeight } = srcElement;
     this.currentScrollTop = scrollTop;
-    this.isScroll = true;
-    let isBottom = scrollHeight - scrollTop === clientHeight;
-    scrollTop > 400 ? (this.showTop = true) : (this.showTop = false);
+    this.showTop = scrollTop > 400;
   }
   handlerLoad() {
     this.requestTopics({ tab: this.topicsTab, page: ++this.page });
   }
   handlerTouchStart({ touches }: TouchEvent) {
-    let { pageX, pageY } = touches[0];
+    let { pageX } = touches[0];
     this.touchStartX = pageX;
-    this.touchStartY = pageY;
   }
   handlerTouchmove({ touches }: TouchEvent) {
-    let { pageX, pageY } = touches[0];
+    let { pageX } = touches[0];
     this.touchEndX = pageX;
-    let touchEndY = pageY;
-    let touchY = this.touchStartY - touchEndY;
-    if (Math.abs(touchY) < 50) {
-      this.isScroll = false;
-    }
-
-    if (this.isScroll) return;
-    if (Math.abs(this.calcTouchDist) < 15) return;
-    this.calcTouch = ~(this.touchStartX - this.touchEndX) + 1; // 取反
+    let touchX = this.touchEndX - this.touchStartX;
+    let isTouchX = Math.abs(touchX) < 50;
+    if (isTouchX) return;
+    this.calcTouch = touchX;
   }
   handlerTouchend() {
     let screenW = window.screen.width / 3;
     let isSlide = Math.abs(this.calcTouch) > screenW;
-    isSlide && this.touchEndX > 0 ? this.touchSwitchTab() : this.resetTouch();
-    this.calcTouch = 0;
-    this.touchStartY = 0;
+    isSlide && this.touchEndX > 0 ? this.touchSwitchTab() : this.resetTouchStatus();
   }
   touchSwitchTab() {
-    let tab;
-    if (this.tabIndex === 0 && this.calcTouchDist < 0) return this.resetTouch();
-    if (this.tabIndex === topicTabs.length - 1 && this.calcTouchDist > 0)
-      return this.resetTouch();
-    this.calcTouchDist > 0
-      ? (tab = topicTabs[this.tabIndex + 1].id)
-      : (tab = topicTabs[this.tabIndex - 1].id);
-    this.topicsTab = tab;
-    this.resetTouch();
+    let isFirstTab = this.tabIndex === 0 && this.calcTouch > 0;
+    let isLastTab = this.tabIndex === topicTabs.length - 1 && this.calcTouch < 0;
+
+    if (isFirstTab || isLastTab) {
+      return this.resetTouchStatus();
+    }
+    let tabId = this.calcTouch > 0 ? this.tabIndex - 1 : this.tabIndex + 1;
+    this.topicsTab = topicTabs[tabId].id;
+    this.resetTouchStatus();
   }
-  resetTouch() {
+  resetTouchStatus() {
     this.calcTouch = 0;
+    this.touchEndX = 0;
+    this.touchStartX = 0;
   }
   get calcTouchDist() {
     return this.touchStartX - this.touchEndX;
