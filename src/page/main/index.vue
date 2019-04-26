@@ -35,13 +35,12 @@ import Edit from "../edit/index.vue";
 import Login from "../login/index.vue";
 import Message from "../message/index.vue";
 import * as type from "@/store/topics/type";
-import { Action, Getter, State } from "vuex-class";
+import { Action, State } from "vuex-class";
 import { TabsInfo } from "@/store/interface/topics";
 import { markALlMessage } from "@/api/user";
 import { calcClientHeight, docH } from "@/utils";
 import { regEvent } from "@/utils/regEvent";
 import tabbars from "./config";
-type requestTopics = (data?: { tab?: string; page?: number }) => never;
 
 @Component({
   components: {

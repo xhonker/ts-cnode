@@ -51,8 +51,9 @@ export default class WuMessage extends Vue {
     setElementAttr(`.${this.$style.messageContainer}`, "style", `height:${h}px`);
 
     let token = this.user.localToken || this.user.accessToken;
-    token && !this.user.message.length && this.getMessage(token);
-    token && this.user.message.length && markALlMessage();
+    if (!token) return;
+    !this.user.message.length && this.getMessage(token);
+    this.user.message.length && markALlMessage();
   }
 }
 </script>
