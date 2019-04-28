@@ -1,31 +1,16 @@
 import Vue from "vue";
-import Router from "vue-router";
-import Main from "@/page/main/index.vue";
+import Router, { RouteConfig } from "vue-router";
 Vue.use(Router);
+let isDev = process.env.NODE_ENV === 'development';
+let routes: Array<RouteConfig> = [];
+//@ts-ignore
+let registerRouter = require.context('./page', true, /_router\.ts$/i);
+registerRouter.keys().forEach((fileName: string) => {
+  let file = registerRouter(fileName).default;
+  if (file.private && !isDev) return; // 如果是开发环境不就打包本地测试的路由
+  routes.push(file);
+})
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "Home",
-      component: Main
-    },
-    {
-      path: "/details/:topic",
-      name: "topicDetails",
-      component: () => import(/** webpackChunkName: "Details" */ '@/page/details/index.vue'),
-      props: true
-    },
-    {
-      path: "/user/:loginname",
-      name: "user",
-      component: () => import(/** webpackChunkName: "User" */'@/page/user/index.vue'),
-      props: true
-    },
-    {
-      path: "/qrcode",
-      name: "qrcode",
-      component: () => import(/** webpackChunkName: "User" */'@/page/qrcode-login/index.vue'),
-    }
-  ]
-});
+  routes
+})
