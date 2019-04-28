@@ -1,6 +1,6 @@
 export default {
   path: "/user/:loginname",
   name: "User",
-  component: () => import(/** webpackChunkName: "User" */'@/page/user/index.vue'),
+  component: () => import(/** webpackChunkName: "User" */'./index.vue'),
   props: true
 }
