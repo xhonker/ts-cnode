@@ -1,5 +1,5 @@
 <template>
-  <i :class="className"></i>
+  <i :class="className" v-on="$listeners"></i>
 </template>
 
 <script lang='ts'>

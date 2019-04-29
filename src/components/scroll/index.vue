@@ -8,6 +8,12 @@
 import { Vue, Prop, Component } from 'vue-property-decorator';
 import { State } from 'vuex-class';
 
+interface ScrollProperty {
+  clientHeight: number,
+  scrollTop: number,
+  scrollHeight: number,
+}
+
 @Component
 export default class Scroll extends Vue {
   @Prop({ default: false }) useDocument!: boolean;
@@ -20,22 +26,28 @@ export default class Scroll extends Vue {
   beforeDestroy() {
     this.scrollContainer.removeEventListener('scroll', this.handlerScroll);
   }
-  handlerScroll({ target }: Event) {
+  handlerScroll() {
     if (this.loading) return;
-    let { clientHeight, scrollHeight, scrollTop } = this.scrollContainer;
+    let { clientHeight, scrollTop, scrollHeight } = this.getScrollProperty();
     let _height = clientHeight + scrollTop;
     let _offsetHeight = scrollHeight - this.offset;
     if (_height >= _offsetHeight) {
       this.loadMore();
     }
   }
-  get scrollContainer(): Element {
-    //@ts-ignore
-    return this.useDocument ? window : this.refsNode.parentNode;
+  getScrollProperty(): ScrollProperty {
+    if (this.scrollContainer === window) {
+      return {
+        clientHeight: window.innerHeight,
+        scrollTop: window.pageYOffset || document.body.scrollTop,
+        scrollHeight: document.body.scrollHeight || document.body.offsetHeight
+      }
+    }
+    return this.scrollContainer as ScrollProperty;
   }
-  get refsNode(): Element {
+  get scrollContainer(): Element | Window {
     //@ts-ignore
-    return this.$refs.node;
+    return this.useDocument ? window : this.$refs.node.parentNode;
   }
 }
 </script>

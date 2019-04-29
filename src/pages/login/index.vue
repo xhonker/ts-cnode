@@ -8,6 +8,7 @@
             <icon type='scan'/>
           </router-link>
         </span>
+        <icon @click='$router.go(-2)' slot='left' type='left'/>
       </nav-bar>
       <div :class='$style.loginContainer'>
         <div :class='$style.loginInput'>
@@ -18,9 +19,9 @@
         </button>
       </div>
     </template>
-    <template v-else>
+    <!-- <template v-else>
       <user :loginname='user.loginname' my='我' v-if='user.loginname'/>
-    </template>
+    </template>-->
   </div>
 </template>
 
@@ -57,6 +58,7 @@ export default class WuLogin extends Vue {
   async login(token: string) {
     if (!token) return toast.show("请输入用户令牌");
     this.userLogin(token);
+    this.$router.go(-1);
   }
 }
 </script>

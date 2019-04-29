@@ -1,5 +1,5 @@
 <template>
-  <div :class="labelItemCls" @click="$parent.$emit('input',id)">
+  <div :class='labelItemCls' @click='$parent.$emit("input",id)'>
     <span>{{label}}</span>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default class Label extends Vue {
 </script>
 
 <style lang='scss'>
-@import "../../../style/index";
+@import "style/index";
 .wu-label-item {
   display: inline-block;
   padding: 5px 8px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="wu-tabs">
+  <div :class='$style.tabs'>
     <slot></slot>
   </div>
 </template>
@@ -14,8 +14,8 @@ export default class Tabs extends Vue {
 }
 </script>
 
-<style lang='scss'>
-.wu-tabs {
+<style lang='scss' module>
+.tabs {
   position: relative;
   display: flex;
   height: 30px;

@@ -6,7 +6,7 @@ import { CreateTopic, CommentInfo } from "@/store/interface/topics";
  * @param page 默认第一页
  * @param limit 默认20
  */
-export const getTopics = (tab = "all", page = 1, limit = 20) =>
+export const getTopics = (tab = "all", page = 1, limit = 10) =>
   get("topics", { tab, page, limit }).then(data => data.data.data);
 
 /**

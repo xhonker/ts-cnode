@@ -1,6 +1,8 @@
 <template>
   <div :class='$style.message'>
-    <nav-bar>消息中心</nav-bar>
+    <nav-bar @leftClick='$router.go(-1)'>
+      <icon slot='left' type='left'/>消息中心
+    </nav-bar>
     <div :class='$style.messageContainer'>
       <template v-if='!user.localToken'>
         <span :class='$style.messageNotLogin'>请登录</span>
@@ -45,13 +47,8 @@ export default class WuMessage extends Vue {
     this.init();
   }
   init() {
-    //@ts-ignore
-    let h = docH - calcClientHeight([`.${this.$style.message} .wu-navbar`, ".wu-tabbar"]);
-    //@ts-ignore
-    setElementAttr(`.${this.$style.messageContainer}`, "style", `height:${h}px`);
-
     let token = this.user.localToken || this.user.accessToken;
-    if (!token) return;
+    if (!token) return this.$router.push("login");
     !this.user.message.length && this.getMessage(token);
     this.user.message.length && markALlMessage();
   }

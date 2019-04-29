@@ -1,6 +1,5 @@
-
 export default {
-  name: "Home",
   path: "/",
+  name: "Home",
   component: () => import(/* webpackChunkName : "Home" */ './index.vue')
 }

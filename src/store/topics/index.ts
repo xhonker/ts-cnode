@@ -21,8 +21,9 @@ let actions: ActionTree<TopicsState, any> = {
     let topics = await getTopics(data.tab, data.page);
     commit(type.REQUEST__TOPICS, topics);
   },
-  [type.TOPICS__CHANGE__TAB]({ commit }, tab: string) {
+  [type.TOPICS__CHANGE__TAB]({ commit, dispatch }, tab: string) {
     commit(type.TOPICS__CHANGE__TAB, tab);
+    dispatch(type.REQUEST__TOPICS, { tab });
   },
   [type.CHANGE__TABBAR]({ commit }, tab: string) {
     commit(type.CHANGE__TABBAR, tab);

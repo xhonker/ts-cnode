@@ -1,39 +1,30 @@
 <template>
   <div :class='$style.home'>
-    <nav-bar>首页</nav-bar>
-    <div :class='$style.content'>
-      <tabs v-model='topicsTab'>
-        <tabs-item :id='tab.id' :key='tab.id' v-for='tab in topicTabs'>{{tab.value}}</tabs-item>
-      </tabs>
+    <temp-nav-bar @hidden='showTop = false' @show='showTop= true'>
       <tab-container
-        :style='styContent'
-        @scroll='handlerScroll'
+        :class='$style.content'
+        :style='tabContentStyle'
         @touchend='handlerTouchend'
         @touchmove='handlerTouchmove'
         @touchstart='handlerTouchStart'
         ref='topicsContent'
       >
-        <tab-container-item
+        <router-link
           :class='$style.tabContainerItem'
           :key='key'
+          :to='path.details(topic.id)'
           v-for='(topic, key) in topics'
         >
-          <router-link :to='path.details(topic.id)'>
-            <topics-card :topics='topic'/>
-          </router-link>
-        </tab-container-item>
-        <scroll :loadMore='handlerLoad' :offset='160'>
+          <topics-card :topics='topic'/>
+        </router-link>
+        <scroll :loadMore='handlerLoad' :offset='160' useDocument>
           <Skeleton/>
           <Skeleton/>
         </scroll>
       </tab-container>
-    </div>
+    </temp-nav-bar>
     <transition name='scroll-top'>
-      <div
-        :class='["iconfont","icon-top",$style.iconTop]'
-        @click='$refs.topicsContent.$el.scrollTop=0'
-        v-show='showTop'
-      ></div>
+      <div :class='["iconfont","icon-top",$style.iconTop]' @click='scrollToTop' v-show='showTop'></div>
     </transition>
   </div>
 </template>
@@ -42,11 +33,9 @@
 import { Vue, Prop, Component, Watch } from "vue-property-decorator";
 import TabContainer from "@/components/tab-container/index.vue";
 import TabContainerItem from "@/components/tab-container-item/index.vue";
-import NavBar from "@/components/navbar/index.vue";
-import Tabs from "@/components/tabs/index.vue";
-import TabsItem from "@/components/tabs-item/index.vue";
 import TopicsCard from "@/components/topics-card/index.vue";
 import Scroll from '@/components/scroll/index.vue'
+import tempNavBar from "./Navbar.vue";
 import Skeleton from "./skeleton.vue";
 import * as type from "@/store/topics/type";
 import { Action, Getter, State } from "vuex-class";
@@ -59,50 +48,33 @@ type requestTopics = (data?: { tab?: string; page?: number }) => void;
   components: {
     TabContainer,
     TabContainerItem,
-    NavBar,
-    Tabs,
-    TabsItem,
     TopicsCard,
     Scroll,
-    Skeleton
+    Skeleton,
+    tempNavBar,
   },
   inject: ["path"]
 })
-export default class WuHome extends Vue {
+export default class Home extends Vue {
   private page: number = 1;
   private showTop: boolean = false;
   private currentScrollTop: number = 0;
-  private topicTabs: Array<TabsInfo> = topicTabs;
   private touchStartX: number = 0;
   private touchEndX: number = 0;
   private contentH: number = 0;
   private calcTouch: number = 0;
-  @Action(type.REQUEST__TOPICS) requestTopics!: requestTopics;
+  @State(state => state.topics.topics) topics!: Array<TopicInfo>;
+  @State(state => state.topics.currentTab) currentTab!: string;
+  @State(state => state.topics.topicsScroll) scroll!: number;
   @Action(type.TOPICS__CHANGE__TAB) topicsChangeTab!: (tab: string) => void;
   @Action(type.SET__TOPICS__SCROLL) setTopicsScroll!: (scrollTop: number) => void;
-  @State(state => state.topics.topics) topics!: Array<TopicInfo>;
-  @State(state => state.topics.topicsScroll) scroll!: number;
-  @State(state => state.topics.currentTab) currentTab!: string;
-
+  @Action(type.REQUEST__TOPICS) requestTopics!: requestTopics;
   mounted() {
     !this.topics.length && this.requestTopics();
-    this.init();
-    //@ts-ignore
-    this.$refs.topicsContent.$el.scrollTop = this.scroll;
-  }
-  init() {
-    let content = [".wu-tabbar", ".wu-navbar", ".wu-tabs"];
-    let containerHeight = docH - calcClientHeight(content);
-    this.contentH = containerHeight;
+    window.scrollTo(0, this.scroll);
   }
   beforeDestroy() {
     this.setTopicsScroll(this.currentScrollTop);
-  }
-  handlerScroll({ srcElement }: Event) {
-    //@ts-ignore
-    let { clientHeight, scrollTop, scrollHeight } = srcElement;
-    this.currentScrollTop = scrollTop;
-    this.showTop = scrollTop > 400;
   }
   handlerLoad() {
     this.requestTopics({ tab: this.topicsTab, page: ++this.page });
@@ -140,24 +112,24 @@ export default class WuHome extends Vue {
     this.touchEndX = 0;
     this.touchStartX = 0;
   }
-  get topicsTab(): string {
-    return this.currentTab;
+  scrollToTop() {
+    window.scrollTo(0, 0);
   }
-  set topicsTab(tab: string) {
-    this.page = 1;
-    this.topicsChangeTab(tab);
-    this.requestTopics({ tab, page: 1 });
-  }
-  get styContent() {
+  get tabContentStyle() {
     return {
-      height: `${this.contentH}px`,
       transform: `translateX(${this.calcTouch}px)`
     };
   }
   get tabIndex() {
     return topicTabs.findIndex(d => d.id === this.topicsTab);
   }
-
+  get topicsTab(): string {
+    return this.currentTab;
+  }
+  set topicsTab(tab: string) {
+    this.page = 1;
+    this.topicsChangeTab(tab);
+  }
 }
 </script>
 
@@ -180,13 +152,15 @@ export default class WuHome extends Vue {
   background-color: #eee;
 }
 .tabContainerItem {
+  display: block;
   margin: 5px 7px;
 }
 .iconTop {
-  position: absolute;
+  position: fixed;
   bottom: 80px;
   right: 20px;
   color: $theme;
   font-size: 40px !important;
+  z-index: $fixed-zIndex;
 }
 </style>
