@@ -5,14 +5,13 @@ import {
   ActionTree,
   MutationTree,
   GetterTree
-} from "../../../node_modules/vuex";
+} from "vuex";
 import { CHANGE__COLLECT } from "@/store/topics/type";
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from "@/utils";
 import { TopicInfo } from "@/store/interface/topics";
 
 let state: user.UserState = {
-  localToken: getLocalStorage("accessToken"),
-  accessToken: "",
+  accessToken: getLocalStorage("accessToken"),
   users: [],
   tab: "replies",
   scroll: 0,
@@ -33,14 +32,14 @@ let actions: ActionTree<user.UserState, any> = {
   [type.UPDATE__USER__SCROLL]({ commit }, scrollTop: number) {
     commit(type.UPDATE__USER__SCROLL, scrollTop);
   },
-  async [type.USER__LOGIN]({ commit }, accessToken: string) {
+  async [type.USER__LOGIN]({ commit, dispatch }, accessToken: string) {
     let { success, ...data } = await login(accessToken);
     if (!success) return;
     let userInfo = Object.assign({}, data,
       {
-        accessToken: accessToken,
-        localToken: accessToken
+        accessToken: accessToken
       })
+    dispatch(type.GET__USER__INFO, data.loginname);
     commit(type.USER__LOGIN, userInfo);
   },
   [type.USER__LOGOUT]({ commit }) {
@@ -78,7 +77,6 @@ let mutations: MutationTree<user.UserState> = {
   },
   [type.USER__LOGOUT](state) {
     state.accessToken = "";
-    state.localToken = "";
     state.avatar_url = "";
     state.id = "";
     state.loginname = "";
@@ -103,7 +101,6 @@ let mutations: MutationTree<user.UserState> = {
 };
 let getters: GetterTree<user.UserState, any> = {
   token: state => state.accessToken,
-  localToken: state => state.localToken
 };
 
 /**

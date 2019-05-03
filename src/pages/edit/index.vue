@@ -1,7 +1,7 @@
 <template>
   <div :class='$style.edit'>
-    <nav-bar @rightClick='handlerSubmit'>
-      新建主题
+    <nav-bar @leftClick='$router.go(-1)' @rightClick='handlerSubmit'>
+      <icon slot='left' type='back'/>新建主题
       <span slot='right'>发布</span>
     </nav-bar>
     <div :class='$style.editContainer'>
@@ -52,7 +52,7 @@ export default class WuEdit extends Vue {
 
   @State(state => state.user.accessToken) accesstoken!: string;
 
-  handlerSubmit() {
+  async handlerSubmit() {
     let { title, tab, content, accesstoken } = this;
     let error = [];
     if (!accesstoken) return toast.show("请登录");
@@ -63,14 +63,12 @@ export default class WuEdit extends Vue {
       error.push("请输入内容");
     }
     if (error.length) {
-      toast.show(error.join());
+      return toast.show(error.join());
     }
-    title &&
-      content &&
-      accesstoken &&
-      createTopic({ title, tab, content, accesstoken }).then(
-        d => d.success && this.$router.push({ path: `/details/${d.topic_id}` })
-      );
+    let { success, topic_id } = await createTopic({ title, tab, content, accesstoken });
+    if (success) {
+      this.$router.push({ path: `/details/${topic_id}` })
+    }
   }
 }
 </script>

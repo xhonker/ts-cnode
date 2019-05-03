@@ -36,7 +36,6 @@ export interface CollectInfo {
 export interface LoginInfo {
   success?: boolean;
   accessToken: string;
-  localToken: string;
   loginname: string;
   avatar_url: string;
   id: string;

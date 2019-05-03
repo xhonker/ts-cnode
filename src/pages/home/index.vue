@@ -1,6 +1,6 @@
 <template>
   <div :class='$style.home'>
-    <temp-nav-bar @hidden='showTop = false' @show='showTop= true'>
+    <home-nav-bar @hidden='showTop = false' @show='showTop= true'>
       <tab-container
         :class='$style.content'
         :style='tabContentStyle'
@@ -22,10 +22,13 @@
           <Skeleton/>
         </scroll>
       </tab-container>
-    </temp-nav-bar>
+    </home-nav-bar>
     <transition name='scroll-top'>
       <div :class='["iconfont","icon-top",$style.iconTop]' @click='scrollToTop' v-show='showTop'></div>
     </transition>
+    <router-link :to='path.publish()'>
+      <div :class='$style.publish'>+</div>
+    </router-link>
   </div>
 </template>
 
@@ -35,7 +38,7 @@ import TabContainer from "@/components/tab-container/index.vue";
 import TabContainerItem from "@/components/tab-container-item/index.vue";
 import TopicsCard from "@/components/topics-card/index.vue";
 import Scroll from '@/components/scroll/index.vue'
-import tempNavBar from "./Navbar.vue";
+import HomeNavBar from "./Navbar.vue";
 import Skeleton from "./skeleton.vue";
 import * as type from "@/store/topics/type";
 import { Action, Getter, State } from "vuex-class";
@@ -51,7 +54,7 @@ type requestTopics = (data?: { tab?: string; page?: number }) => void;
     TopicsCard,
     Scroll,
     Skeleton,
-    tempNavBar,
+    HomeNavBar,
   },
   inject: ["path"]
 })
@@ -157,10 +160,27 @@ export default class Home extends Vue {
 }
 .iconTop {
   position: fixed;
-  bottom: 80px;
+  bottom: 70px;
   right: 20px;
   color: $theme;
-  font-size: 40px !important;
+  font-size: 30px !important;
   z-index: $fixed-zIndex;
+}
+.publish {
+  display: flex;
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 300;
+  color: #fff;
+  background: $theme;
+  z-index: $fixed-zIndex;
+  user-select: none;
 }
 </style>

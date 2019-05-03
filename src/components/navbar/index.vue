@@ -23,7 +23,8 @@ export default class NavBar extends Vue { }
 <style lang='scss'>
 @import "style/index";
 .wu-navbar {
-  position: relative;
+  position: fixed;
+  top: 0;
   display: flex;
   height: 35px;
   width: 100%;
@@ -33,6 +34,10 @@ export default class NavBar extends Vue { }
   align-items: center;
   overflow: hidden;
   background: $theme;
+  z-index: 2;
+  .iconfont {
+    font-size: 14px;
+  }
   &-left,
   &-right {
     position: absolute;

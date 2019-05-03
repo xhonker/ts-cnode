@@ -1,9 +1,9 @@
 <template>
   <div :class='$style.user' v-if='userInfo.loginname'>
     <nav-bar @leftClick='$router.go(-1)' @rightClick='logout'>
-      <icon slot='left' type='left' v-if='!my'></icon>
+      <icon slot='left' type='back' v-if='!my'></icon>
       <span :class='$style.userLogout' slot='right' v-if='my'>注销</span>
-      {{ my ? my:'用户信息'}}
+      {{ userInfo.loginname}}
     </nav-bar>
     <div :class='$style.userContainer'>
       <div :class='$style.userContainerHeader'>
@@ -14,7 +14,7 @@
         </div>
         <span :class='$style.userContainerHeaderTime'>注册时间{{ago(userInfo.create_at)}}</span>
       </div>
-      <tabs v-model='userTab'>
+      <tabs :class='$style.tabs' v-model='userTab'>
         <tabs-item id='replies'>参与的话题</tabs-item>
         <tabs-item id='topics'>发布的话题</tabs-item>
         <tabs-item id='collect'>收藏</tabs-item>
@@ -106,15 +106,8 @@ export default class User extends Vue {
     this.$refs.content.$el.style.height = `${this.userContainerHeight()}px`;
   }
   userContainerHeight(): number {
-    let userEles = [".wu-navbar", `${this.getStyle('userContainerHeader')}`, ".wu-tabs"];
-    let myELes = [
-      `${this.getStyle('user')} .wu-navbar`,
-      `${this.getStyle("userContainerHeader")}`,
-      `${this.getStyle('user')} .wu-tabs`,
-      ".wu-tabbar"
-    ];
-    let calc = this.my ? calcClientHeight(myELes) : calcClientHeight(userEles);
-    return docH - calc;
+    let userEles = [".wu-navbar", `${this.getStyle('userContainerHeader')}`, `${this.getStyle("tabs")}`];
+    return docH - calcClientHeight(userEles);
   }
   get userInfo() {
     return this.users.filter(d => d.loginname === this.loginname)[0] || {};
@@ -153,6 +146,9 @@ export default class User extends Vue {
   margin: 10px;
 }
 .userContainer {
+  position: relative;
+  top: 35px;
+  background-color: #fff;
 }
 .userContainerHeader {
   display: flex;
@@ -198,5 +194,8 @@ export default class User extends Vue {
       font-size: 14px;
     }
   }
+}
+.tabs {
+  position: relative;
 }
 </style>

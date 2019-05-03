@@ -13,7 +13,7 @@
     <rect height='6' rx='3' ry='3' width='380' x='10' y='100'/>
     <rect height='6' rx='3' ry='3' width='201' x='10' y='120'/>
 
-    <rect height='32' rx='0' ry='0' width='32' x='8.63' y='14.2'/> <!--头像位置-->
+    <rect height='32' rx='4' ry='4' width='32' x='8.63' y='14.2'/> <!--头像位置-->
 
     <rect height='6' rx='0' ry='0' width='65' x='10' y='140'/>
     <rect height='6' rx='0' ry='0' width='65' x='153' y='140'/>

@@ -7,7 +7,6 @@ const el = document.createElement("div");
 
 type position = "center" | "top";
 interface IToast {
-  loading(message: string): void;
   show(data: ToastData): void;
   hide(): void;
   clearAll(): void;
@@ -34,6 +33,7 @@ class Toast implements IToast {
     return this.queue[this.queue.length - 1];
   }
   show(data: ToastData | string) {
+    if ((typeof data === 'string' && !data) || (typeof data === 'object' && !data.message)) return;
     return this.createToast(data);
   }
   hide(): void {
@@ -43,9 +43,6 @@ class Toast implements IToast {
   clearAll(): void {
     this.queue.map(toast => (toast.show = false));
     this.queue = [];
-  }
-  loading(message: string) {
-    return this.createToast({ isLoading: true, message, duration: 0 });
   }
 }
 

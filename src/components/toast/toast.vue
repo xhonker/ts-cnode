@@ -1,7 +1,6 @@
 <template>
   <transition name='toast'>
     <div :class='toast' v-if='show'>
-      <div :class='iconCls' v-if='isLoading'></div>
       <div class='wu-toast-content'>{{message}}</div>
     </div>
   </transition>
@@ -23,8 +22,6 @@ export default class Toast extends Vue {
   private message!: string;
   @Prop({ default: 3000 })
   private duration!: number;
-  @Prop({ default: false })
-  private isLoading!: boolean;
   @Prop({ default: "center" })
   private position!: string;
   mounted() {
@@ -33,14 +30,6 @@ export default class Toast extends Vue {
         this.show = !this.show;
       }, this.duration);
     }
-  }
-  get iconCls() {
-    return [
-      "iconfont",
-      {
-        [`loading`]: this.isLoading
-      }
-    ];
   }
   get toast() {
     return [`${prefixCls}`, `${prefixCls}-${this.position}`];
@@ -72,24 +61,6 @@ export default class Toast extends Vue {
     font-weight: 200;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 4px;
-  }
-  .loading {
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 5px;
-    width: 20px;
-    height: 20px;
-    background: url("../../assets/img/loading.png") no-repeat;
-    background-size: cover;
-    animation: loading 1s linear infinite;
-  }
-}
-@keyframes loading {
-  to {
-    transform: rotate(1turn);
-  }
-  from {
-    transform: rotate(0);
   }
 }
 .toast-enter-active,

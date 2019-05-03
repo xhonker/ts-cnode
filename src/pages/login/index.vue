@@ -1,27 +1,20 @@
 <template>
   <div :class='$style.login'>
-    <template v-if='!user.localToken'>
-      <nav-bar>
-        登录
-        <span slot='right'>
-          <router-link :to='path.qrcode()'>
-            <icon type='scan'/>
-          </router-link>
-        </span>
-        <icon @click='$router.go(-2)' slot='left' type='left'/>
-      </nav-bar>
-      <div :class='$style.loginContainer'>
-        <div :class='$style.loginInput'>
-          <input placeholder='请输入accessToken' type='text' v-model='accessToken'>
-        </div>
-        <button :class='$style.loginBtn' @click='handlerLogin'>
-          <span>登录</span>
-        </button>
+    <nav-bar @leftClick='$router.go(-1)'>
+      登录
+      <router-link :to='path.qrcode()' slot='right'>
+        <icon type='scan'/>
+      </router-link>
+      <icon slot='left' type='back'/>
+    </nav-bar>
+    <div :class='$style.loginContainer'>
+      <div :class='$style.loginInput'>
+        <input placeholder='请输入accessToken' type='text' v-model='accessToken'>
       </div>
-    </template>
-    <!-- <template v-else>
-      <user :loginname='user.loginname' my='我' v-if='user.loginname'/>
-    </template>-->
+      <button :class='$style.loginBtn' @click='handlerLogin'>
+        <span>登录</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -45,15 +38,17 @@ import { UserState } from "@/store/interface/user";
 })
 export default class WuLogin extends Vue {
   private accessToken: string = '';
-  @Action(USER__LOGIN) userLogin!: (data: string) => never;
+  @Action(USER__LOGIN) userLogin!: (accessToken: string) => never;
   @State(state => state.user) user!: UserState;
   mounted() {
-    let token = this.user.localToken;
-    if (token) this.login(token);
+    if (this.token) this.login(this.token);
   }
   handlerLogin() {
     this.login(this.accessToken);
     this.accessToken = '';
+  }
+  get token() {
+    return this.user.accessToken
   }
   async login(token: string) {
     if (!token) return toast.show("请输入用户令牌");
@@ -71,6 +66,7 @@ export default class WuLogin extends Vue {
   background: #fff;
   :global(.icon-scan) {
     color: #eee;
+    font-size: 16px;
   }
 }
 .loginContainer {

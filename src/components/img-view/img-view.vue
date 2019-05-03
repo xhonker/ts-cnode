@@ -21,6 +21,7 @@ export default class ImgView extends Vue {
 </script>
 
 <style lang='scss' module>
+@import 'style/index';
 .imgView {
   position: fixed;
   display: flex;
@@ -31,7 +32,7 @@ export default class ImgView extends Vue {
   background: rgba(0, 0, 0, 0.7);
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-  z-index: 1024;
+  z-index: $fixed-zIndex;
   img {
     margin: auto;
   }

@@ -1,9 +1,9 @@
 <template>
   <div :class='$style.topicsDetails' v-if='details.author'>
     <nav-bar :class='$style.topicsDetailsNavbar' @leftClick='$router.go(-1)'>
-      <Icon slot='left' type='left'/>主题详情
+      <Icon slot='left' type='back'/>主题详情
     </nav-bar>
-    <div :class='$style.topicsDetailsContainer' @scroll='handlerScroll' ref='details'>
+    <div :class='$style.topicsDetailsContainer'>
       <div :class='$style.topicsDetailsTitle'>{{details.title}}</div>
       <div :class='$style.topicsDetailsHeader'>
         <image-lazy :class='$style.topicsDetailsHeaderAvatar' :src='details.author.avatar_url'/>
@@ -21,7 +21,7 @@
       </div>
       <div :class='$style.topicsDetailsContent' v-highlight v-html='details.content'></div>
       <div :class='$style.topicsDetailsReplies'>
-        <div v-if='user.accessToken|| user.localToken'>
+        <div v-if='user.accessToken'>
           <textarea maxlength='150' placeholder='我来说一句' v-model='comment'/>
           <div :class='$style.topicsDetailsSubmit'>
             <span @click='handlerSubmit'>评论</span>
@@ -83,17 +83,15 @@ export default class Details extends Vue {
   @Action(CHANGE__COLLECT) changeCollect!: (data: ChangeCollect) => void;
   async mounted() {
     !this.details.author && (await this.getTopicDetails(this.topic));
-    this.details.scroll > 200 && (this.showTop = true);
-
-    let h = docH - getElementAttr(`.wu-navbar`, "clientHeight");
+    this.details.scroll > 500 && (this.showTop = true);
     //@ts-ignore
-    setElementAttr(`.${this.$style.topicsDetailsContainer}`, "style", `height:${h}px`);
-    //@ts-ignore
-    this.$refs.details.scrollTop = this.details.scroll;
+    window.scrollTo(0, this.details.scroll);
+    window.onscroll = this.handlerScroll;
   }
   beforeDestroy(): void {
     let { topic: id, scroll } = this;
     this.setTopicScroll({ id, scroll });
+    window.onscroll = null;
   }
   get details(): TopicDetails {
     return this.openTopics.filter(d => d.id === this.topic)[0] || {};
@@ -120,14 +118,12 @@ export default class Details extends Vue {
       }
     ];
   }
-  handlerScroll(e: Event) {
-    //@ts-ignore
-    let { scrollTop } = e.srcElement;
-    this.scroll = scrollTop;
-    scrollTop > 200 ? (this.showTop = true) : (this.showTop = false);
+  handlerScroll() {
+    this.scroll = window.pageYOffset || document.body.scrollTop;
+    this.showTop = this.scroll > 500;
   }
   handlerCollect() {
-    this.user.localToken
+    this.user.accessToken
       ? this.collect().then(res => {
         this.changeCollect({ topic: this.topic, result: res });
       })
@@ -170,7 +166,7 @@ export default class Details extends Vue {
     bottom: 20px;
     right: 20px;
     color: $theme;
-    font-size: 40px !important;
+    font-size: 30px !important;
   }
   textarea {
     display: block;
@@ -193,11 +189,6 @@ export default class Details extends Vue {
   background: #fff;
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
-}
-.topicsDetailsNavbar {
-  position: fixed;
-  top: 0;
-  z-index: 2;
 }
 .topicsDetailsHeader {
   display: flex;

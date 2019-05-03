@@ -28,8 +28,8 @@ const QRCODE_ERROR: Object = Object.freeze({
   }
 })
 export default class QrcodeLogin extends Vue {
-  @Action(USER__LOGIN) userLogin!: (data: string) => never;
-  
+  @Action(USER__LOGIN) userLogin!: (accessToken: string) => never;
+
   onDecode(res: string) {
     if (res.length < 36) return toast.show('accessToken不对');
     this.userLogin(res);
@@ -39,6 +39,7 @@ export default class QrcodeLogin extends Vue {
     try {
       await promise;
     } catch (error) {
+      console.error("TCL: QrcodeLogin -> onInit -> error %o", error)
       //@ts-ignore
       toast.show(QRCODE_ERROR[error.name]);
       this.$router.go(-1);

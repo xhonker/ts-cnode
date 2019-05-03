@@ -3,7 +3,7 @@ import { baseURL } from "./config";
 import { toast } from "@/components/toast/index";
 import Store from "@/store";
 import { USER__LOGOUT } from '@/store/user/type';
-let accesstoken = () => Store.getters.localToken || Store.getters.token;
+let accesstoken = () => Store.getters.token;
 
 const axios = Axios.create({
   baseURL,
@@ -38,9 +38,13 @@ axios.interceptors.response.use(
     Store.commit('request', false);
     return response;
   },
-  error => {
-    let message = error.response.data && error.response.data.error_msg;
+  ({ response }) => {
     Store.commit('request', false);
+    if (response.status === 404) {
+      toast.show('API 未开放');
+      return;
+    }
+    let message = (response.data && response.data.error_msg) || '';
     Store.commit(USER__LOGOUT);
     toast.show({ message, duration: 5000 });
   }

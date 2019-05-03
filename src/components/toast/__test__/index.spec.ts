@@ -12,9 +12,4 @@ describe("Toast", () => {
     expect(show.$el.className).toContain("wu-toast");
     expect(show.$el.textContent).toContain("test");
   });
-  it("loading", () => {
-    let loading = toast.loading("加载中");
-    expect(loading.$el.className).toContain("wu-toast");
-    expect(loading.$el.textContent).toContain("加载中");
-  });
 });

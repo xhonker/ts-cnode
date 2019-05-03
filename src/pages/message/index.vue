@@ -1,10 +1,10 @@
 <template>
   <div :class='$style.message'>
-    <nav-bar @leftClick='$router.go(-1)'>
-      <icon slot='left' type='left'/>消息中心
+    <nav-bar :class='$style.navbar' @leftClick='$router.go(-1)'>
+      <icon slot='left' type='back'/>消息中心
     </nav-bar>
     <div :class='$style.messageContainer'>
-      <template v-if='!user.localToken'>
+      <template v-if='!token'>
         <span :class='$style.messageNotLogin'>请登录</span>
       </template>
       <template v-else>
@@ -40,17 +40,16 @@ import {
     MessageItem
   }
 })
-export default class WuMessage extends Vue {
+export default class Message extends Vue {
   @State(state => state.user) user!: UserState;
   @Action(GET__MY__MESSAGE) getMessage!: (accessToken: string) => void;
   mounted() {
-    this.init();
-  }
-  init() {
-    let token = this.user.localToken || this.user.accessToken;
-    if (!token) return this.$router.push("login");
-    !this.user.message.length && this.getMessage(token);
+    if (!this.token) return;
+    !this.user.message.length && this.getMessage(this.token);
     this.user.message.length && markALlMessage();
+  }
+  get token() {
+    return this.user.accessToken;
   }
 }
 </script>
@@ -62,8 +61,10 @@ export default class WuMessage extends Vue {
   background: #fff;
 }
 .messageContainer {
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
+  position: relative;
+  top: 35px;
+  background-color: #fff;
+  overflow: hidden;
 }
 .messageNotLogin {
   position: absolute;

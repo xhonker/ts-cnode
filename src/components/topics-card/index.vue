@@ -1,7 +1,7 @@
 <template>
   <Card :class='$style.topicsCard' bodyBorder>
     <div :class='$style.topicsItemHeader' slot='header'>
-      <image-lazy :src='topics.author.avatar_url' :class="$style.topicsItemAvatar"/>
+      <image-lazy :class='$style.topicsItemAvatar' :src='topics.author.avatar_url'/>
       <div :class='$style.topicsItemHeaderContainer'>
         <div :class='$style.topicsItemHeaderContainerNickname'>{{topics.author.loginname}}</div>
         <Icon type='hot' v-if='topics.top'/>
@@ -52,14 +52,18 @@ export default class TopicsCard extends Vue {
 </script>
 
 <style lang='scss' module>
+@import "style/index";
 .topicsCard {
   margin-bottom: 10px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
   :global(.icon-good) {
-    color: #ff4e50;
+    // color: #ff4e50; // before color
+    color: $theme;
   }
   :global(.icon-hot) {
-    color: #fbc327;
+    // color: #fbc327; // before color
+    color: $theme;
     margin-right: 25px;
   }
   :global(.icon-good),
@@ -89,7 +93,7 @@ export default class TopicsCard extends Vue {
   font-size: 16px;
 }
 .topicsItemHeaderContainerText {
-  font-size: 12px;
+  font-size: 10px;
   margin-top: 4px;
   color: #ccc;
 }
@@ -99,7 +103,7 @@ export default class TopicsCard extends Vue {
   text-align: left;
   margin-left: 10px;
   margin-right: 10px;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
 }
 .topicsItemFooter {
