@@ -85,12 +85,6 @@ export default class Aside extends Vue {
   @State(state => state.user) user!: LoginInfo;
   @State(state => state.user.users) users!: Array<UserInfo>;
   @Action(USER__LOGOUT) loginOut!: never;
-  @Action(USER__LOGIN) login!: (accessToken: string) => never;
-  mounted() {
-    if (this.isLogin) {
-      this.login(this.user.accessToken);
-    }
-  }
   get asideBase() {
     return {
       transform: `translateX(${this.transformX}vw)`,
@@ -103,7 +97,7 @@ export default class Aside extends Vue {
     }
   }
   get isLogin(): boolean {
-    return !!this.user.accessToken;
+    return !!(this.user.accessToken && !this.user.loginname);
   }
   get loginName(): string {
     return this.user.loginname;

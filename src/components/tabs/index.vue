@@ -1,5 +1,5 @@
 <template>
-  <div :class='$style.tabs'>
+  <div class='tabs'>
     <slot></slot>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default class Tabs extends Vue {
 }
 </script>
 
-<style lang='scss' module>
+<style lang='scss'>
 .tabs {
   position: relative;
   display: flex;
@@ -23,7 +23,7 @@ export default class Tabs extends Vue {
   user-select: none;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 14px;
   background: #fff;
   &::before {
     content: "";

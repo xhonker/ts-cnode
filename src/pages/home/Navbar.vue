@@ -1,5 +1,5 @@
 <template>
-  <div :class='$style.navbar'>
+  <div class='navbar'>
     <header :class='$style.header'>
       <div class='toolBar' ref='toolBar'>
         <div @click='handlerClickUser'>
@@ -9,7 +9,7 @@
           <icon :class='$style.iconUser' type='user' v-else/>
         </div>
         <span :class='$style.toolBarTitle'>主页</span>
-        <router-link :to='path.message()' v-if='isLogin'>
+        <router-link :to='path.message()'>
           <icon :class='$style.iconMessage' type='message'/>
         </router-link>
       </div>
@@ -107,8 +107,8 @@ export default class HomeNavbar extends Vue {
 
 <style lang='scss' module>
 @import "style/index";
-.navbar {
-  margin-top: 80px;
+:global(.navbar) {
+  margin-top: 85px;
   :global(.toolBar) {
     display: flex;
     align-items: center;

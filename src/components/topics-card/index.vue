@@ -4,18 +4,18 @@
       <image-lazy :class='$style.topicsItemAvatar' :src='topics.author.avatar_url'/>
       <div :class='$style.topicsItemHeaderContainer'>
         <div :class='$style.topicsItemHeaderContainerNickname'>{{topics.author.loginname}}</div>
-        <Icon type='hot' v-if='topics.top'/>
-        <Icon type='good' v-if='topics.good'/>
         <div :class='$style.topicsItemHeaderContainerText'>{{topicsHeaderText}}</div>
       </div>
+      <Icon type='hot' v-if='topics.top'/>
+      <Icon type='good' v-if='topics.good'/>
     </div>
     <div :class='$style.topicsItemBody' slot='body'>{{topics.title}}</div>
     <div :class='$style.topicsItemFooter' slot='footer'>
-      <div>
+      <div :class='$style.itemFooterWatch'>
         <Icon type='chakan'/>
         {{topics.visit_count}}
       </div>
-      <div>
+      <div :class='$style.itemFooterComment'>
         <Icon type='comment'/>
         {{topics.reply_count}}
       </div>
@@ -57,21 +57,12 @@ export default class TopicsCard extends Vue {
   margin-bottom: 10px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
-  :global(.icon-good) {
-    // color: #ff4e50; // before color
-    color: $theme;
-  }
-  :global(.icon-hot) {
-    // color: #fbc327; // before color
-    color: $theme;
-    margin-right: 25px;
-  }
   :global(.icon-good),
   :global(.icon-hot) {
+    // good before color: #ff4e50;
+    // hot before color: #fbc327;
     font-size: 30px !important;
-    position: absolute;
-    right: 0;
-    top: 0;
+    color: $theme;
   }
 }
 .topicsItemAvatar {
@@ -87,6 +78,7 @@ export default class TopicsCard extends Vue {
   position: relative;
 }
 .topicsItemHeaderContainer {
+  flex: 1;
   text-align: left;
 }
 .topicsItemHeaderContainerNickname {
@@ -113,6 +105,7 @@ export default class TopicsCard extends Vue {
     flex: 1;
     padding: 6px 0;
     &:nth-child(2n) {
+      // 左右细边框
       position: relative;
       &::before {
         content: "";

@@ -45,6 +45,8 @@ import { Action, Getter, State } from "vuex-class";
 import { TopicInfo, TabsInfo } from "@/store/interface/topics";
 import { calcClientHeight, docH } from "@/utils";
 import topicTabs from "./config";
+import { LoginInfo } from '@/store/interface/user';
+import { USER__LOGIN } from '@/store/user/type';
 type requestTopics = (data?: { tab?: string; page?: number }) => void;
 
 @Component({
@@ -69,11 +71,16 @@ export default class Home extends Vue {
   @State(state => state.topics.topics) topics!: Array<TopicInfo>;
   @State(state => state.topics.currentTab) currentTab!: string;
   @State(state => state.topics.topicsScroll) scroll!: number;
+  @State(state => state.user) user!: LoginInfo;
   @Action(type.TOPICS__CHANGE__TAB) topicsChangeTab!: (tab: string) => void;
   @Action(type.SET__TOPICS__SCROLL) setTopicsScroll!: (scrollTop: number) => void;
   @Action(type.REQUEST__TOPICS) requestTopics!: requestTopics;
+  @Action(USER__LOGIN) login!: (accessToken: string) => never;
   mounted() {
     !this.topics.length && this.requestTopics();
+    if (this.isLogin) {
+      this.login(this.user.accessToken);
+    }
     window.scrollTo(0, this.scroll);
   }
   beforeDestroy() {
@@ -133,6 +140,9 @@ export default class Home extends Vue {
     this.page = 1;
     this.topicsChangeTab(tab);
   }
+  get isLogin() {
+    return this.user.accessToken && !this.user.loginname;
+  }
 }
 </script>
 
@@ -151,6 +161,7 @@ export default class Home extends Vue {
   }
 }
 .content {
+  padding-top: 5px;
   overflow: hidden;
   background-color: #eee;
 }
