@@ -34,13 +34,14 @@ let actions: ActionTree<user.UserState, any> = {
   },
   async [type.USER__LOGIN]({ commit, dispatch }, accessToken: string) {
     let { success, ...data } = await login(accessToken);
-    if (!success) return;
+    if (!success) return false;
     let userInfo = Object.assign({}, data,
       {
         accessToken: accessToken
       })
     dispatch(type.GET__USER__INFO, data.loginname);
     commit(type.USER__LOGIN, userInfo);
+    return true;
   },
   [type.USER__LOGOUT]({ commit }) {
     commit(type.USER__LOGOUT);

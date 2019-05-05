@@ -45,12 +45,17 @@ import { toast } from "@/components/toast";
     LabelItem
   }
 })
-export default class WuEdit extends Vue {
+export default class Publish extends Vue {
   private tab: TopicTab = "dev";
   private title: string = "";
   private content: string = "";
 
   @State(state => state.user.accessToken) accesstoken!: string;
+  mounted() {
+    if (!this.accesstoken) {
+      this.$router.replace({ name: "Login", params: { redirect: "Publish" } })
+    }
+  }
 
   async handlerSubmit() {
     let { title, tab, content, accesstoken } = this;
@@ -89,6 +94,8 @@ export default class WuEdit extends Vue {
   }
 }
 .editContainer {
+  position: relative;
+  top: 35px;
   // margin: 10px 10px 0;
   :global(.iconfont) {
     color: #aaa !important;

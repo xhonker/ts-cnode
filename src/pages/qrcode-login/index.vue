@@ -28,12 +28,12 @@ const QRCODE_ERROR: Object = Object.freeze({
   }
 })
 export default class QrcodeLogin extends Vue {
+  @Prop({ default: '/' }) redirect!: string;
   @Action(USER__LOGIN) userLogin!: (accessToken: string) => never;
-
-  onDecode(res: string) {
+  async onDecode(res: string) {
     if (res.length < 36) return toast.show('accessToken不对');
-    this.userLogin(res);
-    this.$router.go(-1);
+    let status = await this.userLogin(res);
+    if (status) this.$router.replace(this.redirect);
   }
   async onInit(promise: Promise<any>) {
     try {

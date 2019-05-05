@@ -44,7 +44,7 @@ export default class Message extends Vue {
   @State(state => state.user) user!: UserState;
   @Action(GET__MY__MESSAGE) getMessage!: (accessToken: string) => void;
   mounted() {
-    if (!this.token) return;
+    if (!this.token) return this.$router.replace({ name: 'Login', params: { redirect: "Message" } });
     !this.user.message.length && this.getMessage(this.token);
     this.user.message.length && markALlMessage();
   }

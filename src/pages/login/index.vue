@@ -1,10 +1,8 @@
 <template>
   <div :class='$style.login'>
-    <nav-bar @leftClick='$router.go(-1)'>
+    <nav-bar @leftClick='$router.go(-1)' @rightClick='handlerNavBarRightClick'>
       登录
-      <router-link :to='path.qrcode()' slot='right'>
-        <icon type='scan'/>
-      </router-link>
+      <icon slot='right' type='scan'/>
       <icon slot='left' type='back'/>
     </nav-bar>
     <div :class='$style.loginContainer'>
@@ -36,8 +34,9 @@ import { UserState } from "@/store/interface/user";
   },
   inject: ['path']
 })
-export default class WuLogin extends Vue {
+export default class Login extends Vue {
   private accessToken: string = '';
+  @Prop({ default: '/' }) redirect!: string;
   @Action(USER__LOGIN) userLogin!: (accessToken: string) => never;
   @State(state => state.user) user!: UserState;
   mounted() {
@@ -47,13 +46,17 @@ export default class WuLogin extends Vue {
     this.login(this.accessToken);
     this.accessToken = '';
   }
+  handlerNavBarRightClick() {
+    console.log("Quicker: Login -> handlerNavBarRightClick -> this.redirect", this.redirect)
+    this.$router.replace({ name: "Qrcode", params: { redirect: this.redirect } });
+  }
   get token() {
     return this.user.accessToken
   }
   async login(token: string) {
     if (!token) return toast.show("请输入用户令牌");
-    this.userLogin(token);
-    this.$router.go(-1);
+    let status = await this.userLogin(token);
+    if (status) this.$router.replace(this.redirect);
   }
 }
 </script>

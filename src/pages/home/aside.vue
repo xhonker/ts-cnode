@@ -141,17 +141,6 @@ export default class Aside extends Vue {
   width: 70vw;
   background-color: #f8f8f8;
   transition: all 0.5s ease;
-  &::before {
-    content: "Create by Quicker";
-    position: absolute;
-    bottom: 10px;
-    transform: translateX(-50%);
-    color: #ababab;
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(to right, #eee, #aaa);
-    -webkit-background-clip: text;
-    font-size: 12px;
-  }
 }
 
 .asideBackground {
