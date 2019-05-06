@@ -1,33 +1,24 @@
 <template>
-  <div :class='labelItemCls' @click='$parent.$emit("input",id)'>
+  <div
+    :class='[$style.labelItem,{[$style.selected]:$parent.value === id}]'
+    @click='$parent.$emit("input",id)'
+  >
     <span>{{label}}</span>
   </div>
 </template>
 
 <script lang='ts'>
 import { Vue, Prop, Component } from "vue-property-decorator";
-const prefixCls = "wu-label-item";
 @Component
 export default class Label extends Vue {
-  @Prop()
-  private id!: string;
-  @Prop()
-  private label!: string;
-  get labelItemCls() {
-    return [
-      `${prefixCls}`,
-      {
-        // @ts-ignore
-        [`${prefixCls}-selected`]: this.$parent.value === this.id
-      }
-    ];
-  }
+  @Prop() private id!: string;
+  @Prop() private label!: string;
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' module>
 @import "style/index";
-.wu-label-item {
+.labelItem {
   display: inline-block;
   padding: 5px 8px;
   user-select: none;
@@ -35,9 +26,9 @@ export default class Label extends Vue {
   background: #eff3f4;
   border-radius: 4px;
   margin: 0 4px;
-  &-selected {
-    color: #fff;
-    background: $theme;
-  }
+}
+.selected {
+  color: #fff;
+  background: $theme;
 }
 </style>

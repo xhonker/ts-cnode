@@ -1,21 +1,21 @@
 <template>
   <card :class='$style.topicDetailsReplie'>
     <div :class='$style.topicDetailsReplieHeader' slot='header'>
-      <image-lazy :class='$style.topicDetailsReplieAvatar' :src='replie.author.avatar_url'/>
+      <image-lazy :class='$style.topicDetailsReplieAvatar' :src='comment.author.avatar_url'/>
       <span :class='$style.topicDetailsReplieNickname'>
-        <router-link :to='path.user(replie.author.loginname)'>{{replie.author.loginname}}</router-link>
+        <router-link :to='path.user(comment.author.loginname)'>{{comment.author.loginname}}</router-link>
       </span>
-      <span :class='$style.topicDetailsReplieAuthor' v-if='replie.is_author'>作者</span>
+      <span :class='$style.topicDetailsReplieAuthor' v-if='comment.is_author'>作者</span>
       <span :class='$style.topicDetailsReplieFloor'>
         <slot></slot>楼
       </span>
     </div>
-    <div slot='body' v-highlight v-html='replie.content'></div>
+    <div slot='body' v-highlight v-html='comment.content'></div>
     <div :class='$style.topicDetailsReplieFooter' slot='footer'>
-      <span :class='$style.topicDetailsReplieTime'>{{ago(replie.create_at)}}</span>
-      <span :class='$style.topicDetailsReplieUped' v-if='replie.ups.length'>
+      <span :class='$style.topicDetailsReplieTime'>{{ago(comment.create_at)}}</span>
+      <span :class='$style.topicDetailsReplieUped' v-if='comment.ups.length'>
         <icon type='like'/>
-        {{replie.ups.length}}
+        {{comment.ups.length}}
       </span>
     </div>
   </card>
@@ -25,7 +25,7 @@
 import { Vue, Prop, Component } from "vue-property-decorator";
 import Card from "@/components/card/index.vue";
 import Icon from "@/components/icon/index.vue";
-import { RepliesInfo } from "@/store/interface/topics";
+import { comment } from "@/store/interface/topics";
 import { publicMethods } from "@/mixins";
 @Component({
   components: {
@@ -35,9 +35,9 @@ import { publicMethods } from "@/mixins";
   mixins: [publicMethods],
   inject: ["path"]
 })
-export default class Replie extends Vue {
+export default class CommentItem extends Vue {
   @Prop()
-  private replie!: RepliesInfo;
+  private comment!: comment;
 }
 </script>
 

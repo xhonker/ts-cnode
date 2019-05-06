@@ -1,5 +1,5 @@
 <template>
-  <div @click='show = false' :class='$style.imgView' v-if='show'>
+  <div :class='$style.imgView' @click='show = false' v-if='show'>
     <img :src='src'>
   </div>
 </template>
@@ -10,8 +10,7 @@ import { Vue, Prop, Component } from "vue-property-decorator";
 @Component
 export default class ImgView extends Vue {
   private show: boolean = true;
-  @Prop()
-  src!: string;
+  @Prop() private src!: string;
   mounted() {
     this.$nextTick(() => {
       this.$el.scrollLeft = (this.$el.scrollWidth - this.$el.clientWidth) / 2;
@@ -21,7 +20,7 @@ export default class ImgView extends Vue {
 </script>
 
 <style lang='scss' module>
-@import 'style/index';
+@import "style/index";
 .imgView {
   position: fixed;
   display: flex;

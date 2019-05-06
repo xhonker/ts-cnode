@@ -1,17 +1,24 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div id='app'>
+    <keep-alive>
+      <router-view v-if='$route.meta.keepAlive'/>
+    </keep-alive>
+    <router-view v-if='!$route.meta.keepAlive'/>
   </div>
 </template>
-<script>
+
+<script lang='ts'>
+import { Vue, Component } from "vue-property-decorator";
 import { regEvent } from "@/utils/regEvent";
 
-export default {
+@Component
+export default class App extends Vue {
   mounted() {
     regEvent();
   }
-};
+}
 </script>
+
 <style lang="scss">
 #app {
   margin: auto;

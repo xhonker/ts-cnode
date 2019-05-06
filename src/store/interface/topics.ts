@@ -27,12 +27,12 @@ export interface TopicInfo {
 }
 
 export interface TopicDetails extends TopicInfo {
-  replies: Array<RepliesInfo>;
+  replies: Array<comment>;
   is_collect: boolean;
   scroll: number;
 }
 
-export interface RepliesInfo {
+export interface comment {
   id: string;
   author: author;
   content: string;

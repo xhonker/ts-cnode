@@ -97,7 +97,7 @@ export default class Aside extends Vue {
     }
   }
   get isLogin(): boolean {
-    return !!(this.user.accessToken && !this.user.loginname);
+    return !!(this.user.accessToken && this.user.loginname);
   }
   get loginName(): string {
     return this.user.loginname;

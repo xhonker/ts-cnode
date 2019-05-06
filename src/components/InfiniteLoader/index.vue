@@ -15,10 +15,10 @@ interface ScrollProperty {
 }
 
 @Component
-export default class Scroll extends Vue {
-  @Prop({ default: false }) useDocument!: boolean;
-  @Prop({ default: 50 }) offset!: number;
-  @Prop() loadMore!: Function;
+export default class InfiniteLoader extends Vue {
+  @Prop({ default: false }) private useDocument!: boolean;
+  @Prop({ default: 50 }) private offset!: number;
+  @Prop() private loadMore!: Function;
   @State(state => state.request) loading!: boolean // 如果是vuex 需要 一个接口请求loading的状态
   mounted() {
     this.scrollContainer.addEventListener('scroll', this.handlerScroll);

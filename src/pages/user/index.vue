@@ -53,7 +53,7 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Prop, Component, Watch } from "vue-property-decorator";
+import { Vue, Prop, Component } from "vue-property-decorator";
 import { Action, State } from "vuex-class";
 import { publicMethods } from "@/mixins";
 import NavBar from "@/components/navbar/index.vue";

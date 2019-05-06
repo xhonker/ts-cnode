@@ -4,7 +4,7 @@ import { ViewImg } from "@/components/img-view/index";
  * 处理点击用户以及图片
  */
 export const regEvent = () => {
-  document.querySelector("#app")!.addEventListener("click", e => {
+  document.querySelector("#app")!.addEventListener("click", (e: Event) => {
     let ev = e || window.event;
     let target = ev.target;
     // @ts-ignore
@@ -16,9 +16,8 @@ export const regEvent = () => {
         // @ts-ignore
         let user = target.textContent.replace("@", ""); // @xhonker
         e.preventDefault();
-        window.location.href = `${window.location.origin}${
-          window.location.pathname
-        }#/user/${user}`;
+        let { origin, pathname } = location;
+        location.href = `${origin}${pathname}#/user/${user}`;
       }
     }
     // @ts-ignore

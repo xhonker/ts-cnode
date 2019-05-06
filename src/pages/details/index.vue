@@ -29,7 +29,7 @@
         </div>
         <div :class='$style.topicsDetailsNotLogin' v-else>请登录后再来评论</div>
       </div>
-      <replies :replies='replies' v-if='replies.length'></replies>
+      <comment :comments='replies' v-if='replies.length'/>
       <div :class='$style.topicsDetailsNotReplies' v-else>还没有评论，快来抢沙发</div>
     </div>
     <div @click='$refs.details.scrollTop=0' class='iconfont icon-top' v-show='showTop'></div>
@@ -47,13 +47,13 @@ import {
 import {
   TopicDetails,
   TopicScroll,
-  RepliesInfo,
+  comment,
   ChangeCollect
 } from "@/store/interface/topics";
 import { publicMethods } from "@/mixins";
 import NavBar from "@/components/navbar/index.vue";
 import Icon from "@/components/icon/index.vue";
-import Replies from "@/components/replies/index.vue";
+import Comment from "@/components/comment/index.vue";
 import { UserState } from "@/store/interface/user";
 import { collect, deCollect } from "@/api/user";
 import { toast } from "@/components/toast/index.ts";
@@ -66,7 +66,7 @@ type getTopicDetails = (topic: string) => TopicDetails;
   components: {
     NavBar,
     Icon,
-    Replies
+    Comment
   },
   mixins: [publicMethods],
   inject: ["path"]
@@ -96,10 +96,10 @@ export default class Details extends Vue {
   get details(): TopicDetails {
     return this.openTopics.filter(d => d.id === this.topic)[0] || {};
   }
-  get replies(): Array<RepliesInfo> {
+  get replies(): Array<comment> {
     // 作者
     return this.details.replies.reduce(
-      (acc: Array<RepliesInfo>, curr) => (
+      (acc: Array<comment>, curr) => (
         this.details.author.loginname === curr.author.loginname
           ? acc.push({ is_author: true, ...curr })
           : acc.push(curr),

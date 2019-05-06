@@ -17,10 +17,10 @@
         >
           <topics-card :topics='topic'/>
         </router-link>
-        <scroll :loadMore='handlerLoad' :offset='160' useDocument>
+        <infinite-loader :loadMore='handlerLoad' :offset='160' useDocument>
           <Skeleton/>
           <Skeleton/>
-        </scroll>
+        </infinite-loader>
       </tab-container>
     </home-nav-bar>
     <transition name='scroll-top'>
@@ -37,7 +37,7 @@ import { Vue, Prop, Component, Watch } from "vue-property-decorator";
 import TabContainer from "@/components/tab-container/index.vue";
 import TabContainerItem from "@/components/tab-container-item/index.vue";
 import TopicsCard from "@/components/topics-card/index.vue";
-import Scroll from '@/components/scroll/index.vue'
+import InfiniteLoader from '@/components/InfiniteLoader/index.vue'
 import HomeNavBar from "./Navbar.vue";
 import Skeleton from "./skeleton.vue";
 import * as type from "@/store/topics/type";
@@ -54,7 +54,7 @@ type requestTopics = (data?: { tab?: string; page?: number }) => void;
     TabContainer,
     TabContainerItem,
     TopicsCard,
-    Scroll,
+    InfiniteLoader,
     Skeleton,
     HomeNavBar,
   },
