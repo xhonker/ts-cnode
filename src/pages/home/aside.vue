@@ -52,11 +52,13 @@
           <icon type='right'/>
         </div>
       </div>
-      <div :class='$style.asideItem'>
-        <icon type='about'/>
-        <span :class='$style.asideItemText'>关于</span>
-        <icon type='right'/>
-      </div>
+      <router-link :to='path.about()'>
+        <div :class='$style.asideItem'>
+          <icon type='about'/>
+          <span :class='$style.asideItemText'>关于</span>
+          <icon type='right'/>
+        </div>
+      </router-link>
       <div
         :class='[$style.asideItem,$style.itemTop10,$style.loginOut]'
         @click='loginOut'

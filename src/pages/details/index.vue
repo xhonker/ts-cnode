@@ -32,7 +32,7 @@
       <comment :comments='replies' v-if='replies.length'/>
       <div :class='$style.topicsDetailsNotReplies' v-else>还没有评论，快来抢沙发</div>
     </div>
-    <div @click='$refs.details.scrollTop=0' class='iconfont icon-top' v-show='showTop'></div>
+    <div @click='handlerScrollToTop' class='iconfont icon-top' v-show='showTop'></div>
   </div>
 </template>
 
@@ -92,6 +92,9 @@ export default class Details extends Vue {
     let { topic: id, scroll } = this;
     this.setTopicScroll({ id, scroll });
     window.onscroll = null;
+  }
+  handlerScrollToTop() {
+    window.scrollTo(0, 0);
   }
   get details(): TopicDetails {
     return this.openTopics.filter(d => d.id === this.topic)[0] || {};

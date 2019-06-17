@@ -13,3 +13,5 @@ export const message = () => '/message';
 export const login = () => '/login';
 
 export const setting = () => '/setting';
+
+export const about = () => '/about';

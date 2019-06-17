@@ -4,21 +4,12 @@
 
 ### 扫一扫在线预览
 
-<img src='./src/assets/qr.png' width='150px'>
+![qrcode](./src/assets/qr.png)
 
-### 打包大小
 
-<img src='./src/assets/build.png' width='450px'>
-
-### gif 先感受下
-
-<img src='./src/assets/tabbar.gif' width='200px' alt="tabbar">
-
-<img src='./src/assets/tab.gif' width='200px' alt="tab">
-
-<img src='./src/assets/my.gif' width='200px' alt="my">
-
-<img src='./src/assets/details.gif' width='200px'>
+![home](./src/assets/home.gif)
+![login](./src/assets/login.gif)
+![user](./src/assets/user.gif)
 
 #### 技术栈
 
