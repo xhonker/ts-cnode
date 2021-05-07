@@ -1339,7 +1339,7 @@ aws4@^1.6.0, aws4@^1.8.0:
 
 axios@^0.19.0:
   version "0.19.0"
-  resolved "http://r.cnpmjs.org/axios/download/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
+  resolved "https://r.cnpmjs.org/axios/download/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
   integrity sha1-jgm/89kSLhM/e4EByPvdAO09Krg=
   dependencies:
     follow-redirects "1.5.10"
@@ -3601,7 +3601,7 @@ flush-write-stream@^1.0.0:
 
 follow-redirects@1.5.10:
   version "1.5.10"
-  resolved "http://r.cnpmjs.org/follow-redirects/download/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  resolved "https://r.cnpmjs.org/follow-redirects/download/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
   integrity sha1-e3qfmuov3/NnhqlP9kPtB/T/Xio=
   dependencies:
     debug "=3.1.0"
@@ -4362,7 +4362,7 @@ is-buffer@^1.1.5:
 
 is-buffer@^2.0.2:
   version "2.0.3"
-  resolved "http://r.cnpmjs.org/is-buffer/download/is-buffer-2.0.3.tgz#4ecf3fcf749cbd1e472689e109ac66261a25e725"
+  resolved "https://r.cnpmjs.org/is-buffer/download/is-buffer-2.0.3.tgz#4ecf3fcf749cbd1e472689e109ac66261a25e725"
   integrity sha1-Ts8/z3ScvR5HJonhCaxmJhol5yU=
 
 is-builtin-module@^1.0.0:
@@ -5294,7 +5294,7 @@ jsprim@^1.2.2:
 
 jsqr@^1.1.0:
   version "1.2.0"
-  resolved "http://r.cnpmjs.org/jsqr/download/jsqr-1.2.0.tgz#f93fc65fa7d1ded78b1bcb020fa044352b04261a"
+  resolved "https://r.cnpmjs.org/jsqr/download/jsqr-1.2.0.tgz#f93fc65fa7d1ded78b1bcb020fa044352b04261a"
   integrity sha1-+T/GX6fR3teLG8sCD6BENSsEJho=
 
 killable@^1.0.0:
@@ -5555,7 +5555,7 @@ lodash@4.x, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.3, loda
 
 lodash@^4.17.11:
   version "4.17.11"
-  resolved "http://r.cnpmjs.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+  resolved "https://r.cnpmjs.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha1-s56mIp72B+zYniyN8SU2iRysm40=
 
 log-symbols@^1.0.2:
@@ -7054,9 +7054,10 @@ querystring@0.2.0:
   version "0.2.0"
   resolved "http://registry.npm.taobao.org/querystring/download/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 
-querystringify@^2.0.0:
-  version "2.0.0"
-  resolved "http://registry.npm.taobao.org/querystringify/download/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
+querystringify@^2.1.1:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
+  integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
 randomatic@^3.0.0:
   version "3.1.0"
@@ -7375,7 +7376,8 @@ requireindex@~1.1.0:
 
 requires-port@^1.0.0:
   version "1.0.0"
-  resolved "http://registry.npm.taobao.org/requires-port/download/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+  integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
 
 resolve-cwd@^2.0.0:
   version "2.0.0"
@@ -7456,7 +7458,7 @@ rsvp@^3.3.3:
 
 rtcpeerconnection-shim@^1.2.14:
   version "1.2.15"
-  resolved "http://r.cnpmjs.org/rtcpeerconnection-shim/download/rtcpeerconnection-shim-1.2.15.tgz#e7cc189a81b435324c4949aa3dfb51888684b243"
+  resolved "https://r.cnpmjs.org/rtcpeerconnection-shim/download/rtcpeerconnection-shim-1.2.15.tgz#e7cc189a81b435324c4949aa3dfb51888684b243"
   integrity sha1-58wYmoG0NTJMSUmqPftRiIaEskM=
   dependencies:
     sdp "^2.6.0"
@@ -7570,7 +7572,7 @@ scss-tokenizer@^0.2.3:
 
 sdp@^2.6.0, sdp@^2.9.0:
   version "2.9.0"
-  resolved "http://r.cnpmjs.org/sdp/download/sdp-2.9.0.tgz#2eed2d9c0b26c81ff87593107895c68d6fb9a0a6"
+  resolved "https://r.cnpmjs.org/sdp/download/sdp-2.9.0.tgz#2eed2d9c0b26c81ff87593107895c68d6fb9a0a6"
   integrity sha1-Lu0tnAsmyB/4dZMQeJXGjW+5oKY=
 
 select-hose@^2.0.0:
@@ -8444,7 +8446,7 @@ typescript-eslint-parser@^18.0.0:
 
 typescript@^3.4.3:
   version "3.4.3"
-  resolved "http://r.cnpmjs.org/typescript/download/typescript-3.4.3.tgz#0eb320e4ace9b10eadf5bc6103286b0f8b7c224f"
+  resolved "https://r.cnpmjs.org/typescript/download/typescript-3.4.3.tgz#0eb320e4ace9b10eadf5bc6103286b0f8b7c224f"
   integrity sha1-DrMg5KzpsQ6t9bxhAyhrD4t8Ik8=
 
 uglify-es@^3.3.4:
@@ -8585,10 +8587,11 @@ url-loader@^1.1.0:
     schema-utils "1.0.0"
 
 url-parse@^1.1.8, url-parse@^1.4.3:
-  version "1.4.3"
-  resolved "http://registry.npm.taobao.org/url-parse/download/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.1.tgz#d5fa9890af8a5e1f274a2c98376510f6425f6e3b"
+  integrity sha512-HOfCOUJt7iSYzEx/UqgtwKRMC6EU91NFhsCHMv9oM03VJcVo2Qrp8T8kI9D7amFf1cu+/3CEhgb3rF9zL7k85Q==
   dependencies:
-    querystringify "^2.0.0"
+    querystringify "^2.1.1"
     requires-port "^1.0.0"
 
 url@^0.11.0:
@@ -8676,7 +8679,7 @@ vue-class-component@^6.0.0, vue-class-component@^6.1.0:
 
 vue-content-loader@^0.2.1:
   version "0.2.1"
-  resolved "http://r.cnpmjs.org/vue-content-loader/download/vue-content-loader-0.2.1.tgz#0eb332e2a72643d57fb209d72d6526573b191f5a"
+  resolved "https://r.cnpmjs.org/vue-content-loader/download/vue-content-loader-0.2.1.tgz#0eb332e2a72643d57fb209d72d6526573b191f5a"
   integrity sha1-DrMy4qcmQ9V/sgnXLWUmVzsZH1o=
   dependencies:
     babel-helper-vue-jsx-merge-props "^2.0.3"
@@ -8730,7 +8733,7 @@ vue-property-decorator@^6.0.0:
 
 vue-qrcode-reader@^1.4.2:
   version "1.4.2"
-  resolved "http://r.cnpmjs.org/vue-qrcode-reader/download/vue-qrcode-reader-1.4.2.tgz#ed0812b33976fa7a1ba97b04bd907284c4a2f2e1"
+  resolved "https://r.cnpmjs.org/vue-qrcode-reader/download/vue-qrcode-reader-1.4.2.tgz#ed0812b33976fa7a1ba97b04bd907284c4a2f2e1"
   integrity sha1-7QgSszl2+nobqXsEvZByhMSi8uE=
   dependencies:
     babel-runtime "^6.26.0"
@@ -8751,7 +8754,7 @@ vue-style-loader@^4.1.0:
 
 vue-template-compiler@^2.6.10:
   version "2.6.10"
-  resolved "http://r.cnpmjs.org/vue-template-compiler/download/vue-template-compiler-2.6.10.tgz#323b4f3495f04faa3503337a82f5d6507799c9cc"
+  resolved "https://r.cnpmjs.org/vue-template-compiler/download/vue-template-compiler-2.6.10.tgz#323b4f3495f04faa3503337a82f5d6507799c9cc"
   integrity sha1-MjtPNJXwT6o1AzN6gvXWUHeZycw=
   dependencies:
     de-indent "^1.0.2"
@@ -8763,7 +8766,7 @@ vue-template-es2015-compiler@^1.6.0:
 
 vue@^2.6.10:
   version "2.6.10"
-  resolved "http://r.cnpmjs.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
+  resolved "https://r.cnpmjs.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
 
 vuex-class@^0.3.1:
@@ -8940,7 +8943,7 @@ webpack@^4.15.1:
 
 webrtc-adapter@^6.2.1:
   version "6.4.8"
-  resolved "http://r.cnpmjs.org/webrtc-adapter/download/webrtc-adapter-6.4.8.tgz#eeca3f0d5b40c0e629b865ef2a936a0b658274de"
+  resolved "https://r.cnpmjs.org/webrtc-adapter/download/webrtc-adapter-6.4.8.tgz#eeca3f0d5b40c0e629b865ef2a936a0b658274de"
   integrity sha1-7so/DVtAwOYpuGXvKpNqC2WCdN4=
   dependencies:
     rtcpeerconnection-shim "^1.2.14"
