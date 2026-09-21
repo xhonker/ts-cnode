@@ -1,3 +1,5 @@
+
+
 [![node][node]][node-url]
 [![vue-cli][vue-cli]][vue-cli-url]
 [![typescript][typescript]][typescript-url]
@@ -52,5 +54,5 @@
 [node-url]: https://nodejs.org
 [vue-cli]: https://img.shields.io/badge/%40vue%2Fcli-3.0.1-brightgreen.svg
 [vue-cli-url]: https://cli.vuejs.org
-[typescript]: https://img.shields.io/badge/typescript-2.9.1-brightgreen.svg
+[typescript]: https://img.shields.io/badge/typescript-3.4.3-brightgreen.svg
 [typescript-url]: http://www.typescriptlang.org
